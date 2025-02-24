@@ -4,6 +4,7 @@ import Register from '@/components/Register.vue';
 import Home from '@/views/Home.vue';
 import ProductList from '@/views/ProductList.vue';
 import ProductForm from '@/views/ProductForm.vue';
+import Cart from '@/components/Cart.vue';
 
 const routes = [
     { path: '/', component: Home },
@@ -12,6 +13,7 @@ const routes = [
     { path: '/api/products', component: ProductList },
     { path: '/api/products/add', component: ProductForm },
     { path: '/api/products/edit/:id', component: ProductForm, props: true },
+    { path: '/api/cart', component: Cart },
 ];
 
 export const router = createRouter({ history: createWebHistory(), routes });
