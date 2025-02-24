@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import authRouter from './routes/authRoutes.js';
 import productRouter from './routes/productRoutes.js';
+import orderRouter from './routes/orderRoutes.js';
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(
 app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/products', productRouter);
+app.use('/api/orders', orderRouter);
 
 app.get('/hello', (req, res) => {
     res.json({ message: 'Tudo certo!' });
