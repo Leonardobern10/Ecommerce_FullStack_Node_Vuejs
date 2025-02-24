@@ -9,10 +9,8 @@ productRouter.post('/', async (req, res) => {
         const product = new Product(req.body);
         await product.save();
         res.status(201).json(product);
-        alert('Produto cadastrado com sucesso!');
     } catch (error) {
         res.status(500).json({ message: error.message });
-        alert('Falha ao cadastrar produto!');
         console.error(error);
     }
 });
@@ -36,10 +34,8 @@ productRouter.put('/:id', async (req, res) => {
             { new: true },
         );
         res.json(product);
-        alert('Produto atualizado com sucesso!');
     } catch (error) {
         res.status(500).json({ message: error.message });
-        alert('Erro ao atualizar produto!');
         console.error(error);
     }
 });
@@ -49,10 +45,8 @@ productRouter.delete('/:id', async (req, res) => {
     try {
         await Product.findByIdAndDelete(req.params.id);
         res.json({ message: 'Produto removido com sucesso!' });
-        alert('Produto excluído com sucesso!');
     } catch (error) {
         res.status(500).json({ message: error.message });
-        alert('Erro ao deletar o produto!');
         console.error(error);
     }
 });

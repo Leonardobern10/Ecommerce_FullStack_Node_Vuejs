@@ -10,30 +10,47 @@ import { useRoute, useRouter } from 'vue-router';
 const route = useRoute();
 const router = useRouter();
 const isEdit = ref(false);
-const product = ref({ name: '', price: 0 });
+const product = ref({
+    name: '',
+    price: 0,
+    description: '',
+    stock: 0,
+    imageUrl: '',
+});
 
 onMounted(async () => {
-    if (route.params.id) {
-        isEdit.value = true;
-        const products = await getProducts();
-        product.value = products.find((p) => p._id === route.params.id);
+    try {
+        if (route.params.id) {
+            isEdit.value = true;
+            const products = await getProducts();
+            product.value = products.find((p) => p._id === route.params.id);
+        }
+    } catch (error) {
+        console.error(error);
     }
 });
 
 const saveProduct = async () => {
-    if (isEdit.value) {
-        await updateProduct(route.params.id, product.value);
-    } else {
-        await createProduct(product.value);
+    try {
+        if (isEdit.value) {
+            await updateProduct(route.params.id, product.value);
+            alert('Produto atualizado com sucesso!');
+        } else {
+            await createProduct(product.value);
+            alert('Produto cadastrado com sucesso!');
+        }
+        router.push('/api/products');
+    } catch (error) {
+        console.error(error);
+        alert('Falha ao registrar produto!');
     }
-    router.push('/products');
 };
 </script>
 
 <template>
     <div>
         <h2>{{ isEdit ? 'Editar Produto' : 'Adicionar Produto' }}</h2>
-        <form @submit.prevent="saverProduct">
+        <form @submit.prevent="saveProduct">
             <input
                 v-model="product.name"
                 type="text"
@@ -41,9 +58,27 @@ const saveProduct = async () => {
                 required
             />
             <input
+                v-model="product.description"
+                type="text"
+                placeholder="Descricao do produto"
+                required
+            />
+            <input
                 v-model="product.price"
                 type="number"
                 placeholder="Preço"
+                required
+            />
+            <input
+                v-model="product.stock"
+                type="number"
+                placeholder="Quantidade"
+                required
+            />
+            <input
+                v-model="product.imageUrl"
+                type="text"
+                placeholder="Url da imagem"
                 required
             />
             <button type="submit">

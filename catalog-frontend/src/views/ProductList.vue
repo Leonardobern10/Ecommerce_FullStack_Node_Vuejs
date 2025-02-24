@@ -19,14 +19,14 @@ onMounted(loadProducts);
 <template>
     <div>
         <h2>Lista de Produtos</h2>
-        <router-link to="/products/add" class="btn-add"
+        <router-link to="/api/products/add" class="btn-add"
             >Adicionar Produto</router-link
         >
         <ul>
             <li v-for="product in products" :key="product._id">
                 {{ product.name }} - {{ product.price }}
                 <button @click="removeProduct(product._id)">Excluir</button>
-                <router-link :to="`/products/edit/${product._id}`"
+                <router-link :to="`/api/products/edit/${product._id}`"
                     >Editar</router-link
                 >
             </li>
