@@ -9,6 +9,9 @@
             <router-link to="/api/cart" class="navbar-link"
                 >Carrinho</router-link
             >
+            <router-link to="/api/orders" class="navbar-link"
+                >Meus pedidos</router-link
+            >
             <router-link to="/api/auth/login" class="navbar-link"
                 >Login</router-link
             >
