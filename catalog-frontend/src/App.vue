@@ -31,7 +31,7 @@
             >
             <button
                 v-if="authState.isAuthenticated.value"
-                class="navbar-link"
+                id="btn-logout"
                 @click="logout"
             >
                 Logout
@@ -76,5 +76,12 @@ const logout = () => {
 
 .navbar-link:hover {
     text-decoration: underline;
+}
+
+#btn-logout {
+    width: 4rem;
+    border: none;
+    background-color: #0e6402;
+    color: #fff;
 }
 </style>
