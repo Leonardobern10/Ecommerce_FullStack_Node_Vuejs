@@ -1,6 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../model/User.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
 
 const authRouter = express.Router();
 
@@ -27,13 +28,17 @@ authRouter.post('/login', async (req, res) => {
         }
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-            expiresIn: '1h',
+            expiresIn: '60s',
         });
         console.log('Token gerado:', token);
         res.json({ token });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
+});
+
+authRouter.post('/logout', authMiddleware, (req, res) => {
+    res.json({ message: 'Logout bem-sucedido.' });
 });
 
 export default authRouter;

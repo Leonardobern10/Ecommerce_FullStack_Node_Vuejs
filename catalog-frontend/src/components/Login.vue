@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { authState } from '@/store/useAuth.js';
 
 const router = useRouter();
 const email = ref('');
@@ -13,10 +14,17 @@ async function login() {
             'http://localhost:5000/api/auth/login',
             { email: email.value, password: password.value },
         );
-        localStorage.setItem('token', response.data.token);
-        router.push('/');
+
+        const token = response.data.token;
+        if (!token) throw new Error('Token inválido');
+
+        localStorage.setItem('token', token);
+        authState.login(token); // Corrigido: agora passa o token corretamente
+
+        router.push('/api/products'); // Garante que o caminho é correto
     } catch (error) {
-        alert('Login falhou!');
+        console.error('Erro no login:', error);
+        alert('Login falhou! Verifique suas credenciais.');
     }
 }
 </script>
@@ -38,7 +46,6 @@ async function login() {
 </template>
 
 <style scoped>
-/* Estilos para o formulário de login */
 form {
     max-width: 400px;
     margin: auto;
@@ -58,5 +65,6 @@ button {
     color: white;
     border: none;
     font-size: 16px;
+    cursor: pointer;
 }
 </style>
