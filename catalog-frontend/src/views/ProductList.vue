@@ -1,11 +1,17 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { getProducts, deleteProduct } from '../services/productService.js';
+import { addToCart } from '../services/cartService.js';
 
 const products = ref([]);
 
 const loadProducts = async () => {
     products.value = await getProducts();
+};
+
+const addProductToCart = (product) => {
+    addToCart(product);
+    alert('Produto adicionar ao carrinho!');
 };
 
 const removeProduct = async (id) => {
@@ -24,11 +30,10 @@ onMounted(loadProducts);
         >
         <ul>
             <li v-for="product in products" :key="product._id">
-                {{ product.name }} - {{ product.price }}
-                <button @click="removeProduct(product._id)">Excluir</button>
-                <router-link :to="`/api/products/edit/${product._id}`"
-                    >Editar</router-link
-                >
+                {{ product.name }} - R$ {{ product.price }}
+                <button @click="addProductToCart(product)">
+                    Adicionar ao Carrinho
+                </button>
             </li>
         </ul>
     </div>
@@ -40,17 +45,15 @@ ul {
     padding: 0;
 }
 li {
-    margin: 10px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 10px 0;
 }
-.btn-add {
-    display: inline-block;
-    padding: 10px;
+button {
     background-color: green;
     color: white;
-    text-decoration: none;
-    margin-bottom: 10px;
+    border: none;
+    padding: 5px 10px;
 }
 </style>
