@@ -1,15 +1,12 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import {
-    getCart,
-    updateQuantity,
-    removeFromCart,
-    clearCart,
-} from '../services/cartService.js';
+import { getCart, clearCart } from '../services/cartService.js';
+import { createOrder } from '@/services/orderService.js';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const cart = ref([]);
+const token = localStorage.getItem('token');
 
 const loadCart = () => {
     cart.value = getCart();
@@ -19,20 +16,30 @@ const totalAmount = computed(() =>
     cart.value.reduce((total, item) => total + item.price * item.quantity, 0),
 );
 
-const uppdateItemQuantity = (item, quantity) => {
-    updateQuantity(item._id, quantity);
-    loadCart();
-};
+const checkout = async () => {
+    if (!token) {
+        alert('Você precisa estar logado para finalizar a compra.');
+        router.push('/login');
+        return;
+    }
 
-const removeItem = (item) => {
-    removeFromCart(item._id);
-    loadCart();
-};
+    try {
+        const orderData = {
+            items: cart.value.map((item) => ({
+                product: item._id,
+                quantity: item.quantity,
+            })),
+            totalAmount: totalAmount.value,
+        };
 
-const checkout = () => {
-    alert('Compra finalizada com sucesso!');
-    clearCart();
-    router.push('/');
+        await createOrder(orderData, token);
+        alert('Pedido realizado com sucesso!');
+        clearCart();
+        router.push('/');
+    } catch (error) {
+        alert('Erro ao finalizar compra. Tente novamente.');
+        console.error(error);
+    }
 };
 
 onMounted(loadCart);
@@ -43,14 +50,7 @@ onMounted(loadCart);
         <h2>Carrinho de Compras</h2>
         <ul v-if="cart.length">
             <li v-for="item in cart" :key="item._id">
-                {{ item.name }} - R$ {{ item.price }}
-                <input
-                    type="number"
-                    v-model="item.quantity"
-                    @change="uppdateItemQuantity(item, parseInt(item.quantity))"
-                    min="1"
-                />
-                <button @click="removeItem(item)">Remover</button>
+                {{ item.name }} - R$ {{ item.price }} x {{ item.quantity }}
             </li>
         </ul>
         <p v-else>Seu carrinho está vazio.</p>
@@ -62,20 +62,11 @@ onMounted(loadCart);
 </template>
 
 <style scoped>
-ul {
-    list-style: none;
-    padding: 0;
-}
-li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 10px 0;
-}
 button {
-    background-color: red;
+    background-color: blue;
     color: white;
+    padding: 10px;
     border: none;
-    padding: 5px 10px;
+    cursor: pointer;
 }
 </style>
