@@ -41,11 +41,11 @@ onMounted(loadCart);
 <template>
     <div>
         <h2>Carrinho de Compras</h2>
-        <ul v-if="car.length">
+        <ul v-if="cart.length">
             <li v-for="item in cart" :key="item._id">
                 {{ item.name }} - R$ {{ item.price }}
                 <input
-                    type="numer"
+                    type="number"
                     v-model="item.quantity"
                     @change="uppdateItemQuantity(item, parseInt(item.quantity))"
                     min="1"
