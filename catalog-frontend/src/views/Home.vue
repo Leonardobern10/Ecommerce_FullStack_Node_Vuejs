@@ -6,7 +6,7 @@
             rápida.
         </p>
 
-        <router-link to="/products" class="link">Ver Produtos</router-link>
+        <router-link to="/api/products" class="link">Ver Produtos</router-link>
     </div>
 </template>
 
