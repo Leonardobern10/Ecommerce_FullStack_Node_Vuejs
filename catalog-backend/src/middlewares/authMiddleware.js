@@ -14,9 +14,11 @@ const authMiddleware = (req, res, next) => {
             token.replace('Bearer ', ''),
             process.env.JWT_SECRET,
         );
+        console.log('Token decodificado:', decoded);
         req.user = decoded;
         next();
     } catch (error) {
+        console.log('Erro na decodificação do token:', error);
         res.status(401).json({ message: 'Token inválido.' });
     }
 };

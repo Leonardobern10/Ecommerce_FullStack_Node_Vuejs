@@ -6,16 +6,22 @@
             <router-link to="/api/products" class="navbar-link"
                 >Produtos</router-link
             >
-            <router-link to="/api/cart" class="navbar-link"
+            <router-link v-if="isLoggedIn" to="/api/cart" class="navbar-link"
                 >Carrinho</router-link
             >
-            <router-link to="/api/orders" class="navbar-link"
+            <router-link v-if="isLoggedIn" to="/api/orders" class="navbar-link"
                 >Meus pedidos</router-link
             >
-            <router-link to="/api/auth/login" class="navbar-link"
+            <router-link
+                v-if="!isLoggedIn"
+                to="/api/auth/login"
+                class="navbar-link"
                 >Login</router-link
             >
-            <router-link to="/api/auth/register" class="navbar-link"
+            <router-link
+                v-if="!isLoggedIn"
+                to="/api/auth/register"
+                class="navbar-link"
                 >Registrar</router-link
             >
         </nav>
@@ -26,7 +32,8 @@
 </template>
 
 <script setup>
-// Este componente não precisa de lógica adicional por enquanto
+import { ref } from 'vue';
+const isLoggedIn = ref(!!localStorage.getItem('token'));
 </script>
 
 <style>
