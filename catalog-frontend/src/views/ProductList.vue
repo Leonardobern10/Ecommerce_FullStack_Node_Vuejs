@@ -14,11 +14,6 @@ const addProductToCart = (product) => {
     alert('Produto adicionar ao carrinho!');
 };
 
-const removeProduct = async (id) => {
-    await deleteProduct(id);
-    loadProducts();
-};
-
 onMounted(loadProducts);
 </script>
 
