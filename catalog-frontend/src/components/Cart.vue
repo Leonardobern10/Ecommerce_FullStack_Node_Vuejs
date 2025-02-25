@@ -49,7 +49,7 @@ onMounted(loadCart);
     <div>
         <h2>Carrinho de Compras</h2>
         <ul v-if="cart.length">
-            <li v-for="item in cart" :key="item._id">
+            <li class="item-cart" v-for="item in cart" :key="item._id">
                 {{ item.name }} - R$ {{ item.price }} x {{ item.quantity }}
             </li>
         </ul>
@@ -68,5 +68,8 @@ button {
     padding: 10px;
     border: none;
     cursor: pointer;
+}
+li {
+    list-style: none;
 }
 </style>

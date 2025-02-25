@@ -48,7 +48,7 @@ const saveProduct = async () => {
 </script>
 
 <template>
-    <div>
+    <div id="view-product-form">
         <h2>{{ isEdit ? 'Editar Produto' : 'Adicionar Produto' }}</h2>
         <form @submit.prevent="saveProduct">
             <input
@@ -104,5 +104,8 @@ button {
     color: white;
     padding: 10px;
     border: none;
+}
+#view-product-form {
+    padding: 0 2rem;
 }
 </style>

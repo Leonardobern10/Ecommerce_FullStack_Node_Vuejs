@@ -63,5 +63,7 @@ export default {
 </script>
 
 <style scoped>
-/* Adicione seu estilo aqui, se necessário */
+li {
+    list-style: none;
+}
 </style>
