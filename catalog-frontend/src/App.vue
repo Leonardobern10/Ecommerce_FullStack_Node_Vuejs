@@ -65,6 +65,7 @@ const logout = () => {
     justify-content: center;
     background-color: #333;
     padding: 10px;
+    width: 100%;
 }
 
 .navbar-link {

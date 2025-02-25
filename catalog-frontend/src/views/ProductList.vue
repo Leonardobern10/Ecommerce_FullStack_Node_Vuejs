@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { getProducts } from '../services/productService.js';
 import { addToCart } from '../services/cartService.js';
 import { authState } from '../store/useAuth.js';
@@ -13,20 +13,26 @@ const loadProducts = async () => {
 };
 
 const addProductToCart = (product) => {
-    console.log();
     if (!authState.isAuthenticated.value) {
         alert('Entre em sua conta para adicionar ao carrinho.');
         return router.push('/login');
     }
     addToCart(product);
-    alert('Produto adicionar ao carrinho!');
+    alert('Produto adicionado ao carrinho!');
+};
+
+const updateStock = (id, quantity) => {
+    const currentProduct = products.value.find((el) => el.id === id);
+    if (currentProduct) {
+        currentProduct.quantity -= quantity;
+    }
 };
 
 onMounted(loadProducts);
 </script>
 
 <template>
-    <div id="view">
+    <div id="view" @quantityOrder="updateStock">
         <h2>Lista de Produtos</h2>
         <router-link to="/products/add" class="btn-add"
             >Adicionar Produto</router-link
@@ -113,8 +119,7 @@ img {
 #container-products {
     display: grid;
     width: 100%;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
-    grid-auto-flow: row;
 }
 </style>
