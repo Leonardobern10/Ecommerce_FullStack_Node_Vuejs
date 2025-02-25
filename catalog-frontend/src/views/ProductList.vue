@@ -2,14 +2,22 @@
 import { onMounted, ref } from 'vue';
 import { getProducts } from '../services/productService.js';
 import { addToCart } from '../services/cartService.js';
+import { authState } from '../store/useAuth.js';
+import { useRouter } from 'vue-router';
 
 const products = ref([]);
+const router = useRouter();
 
 const loadProducts = async () => {
     products.value = await getProducts();
 };
 
 const addProductToCart = (product) => {
+    console.log();
+    if (!authState.isAuthenticated.value) {
+        alert('Entre em sua conta para adicionar ao carrinho.');
+        return router.push('/login');
+    }
     addToCart(product);
     alert('Produto adicionar ao carrinho!');
 };
@@ -33,7 +41,9 @@ onMounted(loadProducts);
                 </div>
                 {{ product.name }}
                 <div id="info-numbers">
-                    <p id="p-price">R$ {{ product.price }}</p>
+                    <p id="p-price">
+                        R$ {{ Number.parseFloat(product.price).toFixed(2) }}
+                    </p>
                     <p id="p-quantity">
                         <strong>Quantidade: </strong>{{ product.stock }}
                     </p>
@@ -59,10 +69,6 @@ li {
     padding: 1rem;
     min-width: 15rem;
     width: fit-content;
-
-    background: #00000059;
-
-    border: 2px solid yellow;
 }
 button {
     background-color: green;

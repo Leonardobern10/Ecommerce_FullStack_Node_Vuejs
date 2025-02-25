@@ -8,7 +8,6 @@ const authRouter = express.Router();
 // * Registro de usuário
 authRouter.post('/register', async (req, res) => {
     const { name, email, password } = req.body;
-    console.log(name, email, password);
     try {
         const user = new User({ name, email, password });
         await user.save();
@@ -23,6 +22,7 @@ authRouter.post('/login', async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = await User.findOne({ email });
+
         if (!user || !(await user.matchPassword(password))) {
             return res.status(401).json({ message: 'Credenciais inválidas' });
         }
@@ -30,7 +30,7 @@ authRouter.post('/login', async (req, res) => {
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
             expiresIn: '60s',
         });
-        console.log('Token gerado:', token);
+
         res.json({ token });
     } catch (error) {
         res.status(500).json({ message: error.message });

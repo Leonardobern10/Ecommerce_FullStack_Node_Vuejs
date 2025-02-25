@@ -66,6 +66,7 @@ const saveProduct = async () => {
             <input
                 v-model="product.price"
                 type="number"
+                step="0.01"
                 placeholder="Preço"
                 required
             />
