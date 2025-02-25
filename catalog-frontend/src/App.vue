@@ -2,30 +2,30 @@
     <div id="app">
         <nav class="navbar">
             <router-link to="/" class="navbar-link">Home</router-link>
-            <router-link to="/api/products" class="navbar-link"
+            <router-link to="/products" class="navbar-link"
                 >Produtos</router-link
             >
             <router-link
                 v-if="authState.isAuthenticated.value"
-                to="/api/cart"
+                to="/cart"
                 class="navbar-link"
                 >Carrinho</router-link
             >
             <router-link
                 v-if="authState.isAuthenticated.value"
-                to="/api/orders"
+                to="/orders"
                 class="navbar-link"
                 >Meus pedidos</router-link
             >
             <router-link
                 v-if="!authState.isAuthenticated.value"
-                to="/api/auth/login"
+                to="/login"
                 class="navbar-link"
                 >Login</router-link
             >
             <router-link
                 v-if="!authState.isAuthenticated.value"
-                to="/api/auth/register"
+                to="/register"
                 class="navbar-link"
                 >Registrar</router-link
             >
@@ -50,7 +50,7 @@ const router = useRouter();
 
 const logout = () => {
     authState.logout();
-    router.push('/api/auth/login');
+    router.push('/login');
 };
 </script>
 
@@ -72,6 +72,8 @@ const logout = () => {
     text-decoration: none;
     margin: 0 15px;
     font-size: 1.2rem;
+
+    font-weight: 500;
 }
 
 .navbar-link:hover {

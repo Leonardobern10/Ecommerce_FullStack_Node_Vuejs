@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { getProducts, deleteProduct } from '../services/productService.js';
+import { getProducts } from '../services/productService.js';
 import { addToCart } from '../services/cartService.js';
 
 const products = ref([]);
@@ -20,7 +20,7 @@ onMounted(loadProducts);
 <template>
     <div id="view">
         <h2>Lista de Produtos</h2>
-        <router-link to="/api/products/add" class="btn-add"
+        <router-link to="/products/add" class="btn-add"
             >Adicionar Produto</router-link
         >
         <ul id="container-products">
@@ -56,13 +56,19 @@ li {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin: 10px 0;
+    padding: 1rem;
+    min-width: 15rem;
+    width: fit-content;
+
+    background: #00000059;
+
+    border: 2px solid yellow;
 }
 button {
     background-color: green;
     color: white;
     border: none;
-    padding: 5px 10px;
+    padding: 0.5rem 1rem;
 }
 
 #view {
@@ -75,8 +81,8 @@ img {
 }
 
 #container-img-product {
-    width: 10rem;
-    height: 10rem;
+    width: 5rem;
+    height: 8rem;
 
     margin-bottom: 1rem;
 }
@@ -89,17 +95,20 @@ img {
 }
 
 #info-numbers p {
-    padding: 0 2rem;
+    padding: 0 1rem;
 }
 
 #p-price {
-    font-size: 1.7rem;
-    width: 50%;
+    font-size: 1.4rem;
+    font-weight: 800;
+    width: 90%;
 }
 
 #container-products {
     display: grid;
+    width: 100%;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
+    grid-auto-flow: row;
 }
 </style>

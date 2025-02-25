@@ -39,7 +39,7 @@ const saveProduct = async () => {
             await createProduct(product.value);
             alert('Produto cadastrado com sucesso!');
         }
-        router.push('/api/products');
+        router.push('/products');
     } catch (error) {
         console.error(error);
         alert('Falha ao registrar produto!');

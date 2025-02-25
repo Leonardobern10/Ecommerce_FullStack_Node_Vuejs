@@ -1,3 +1,7 @@
+<script setup>
+// Este componente não precisa de lógica adicional por enquanto
+</script>
+
 <template>
     <div class="home">
         <h1>Bem-vindo ao nosso Catálogo de Produtos!</h1>
@@ -6,13 +10,9 @@
             rápida.
         </p>
 
-        <router-link to="/api/products" class="link">Ver Produtos</router-link>
+        <router-link to="/products" class="link">Ver Produtos</router-link>
     </div>
 </template>
-
-<script setup>
-// Este componente não precisa de lógica adicional por enquanto
-</script>
 
 <style scoped>
 .home {

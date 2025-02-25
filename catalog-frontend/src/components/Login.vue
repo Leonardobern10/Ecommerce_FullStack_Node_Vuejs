@@ -21,7 +21,7 @@ async function login() {
         localStorage.setItem('token', token);
         authState.login(token); // Corrigido: agora passa o token corretamente
 
-        router.push('/api/products'); // Garante que o caminho é correto
+        router.push('/products'); // Garante que o caminho é correto
     } catch (error) {
         console.error('Erro no login:', error);
         alert('Login falhou! Verifique suas credenciais.');

@@ -9,13 +9,13 @@ import Orders from '@/views/Orders.vue';
 
 const routes = [
     { path: '/', component: Home },
-    { path: '/api/auth/login', component: Login },
-    { path: '/api/auth/register', component: Register },
-    { path: '/api/products', component: ProductList },
-    { path: '/api/products/add', component: ProductForm },
-    { path: '/api/products/edit/:id', component: ProductForm, props: true },
-    { path: '/api/cart', component: Cart },
-    { path: '/api/orders', component: Orders },
+    { path: '/login', component: Login },
+    { path: '/register', component: Register },
+    { path: '/products', component: ProductList },
+    { path: '/products/add', component: ProductForm },
+    { path: '/products/edit/:id', component: ProductForm, props: true },
+    { path: '/cart', component: Cart },
+    { path: '/orders', component: Orders },
 ];
 
 export const router = createRouter({ history: createWebHistory(), routes });

@@ -16,7 +16,7 @@ async function register() {
             email: email.value,
             password: password.value,
         });
-        router.push('/api/auth/login');
+        router.push('/login');
     } catch (error) {
         alert('Error ao registrar');
         console.log(error);
