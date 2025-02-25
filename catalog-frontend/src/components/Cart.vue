@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUpdated, watchEffect } from 'vue';
 import { getCart, clearCart } from '../services/cartService.js';
 import { createOrder } from '@/services/orderService.js';
 import { useRouter } from 'vue-router';
@@ -12,6 +12,10 @@ const loadCart = () => {
     cart.value = getCart();
 };
 
+const clear = () => {
+    clearCart();
+    cart.value = [];
+};
 const totalAmount = computed(() =>
     cart.value.reduce((total, item) => total + item.price * item.quantity, 0),
 );
@@ -58,6 +62,7 @@ onMounted(loadCart);
             <strong>Total: R$ {{ totalAmount }}</strong>
         </p>
         <button @click="checkout" v-if="cart.length">Finalizar compra</button>
+        <button @click="clear" v-if="cart.length">Limpar</button>
     </div>
 </template>
 
