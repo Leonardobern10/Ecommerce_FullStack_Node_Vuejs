@@ -70,11 +70,7 @@ const checkout = async () => {
     }
 };
 
-onMounted(() => {
-    if (authState.isAuthenticated.value) return loadCart;
-
-    router.push('/login');
-});
+onMounted(loadCart);
 </script>
 
 <template>
