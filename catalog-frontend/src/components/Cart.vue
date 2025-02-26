@@ -76,13 +76,17 @@ onMounted(loadCart);
 <template>
     <div>
         <h2>Carrinho de Compras</h2>
+        <!-- Exibe essa seção SE HOUVER ITENS NO CARRINHO-->
         <ul v-if="cart.length">
+            <!-- Para cada item no carrinho -->
             <li class="item-cart" v-for="item in cart" :key="item._id">
                 {{ item.name }} - R$ {{ item.price }} x {{ item.quantity }}
             </li>
         </ul>
+        <!-- Exibe essa seção SE NÃO HOUVER ITENS NO CARRINHO -->
         <p v-else>Seu carrinho está vazio.</p>
         <p>
+            <!-- Valor total do carrinho -->
             <strong>Total: R$ {{ totalAmount }}</strong>
         </p>
         <button @click="checkout" v-if="cart.length">Finalizar compra</button>
