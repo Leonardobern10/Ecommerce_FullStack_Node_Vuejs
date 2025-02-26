@@ -3,6 +3,7 @@ import { ref, computed, onMounted } from 'vue';
 import { getCart, clearCart } from '../services/cartService.js';
 import { createOrder } from '@/services/orderService.js';
 import { useRouter } from 'vue-router';
+import { authState } from '@/store/useAuth.js';
 
 const router = useRouter();
 const cart = ref([]);
@@ -47,7 +48,11 @@ const checkout = async () => {
     }
 };
 
-onMounted(loadCart);
+onMounted(() => {
+    if (authState.isAuthenticated.value) return loadCart;
+
+    router.push('/login');
+});
 </script>
 
 <template>

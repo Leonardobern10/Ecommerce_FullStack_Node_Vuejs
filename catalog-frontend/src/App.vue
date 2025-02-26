@@ -52,6 +52,11 @@ const logout = () => {
     authState.logout();
     router.push('/login');
 };
+
+if (!authState.isAuthenticated.value) {
+    alert('Desconectado!');
+    router.push('/login');
+}
 </script>
 
 <style>

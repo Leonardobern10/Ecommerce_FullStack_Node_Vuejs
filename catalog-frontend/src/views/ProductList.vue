@@ -50,9 +50,6 @@ onMounted(loadProducts);
                     <p id="p-price">
                         R$ {{ Number.parseFloat(product.price).toFixed(2) }}
                     </p>
-                    <p id="p-quantity">
-                        <strong>Quantidade: </strong>{{ product.stock }}
-                    </p>
                 </div>
                 <button @click="addProductToCart(product)">
                     Adicionar ao Carrinho
