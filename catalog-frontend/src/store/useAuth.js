@@ -9,7 +9,9 @@ export const authState = {
     },
 
     logout() {
+        // Remove o token da sessão do usuario
         localStorage.removeItem('token');
+        // Atribui como falso o estado de autenticado
         this.isAuthenticated.value = false;
     },
 };

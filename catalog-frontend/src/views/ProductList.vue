@@ -2,21 +2,14 @@
 import { ref, onMounted } from 'vue';
 import { getProducts } from '../services/productService.js';
 import { addToCart } from '../services/cartService.js';
-import { authState } from '../store/useAuth.js';
-import { useRouter } from 'vue-router';
 
 const products = ref([]);
-const router = useRouter();
 
 const loadProducts = async () => {
     products.value = await getProducts();
 };
 
 const addProductToCart = (product) => {
-    if (!authState.isAuthenticated.value) {
-        alert('Entre em sua conta para adicionar ao carrinho.');
-        return router.push('/login');
-    }
     addToCart(product);
     alert('Produto adicionado ao carrinho!');
 };

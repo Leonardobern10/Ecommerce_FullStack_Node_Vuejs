@@ -46,17 +46,16 @@
 import { useRouter } from 'vue-router';
 import { authState } from '@/store/useAuth.js';
 
+// Responsável por fazer o redirecionamento para o endereço correto
 const router = useRouter();
 
+// Função executada quando o botao [Logout] é pressionado.
 const logout = () => {
+    // É chamado o método logout()
     authState.logout();
+    // O usuario é redirecionado para a pagina de login
     router.push('/login');
 };
-
-if (!authState.isAuthenticated.value) {
-    alert('Desconectado!');
-    router.push('/login');
-}
 </script>
 
 <style>
