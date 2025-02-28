@@ -1,6 +1,7 @@
 const CART_KEY = 'shopping_cart';
 
 export const getCart = () => {
+    console.log(localStorage.getItem(CART_KEY));
     return JSON.parse(localStorage.getItem(CART_KEY)) || [];
 };
 

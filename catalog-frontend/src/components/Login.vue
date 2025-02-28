@@ -6,9 +6,34 @@ import { authState } from '@/store/useAuth.js';
 
 // Direcionador de rotas
 const router = useRouter();
+
 const email = ref('');
+
 const password = ref('');
 
+/**
+ * A função Login faz uma requisição utilizando a biblioteca axios,
+ * através de um metodo HTTP POST para a url definida, passando no
+ * corpo da requisição os dados email e password.
+ * Em seguida, armazena na variavel 'token' um possivel token que será
+ * gerado e recebido como resposta caso a requisição tenha sido feita
+ * corretamente.
+ * Existe então uma verificação para o caso de a variavel 'token' ter
+ * recebido algum tipo de valor falsy (null, undefined, nan, '', etc.).
+ * Em todos os casos, um erro será lançado dizendo que o token é invalido.
+ * Caso o token seja valido, um registro do tipo chave-valor é armazenado
+ * no localStorage, sendo a chave:'token' e o valor:o resultado do token
+ * gerado pela autenticação.
+ * É acessada a função login do objeto authState que é quem gerencia o
+ * status do usuario na sessão (autenticado ou nao autenticado) passando
+ * o token como parametro. A função login do objeto authState atualiza o
+ * estado global do usuario como autenticado e disponibiliza esse valor
+ * para toda a aplicação.
+ * Se tudo acima ocorrer bem, o usuário estará logado e será redirecionado
+ * para a seção de produtos.
+ *
+ * Caso ocorra erro na autenticação, o usuário é notificado à rever suas credenciais.
+ */
 // Metodo que cuida do login
 async function login() {
     try {

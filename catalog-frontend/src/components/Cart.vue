@@ -8,8 +8,10 @@ import { authState } from '@/store/useAuth.js';
 
 // Direcionador de endereços
 const router = useRouter();
+
 // Reponsável por receber os produtos
 const cart = ref([]);
+
 // Obtém o token da sessão do usuário
 const token = localStorage.getItem('token');
 
@@ -71,12 +73,16 @@ const checkout = async () => {
     }
 };
 
+// Sempre que Cart.vue é montado
 onMounted(() => {
+    // Primeiro é verificado se o usuário está logado
     if (authState.isAuthenticated.value) {
+        // Carrega os itens do carrinho
         loadCart();
         return;
     }
 
+    // Caso não esteja logado, é redirecionado para login
     router.push('/login');
 });
 </script>
