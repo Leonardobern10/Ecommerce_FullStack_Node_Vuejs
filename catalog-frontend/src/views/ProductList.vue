@@ -107,6 +107,6 @@ img {
     display: grid;
     width: 100%;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+    gap: 1rem 2rem;
 }
 </style>
