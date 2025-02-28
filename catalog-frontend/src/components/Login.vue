@@ -4,20 +4,28 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { authState } from '@/store/useAuth.js';
 
+// Direcionador de rotas
 const router = useRouter();
 const email = ref('');
 const password = ref('');
 
+// Metodo que cuida do login
 async function login() {
     try {
+        // Faz um POST para uma URI passando email e senha
         const response = await axios.post(
             'http://localhost:5000/api/auth/login',
             { email: email.value, password: password.value },
         );
 
+        // Recebe e armazena o token de resposta
+
         const token = response.data.token;
+
+        // Se não vou token, lança um erro
         if (!token) throw new Error('Token inválido');
 
+        // Insere
         localStorage.setItem('token', token);
         authState.login(token); // Corrigido: agora passa o token corretamente
 

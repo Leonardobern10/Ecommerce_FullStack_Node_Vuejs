@@ -45,6 +45,7 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { authState } from '@/store/useAuth.js';
+import { onMounted } from 'vue';
 
 // Responsável por fazer o redirecionamento para o endereço correto
 const router = useRouter();

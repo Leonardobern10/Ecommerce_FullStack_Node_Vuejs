@@ -3,9 +3,13 @@ import { ref, onMounted } from 'vue';
 import { getProducts } from '../services/productService.js';
 import { addToCart } from '../services/cartService.js';
 
+// Variável reativa responsável por receber os produtos para exibição
 const products = ref([]);
 
+// Método responsável por carregar os produtos
 const loadProducts = async () => {
+    // Aguarda até que todos os produtos sejam buscados
+    // e os armazena no array {products}
     products.value = await getProducts();
 };
 
@@ -14,18 +18,11 @@ const addProductToCart = (product) => {
     alert('Produto adicionado ao carrinho!');
 };
 
-const updateStock = (id, quantity) => {
-    const currentProduct = products.value.find((el) => el.id === id);
-    if (currentProduct) {
-        currentProduct.quantity -= quantity;
-    }
-};
-
 onMounted(loadProducts);
 </script>
 
 <template>
-    <div id="view" @quantityOrder="updateStock">
+    <div id="view">
         <h2>Lista de Produtos</h2>
         <router-link to="/products/add" class="btn-add"
             >Adicionar Produto</router-link

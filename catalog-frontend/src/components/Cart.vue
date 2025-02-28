@@ -3,6 +3,7 @@ import { ref, computed, onMounted } from 'vue';
 import { getCart, clearCart } from '../services/cartService.js';
 import { createOrder } from '@/services/orderService.js';
 import { useRouter } from 'vue-router';
+import CartItemView from './CartItemView.vue';
 import { authState } from '@/store/useAuth.js';
 
 // Direcionador de endereços
@@ -70,24 +71,39 @@ const checkout = async () => {
     }
 };
 
-onMounted(loadCart);
+onMounted(() => {
+    if (authState.isAuthenticated.value) {
+        loadCart();
+        return;
+    }
+
+    router.push('/login');
+});
 </script>
 
 <template>
     <div>
         <h2>Carrinho de Compras</h2>
         <!-- Exibe essa seção SE HOUVER ITENS NO CARRINHO-->
-        <ul v-if="cart.length">
+        <ul id="items-cart" v-if="cart.length">
             <!-- Para cada item no carrinho -->
             <li class="item-cart" v-for="item in cart" :key="item._id">
-                {{ item.name }} - R$ {{ item.price }} x {{ item.quantity }}
+                <CartItemView
+                    :name="item.name"
+                    :price="item.price"
+                    :quantity="item.quantity"
+                    :image-url="item.imageUrl"
+                />
             </li>
         </ul>
         <!-- Exibe essa seção SE NÃO HOUVER ITENS NO CARRINHO -->
         <p v-else>Seu carrinho está vazio.</p>
         <p>
             <!-- Valor total do carrinho -->
-            <strong>Total: R$ {{ totalAmount }}</strong>
+            <strong
+                >Total: R$
+                {{ Number.parseFloat(totalAmount).toFixed(2) }}</strong
+            >
         </p>
         <button @click="checkout" v-if="cart.length">Finalizar compra</button>
         <button @click="clear" v-if="cart.length">Limpar</button>
@@ -96,7 +112,7 @@ onMounted(loadCart);
 
 <style scoped>
 button {
-    background-color: blue;
+    background-color: rgb(3, 116, 31);
     color: white;
     padding: 10px;
     border: none;
@@ -104,5 +120,17 @@ button {
 }
 li {
     list-style: none;
+}
+
+button {
+    margin: 0 2rem;
+}
+
+#items-cart {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 </style>
