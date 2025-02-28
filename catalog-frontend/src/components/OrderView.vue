@@ -11,8 +11,6 @@ defineProps([
     'quantity',
     'imageUrl',
 ]);
-
-const listItems = ref([]);
 </script>
 
 <template>
@@ -25,12 +23,16 @@ const listItems = ref([]);
             <p>Valor total: {{ orderTotalValue }}</p>
         </div>
         <div>
-            <CartItemView
-                :name="name"
-                :price="price"
-                :quantity="quantity"
-                :image-url="imageUrl"
-            />
+            <ul>
+                <li :v-for="item in order.items" :key="item.product._id">
+                    <CartItemView
+                        :name="name"
+                        :price="price"
+                        :quantity="quantity"
+                        :image-url="imageUrl"
+                    />
+                </li>
+            </ul>
         </div>
     </div>
 </template>

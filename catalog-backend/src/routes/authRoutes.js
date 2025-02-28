@@ -44,7 +44,7 @@ authRouter.post('/login', async (req, res) => {
         // Faz a geração de um token com base no id, na chave-secreta
         // e com tempo de expiração
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-            expiresIn: '60s',
+            expiresIn: '15m',
         });
 
         // Retorna o token em formato json
