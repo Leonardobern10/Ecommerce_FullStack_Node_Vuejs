@@ -5,6 +5,20 @@ import authMiddleware from '../middlewares/authMiddleware.js';
 
 const authRouter = express.Router();
 
+// Gera um accessToken de curta duração
+const generateAccessToken = (userId) => {
+    return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
+        expiresIn: '15m',
+    });
+};
+
+// Gera um refreshToken de longa duração
+const generateRefreshToken = (userId) => {
+    return jwt.sign({ id: userId }, process.env.REFRESH_SECRET_KEY, {
+        expiresIn: '7d',
+    });
+};
+
 // Método que cuida do acesso à rota '/register' mediante
 // o metodo http [POST]
 authRouter.post('/register', async (req, res) => {
@@ -41,26 +55,85 @@ authRouter.post('/login', async (req, res) => {
             return res.status(401).json({ message: 'Credenciais inválidas' });
         }
 
-        // Faz a geração de um token com base no id, na chave-secreta
-        // e com tempo de expiração
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-            expiresIn: '15m',
+        const accessToken = generateAccessToken(user._id);
+        const refreshToken = generateRefreshToken(user._id);
+
+        user.refreshTokens.push(refreshToken);
+        await user.save();
+
+        res.cookie('token', accessToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'Strict',
+            maxAge: 15 * 60 * 1000,
         });
 
         // Retorna o token em formato json
-        res.json({ token });
+        res.json({ accessToken });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
 
+/**
+ * Renovação do Access Token
+ *
+ */
+authRouter.post('/refresh', async (req, res) => {
+    const { refreshToken } = req.body;
+
+    if (!refreshToken)
+        return res
+            .status(403)
+            .json({ message: 'Nenhum refresh token fornecido' });
+
+    try {
+        // Verifica se o Refresh Token está salvo no banco
+        const user = await User.findOne({ refreshTokens: refreshToken });
+        if (!user)
+            return res.status(403).json({ message: 'Refresh Token inválido.' });
+
+        const decoded = jwt.verify(
+            refreshToken,
+            process.env.REFRESH_SECRET_KEY,
+        );
+        if (decoded.id !== user._id.toString()) {
+            return res.status(403).json({ message: 'Refresh Token inválido' });
+        }
+
+        const newAccessToken = generateAccessToken(user._id);
+
+        res.cookie('token', newAccessToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'Strict',
+            maxAge: 15 * 60 * 1000,
+        });
+
+        res.json({ message: 'Token renovado com sucesso!' });
+    } catch (error) {
+        res.status(403).json({
+            message: 'Refresh token inválido ou expirado.',
+        });
+    }
+});
+
 // Método que cuida do acesso à rota '/logout' mediante
 // o metodo http [POST]
-authRouter.post('/logout', authMiddleware, (req, res) => {
-    // Executa primeiro a função authMiddleware e, caso
-    // recebe uma confimação, finaliza o processamento.
-    // Se algo der errado, a execução para no middleware.
-    res.json({ message: 'Logout bem-sucedido.' });
+authRouter.post('/logout', authMiddleware, async (req, res) => {
+    const { refreshToken } = req.body;
+
+    try {
+        await User.updateOne(
+            { _id: req.user.id },
+            { $pull: { refreshTokens: refreshToken } },
+        );
+
+        res.clearCookie('token');
+        res.json({ message: 'Logout bem-sucedido.' });
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao realizar logour' });
+    }
 });
 
 export default authRouter;

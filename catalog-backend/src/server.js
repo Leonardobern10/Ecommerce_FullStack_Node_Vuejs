@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import authRouter from './routes/authRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import orderRouter from './routes/orderRoutes.js';
@@ -15,8 +16,10 @@ app.use(
     cors({
         origin: 'http://localhost:5173',
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        credentials: true,
     }),
 );
+app.use(cookieParser()); // Permite manipulação de cookies
 app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/products', productRouter);

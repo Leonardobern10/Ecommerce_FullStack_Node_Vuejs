@@ -8,8 +8,8 @@ import { authState } from '@/store/useAuth.js';
 const router = useRouter();
 
 const email = ref('');
-
 const password = ref('');
+const isLoading = ref(false);
 
 /**
  * A função Login faz uma requisição utilizando a biblioteca axios,
@@ -36,28 +36,22 @@ const password = ref('');
  */
 // Metodo que cuida do login
 async function login() {
+    isLoading.value = true;
+
     try {
         // Faz um POST para uma URI passando email e senha
         const response = await axios.post(
             'http://localhost:5000/api/auth/login',
             { email: email.value, password: password.value },
+            { withCredentials: true },
         );
-
-        // Recebe e armazena o token de resposta
-
-        const token = response.data.token;
-
-        // Se não vou token, lança um erro
-        if (!token) throw new Error('Token inválido');
-
-        // Insere
-        localStorage.setItem('token', token);
-        authState.login(token); // Corrigido: agora passa o token corretamente
-
+        authState.login();
         router.push('/products'); // Garante que o caminho é correto
     } catch (error) {
         console.error('Erro no login:', error);
         alert('Login falhou! Verifique suas credenciais.');
+    } finally {
+        isLoading.value = false;
     }
 }
 </script>
@@ -73,7 +67,9 @@ async function login() {
                 placeholder="Senha"
                 required
             />
-            <button type="submit">Entrar</button>
+            <button type="submit" :disabled="isLoading">
+                {{ isLoading ? 'Entrando...' : 'Entrar' }}
+            </button>
         </form>
     </div>
 </template>
