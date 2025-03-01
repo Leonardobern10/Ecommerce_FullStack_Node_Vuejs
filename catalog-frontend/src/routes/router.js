@@ -7,6 +7,8 @@ import ProductForm from '@/views/ProductForm.vue';
 import Cart from '@/components/Cart.vue';
 import Orders from '@/views/Orders.vue';
 
+// Define para cada rota um componente correspondente
+// que será renderizado no momento que a rota for acessada
 const routes = [
     { path: '/', component: Home },
     { path: '/login', component: Login },

@@ -2,7 +2,11 @@
 import { ref, onMounted } from 'vue';
 import { getProducts } from '../services/productService.js';
 import { addToCart } from '../services/cartService.js';
+import { authState } from '@/store/useAuth.js';
+import { useRouter } from 'vue-router';
 
+let isLogged = authState.isAuthenticated.value;
+const router = useRouter();
 // Variável reativa responsável por receber os produtos para exibição
 const products = ref([]);
 
@@ -14,6 +18,10 @@ const loadProducts = async () => {
 };
 
 const addProductToCart = (product) => {
+    if (!isLogged) {
+        alert('Faça login para acessar seu carrinho.');
+        return router.push('/login');
+    }
     addToCart(product);
     alert('Produto adicionado ao carrinho!');
 };
