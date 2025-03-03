@@ -28,8 +28,7 @@ Este é um sistema de **e-commerce** desenvolvido com **Vue.js** no frontend e *
 ![](./images/Captura%20de%20tela%202025-03-02%20201219.png)
 ![](./images/Captura%20de%20tela%202025-03-02%20201229.png)
 ![](./images/Captura%20de%20tela%202025-03-02%20201246.png)
-![](./images/Captura%20de%20tela%202025-03-02%20201256.png)
-![](./images/Captura%20de%20tela%202025-03-02%20201307.png)
+![](./images/Captura%20de%20tela%202025-03-03%20000535.png)
 
 ## 📂 Estrutura do Projeto
 
