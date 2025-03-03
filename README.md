@@ -97,7 +97,7 @@ npm run dev
 
 ## 🔑 Autenticação
 
-O sistema utiliza **JWT** para autenticação. Ao logar, o token é armazenado no **localStorage** e utilizado nas requisições para rotas protegidas.
+O sistema utiliza **JWT** para autenticação. Ao logar, um refreshtoken é armazenado no **banco de dados** e vinculado ao usuário. Esse refreshToken é utilizado para gerar um token (**accessToken**) de menor duração, garantindo que o usuário fique logado por mais tempo.
 
 ## 📌 Endpoints da API
 
@@ -105,23 +105,23 @@ O sistema utiliza **JWT** para autenticação. Ao logar, o token é armazenado n
 
 - `POST /api/auth/register` - Cadastro de usuário
 - `POST /api/auth/login` - Login de usuário
-- `GET /api/auth/me` - Obtém dados do usuário autenticado
+- `POST /api/auth/refresh` - Renovação do AccessToken
+- `POST /api/auth/logout` - Desconexão do usuário
+- `GET /api/auth/userStatus` - Obtém dados do usuário autenticado
 
 ### 🔹 Produtos
 
 - `GET /api/products` - Lista todos os produtos
+- `POST /api/products` - Adiciona um produto ao sistema
+- `PUT /api/products/:id` - Atualiza os dados de um produto
 - `GET /api/products/:id` - Obtém um produto específico
-
-### 🔹 Carrinho
-
-- `POST /api/cart` - Adiciona um item ao carrinho
-- `GET /api/cart` - Obtém os itens do carrinho
-- `DELETE /api/cart/:id` - Remove um item do carrinho
 
 ### 🔹 Pedidos
 
 - `POST /api/orders` - Finaliza uma compra
 - `GET /api/orders` - Obtém o histórico de pedidos do usuário
+
+_Os itens armazenados no carrinho são salvos no **LocalStorage** permitindo que esses dados persistam entre sessões._
 
 ## 📜 Licença
 
@@ -135,3 +135,4 @@ Pull requests são bem-vindos! Para melhorias significativas, abra uma issue par
 
 - **Autor:** Leonardo Bernardo
 - **GitHub:** [Leonardobern10](https://github.com/Leonardobern10)
+- **LinkedIn:** [in/leonardo-bern](https://www.linkedin.com/in/leonardo-bern/)
