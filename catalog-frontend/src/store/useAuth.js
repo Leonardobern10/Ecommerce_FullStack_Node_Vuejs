@@ -15,6 +15,10 @@ export const authState = {
                 this.isAuthenticated.value = true;
             }
 
+            if (response.status === 401) {
+                this.isAuthenticated.value = false;
+            }
+
             console.log(response.status);
         } catch (error) {
             this.isAuthenticated.value = false;

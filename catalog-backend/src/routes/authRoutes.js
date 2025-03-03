@@ -1,7 +1,10 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../model/User.js';
-import authMiddleware from '../middlewares/authMiddleware.js';
+import {
+    authMiddleware,
+    logoutMiddleware,
+} from '../middlewares/authMiddleware.js';
 import cookie from 'cookie';
 
 const authRouter = express.Router();
@@ -130,17 +133,41 @@ authRouter.post('/refresh', async (req, res) => {
 
 // Método que cuida do acesso à rota '/logout' mediante
 // o metodo http [POST]
-authRouter.post('/logout', authMiddleware, async (req, res) => {
-    const { refreshToken } = req.body;
+authRouter.post('/logout', logoutMiddleware, async (req, res) => {
+    const cookies = cookie.parse(req.headers.cookie || '');
+    const refreshToken = cookies.refreshToken;
+
+    if (!refreshToken) {
+        return res
+            .status(400)
+            .json({ message: 'Nenhum refresh token encontrado!' });
+    }
 
     try {
-        await User.updateOne(
+        const user = await User.updateOne(
             { _id: req.user.id },
             { $pull: { refreshTokens: refreshToken } },
         );
 
-        res.clearCookie('accessToken');
-        res.clearCookie('refreshToken');
+        if (!user) {
+            return res
+                .status(400)
+                .json({ message: 'Usuario nao autenticado!' });
+        }
+
+        res.clearCookie('accessToken', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'Lax',
+            path: '/',
+        });
+        res.clearCookie('refreshToken', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'Lax',
+            path: '/',
+        });
+
         res.json({ message: 'Logout bem-sucedido.' });
     } catch (error) {
         res.status(500).json({ message: 'Erro ao realizar logour' });

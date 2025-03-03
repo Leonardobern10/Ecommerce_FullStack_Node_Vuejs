@@ -30,17 +30,27 @@
 import { useRouter } from 'vue-router';
 import { authState } from '@/store/useAuth.js';
 import { onMounted, ref } from 'vue';
+import axios from 'axios';
 
 // Responsável por fazer o redirecionamento para o endereço correto
 const router = useRouter();
 const userIsLogged = ref(false);
+const API_URL_LOGOUT = 'http://localhost:5000/api/auth/logout';
 
 // Função executada quando o botao [Logout] é pressionado.
-const logout = () => {
+const logout = async () => {
+    try {
+        await axios.post(API_URL_LOGOUT, {}, { withCredentials: true });
+        authState.logout();
+        userIsLogged.value = false;
+        router.push('/login');
+    } catch (error) {
+        console.error('Erro ao fazer logout!');
+        alert('Erro ao fazer logout!');
+    }
     // É chamado o método logout()
-    authState.logout();
+
     // O usuario é redirecionado para a pagina de login
-    router.push('/login');
 };
 
 onMounted(async () => {
