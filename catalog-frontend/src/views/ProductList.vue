@@ -75,16 +75,17 @@ li {
     padding: 1rem;
     width: 100%;
     height: 100%;
-    box-shadow: 5px 5px 10px var(--xanadu);
     border-radius: 10px;
 
     color: var(--blue-smoke);
 
     background-color: #d9d9d9;
+    transition: box-shadow 0.3s ease;
 }
 
 li:hover {
-    scale: 1.1;
+    animation: piscar 5s ease-in-out infinite 0.5s;
+    scale: 1;
 }
 
 button {

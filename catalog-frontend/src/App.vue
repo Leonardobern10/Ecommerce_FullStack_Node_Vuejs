@@ -5,19 +5,35 @@
             <router-link to="/products" class="navbar-link"
                 >Produtos</router-link
             >
-            <router-link v-if="userIsLogged" to="/cart" class="navbar-link"
+            <router-link
+                v-if="authState.isAuthenticated.value"
+                to="/cart"
+                class="navbar-link"
                 >Carrinho</router-link
             >
-            <router-link v-if="userIsLogged" to="/orders" class="navbar-link"
+            <router-link
+                v-if="authState.isAuthenticated.value"
+                to="/orders"
+                class="navbar-link"
                 >Meus pedidos</router-link
             >
-            <router-link v-if="!userIsLogged" to="/login" class="navbar-link"
+            <router-link
+                v-if="!authState.isAuthenticated.value"
+                to="/login"
+                class="navbar-link"
                 >Login</router-link
             >
-            <router-link v-if="!userIsLogged" to="/register" class="navbar-link"
+            <router-link
+                v-if="!authState.isAuthenticated.value"
+                to="/register"
+                class="navbar-link"
                 >Registrar</router-link
             >
-            <button v-if="userIsLogged" id="btn-logout" @click="logout">
+            <button
+                v-if="authState.isAuthenticated.value"
+                id="btn-logout"
+                @click="logout"
+            >
                 Logout
             </button>
         </nav>
@@ -34,7 +50,7 @@ import axios from 'axios';
 
 // Responsável por fazer o redirecionamento para o endereço correto
 const router = useRouter();
-const userIsLogged = ref(false);
+let userIsLogged = ref(false);
 const API_URL_LOGOUT = 'http://localhost:5000/api/auth/logout';
 
 // Função executada quando o botao [Logout] é pressionado.
@@ -81,10 +97,11 @@ onMounted(async () => {
     margin: 0 1.3rem;
     font-size: 1.3rem;
     letter-spacing: 0.2px;
+    transition: text-shadow 0.1s ease-in-out;
 }
 
 .navbar-link:hover {
-    text-decoration: underline;
+    text-shadow: 2px 2px 10px var(--green-spring);
 }
 
 #btn-logout {

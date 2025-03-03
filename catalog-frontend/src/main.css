@@ -15,3 +15,29 @@ body {
     --xanadu: #758073;
     --green-spring: #b0bfac;
 }
+
+@keyframes piscar {
+    0% {
+        box-shadow: none;
+    }
+    25% {
+        box-shadow:
+            5px 5px 10px var(--xanadu),
+            -5px -5px 10px var(--xanadu),
+            5px -5px 10px var(--xanadu),
+            -5px 5px 10px var(--xanadu);
+    }
+    50% {
+        box-shadow: none;
+    }
+    75% {
+        box-shadow:
+            5px 5px 10px var(--xanadu),
+            -5px -5px 10px var(--xanadu),
+            5px -5px 10px var(--xanadu),
+            -5px 5px 10px var(--xanadu);
+    }
+    100% {
+        box-shadow: none;
+    }
+}
