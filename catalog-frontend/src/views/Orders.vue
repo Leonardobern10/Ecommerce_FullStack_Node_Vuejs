@@ -146,8 +146,6 @@ li {
     border-radius: 15px;
     padding: 0.5rem 1rem;
 
-    background-color: var(--blue-smoke);
-
     height: 12rem;
     width: 45%;
 }

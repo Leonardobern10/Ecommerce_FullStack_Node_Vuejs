@@ -11,11 +11,12 @@ Este é um sistema de **e-commerce** desenvolvido com **Vue.js** no frontend e *
 - **Banco de Dados:** MongoDB (com Mongoose)
 - **Autenticação:** JWT (JSON Web Token)
 - **Gerenciamento de Estado:** Pinia
-- **Estilização:** Tailwind CSS
+- **Estilização:** CSS puro
 
 ## 🎯 Funcionalidades
 
 - Cadastro e login de usuários
+- Geração de tokens
 - Listagem de produtos
 - Adição e remoção de produtos no carrinho
 - Finalização de compras
@@ -24,14 +25,11 @@ Este é um sistema de **e-commerce** desenvolvido com **Vue.js** no frontend e *
 
 ## 📸 Imagens do Projeto
 
-![](./images/Captura%20de%20tela%202025-02-28%20152907.png)
-![](./images/Captura%20de%20tela%202025-02-28%20154140.png)
-![](./images/Captura%20de%20tela%202025-02-28%20154159.png)
-![](./images/Captura%20de%20tela%202025-02-28%20154219.png)
-![](./images/Captura%20de%20tela%202025-02-28%20154239.png)
-![](./images/Captura%20de%20tela%202025-02-28%20154251.png)
-![](./images/Captura%20de%20tela%202025-02-28%20154307.png)
-![](./images/Captura%20de%20tela%202025-02-28%20154315.png)
+![](./images/Captura%20de%20tela%202025-03-02%20201219.png)
+![](./images/Captura%20de%20tela%202025-03-02%20201229.png)
+![](./images/Captura%20de%20tela%202025-03-02%20201246.png)
+![](./images/Captura%20de%20tela%202025-03-02%20201256.png)
+![](./images/Captura%20de%20tela%202025-03-02%20201307.png)
 
 ## 📂 Estrutura do Projeto
 
@@ -49,6 +47,7 @@ Estrutura do backend:
 ```
 backend/
 ├── controllers/   # Lógica dos endpoints
+|-- middlewares/   # Definição de middlewares para autentição
 ├── models/        # Modelos do MongoDB
 ├── routes/        # Definição das rotas da API
 ├── config/        # Configurações do banco de dados
@@ -65,7 +64,8 @@ frontend/
 │   ├── components/   # Componentes reutilizáveis
 │   ├── views/        # Páginas da aplicação
 │   ├── store/        # Gerenciamento de estado (Pinia)
-│   ├── router/       # Definição das rotas
+│   ├── routes/       # Definição das rotas
+|   |-- services/    # Definição dos serviços
 │   ├── App.vue       # Componente raiz
 │   ├── main.js       # Arquivo de inicialização
 ```
