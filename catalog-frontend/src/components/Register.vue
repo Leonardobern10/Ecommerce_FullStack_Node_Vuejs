@@ -3,30 +3,11 @@ import axios from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-// Obtemos um direcionador de rotas que será
-// responsável por chamar o componente correpondente
-// para cada rota passada
-const router = useRouter();
-
-// Definição de variáveis reativas (permitem
-// alteração de valor em tempo de execução
-// sem necessariamente, manipular o DOM.)
 const name = ref('');
 const email = ref('');
 const password = ref('');
+const router = useRouter();
 
-/**
- * O metodo register envia uma requisição utilizando axios,
- * através do metodo HTTP POST para a url definida. São enviados,
- * no corpo da requisição, os dados: name, email e password.
- * Após isso, caso nenhum erro tenha ocorrido, o usuário é
- * redirecionado para a rota de login que irá renderizar o
- * componente correspondente.
- *
- * Caso ocorra algum erro no registro o usuário é notificado
- * e o erro em questão é exibido no console.
-
- */
 async function register() {
     try {
         await axios.post('http://localhost:5000/api/auth/register', {
@@ -36,7 +17,7 @@ async function register() {
         });
         router.push('/login');
     } catch (error) {
-        alert('Error ao registrar');
+        alert('Erro ao registrar');
         console.log(error);
     }
 }
@@ -60,7 +41,6 @@ async function register() {
 </template>
 
 <style scoped>
-/* Estilos para o formulário de registro */
 form {
     max-width: 400px;
     margin: auto;

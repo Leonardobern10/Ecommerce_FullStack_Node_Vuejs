@@ -4,49 +4,24 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { authState } from '@/store/useAuth.js';
 
-// Direcionador de rotas
-const router = useRouter();
-
 const email = ref('');
 const password = ref('');
 const isLoading = ref(false);
+const router = useRouter();
 
-/**
- * A função Login faz uma requisição utilizando a biblioteca axios,
- * através de um metodo HTTP POST para a url definida, passando no
- * corpo da requisição os dados email e password.
- * Em seguida, armazena na variavel 'token' um possivel token que será
- * gerado e recebido como resposta caso a requisição tenha sido feita
- * corretamente.
- * Existe então uma verificação para o caso de a variavel 'token' ter
- * recebido algum tipo de valor falsy (null, undefined, nan, '', etc.).
- * Em todos os casos, um erro será lançado dizendo que o token é invalido.
- * Caso o token seja valido, um registro do tipo chave-valor é armazenado
- * no localStorage, sendo a chave:'token' e o valor:o resultado do token
- * gerado pela autenticação.
- * É acessada a função login do objeto authState que é quem gerencia o
- * status do usuario na sessão (autenticado ou nao autenticado) passando
- * o token como parametro. A função login do objeto authState atualiza o
- * estado global do usuario como autenticado e disponibiliza esse valor
- * para toda a aplicação.
- * Se tudo acima ocorrer bem, o usuário estará logado e será redirecionado
- * para a seção de produtos.
- *
- * Caso ocorra erro na autenticação, o usuário é notificado à rever suas credenciais.
- */
-// Metodo que cuida do login
+// Faz login utilizando os dados do formulário
 async function login() {
     isLoading.value = true;
 
     try {
-        // Faz um POST para uma URI passando email e senha
         const response = await axios.post(
             'http://localhost:5000/api/auth/login',
             { email: email.value, password: password.value },
             { withCredentials: true },
         );
-        authState.login();
-        router.push('/products'); // Garante que o caminho é correto
+        authState.isAuthenticated.value = true;
+        authState.checkAuthStatus();
+        router.push('/products');
     } catch (error) {
         console.error('Erro no login:', error);
         alert('Login falhou! Verifique suas credenciais.');
@@ -57,7 +32,7 @@ async function login() {
 </script>
 
 <template>
-    <div>
+    <div id="view">
         <h2>Login</h2>
         <form @submit.prevent="login">
             <input v-model="email" type="email" placeholder="Email" required />
@@ -75,25 +50,57 @@ async function login() {
 </template>
 
 <style scoped>
+#view {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
 form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     max-width: 400px;
     margin: auto;
+
+    padding: 1rem 0;
 }
 input {
     display: block;
     width: 100%;
     margin-bottom: 10px;
-    padding: 8px;
+    padding: 0.7rem;
     font-size: 16px;
+    border: none;
+    border-radius: 15px;
+}
+
+input:focus {
+    background-color: #d9d9d9;
+    border: none;
+    border-left-style: ridge;
+    border-right-style: ridge;
 }
 button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: blue;
-    color: white;
-    border: none;
-    font-size: 16px;
+    width: 5rem;
+    border: 2px solid #d9d9d9;
+    border-radius: 5px;
+    padding: 0.3rem;
+    background-color: var(--green-spring);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 200;
+    letter-spacing: 0.5px;
+    margin-top: 2rem;
+    transition:
+        background-color 0.3s ease-in,
+        border 0.3s ease-in;
+}
+
+button:hover {
     cursor: pointer;
+    background-color: var(--xanadu);
+    border: 1px solid #fff;
 }
 </style>

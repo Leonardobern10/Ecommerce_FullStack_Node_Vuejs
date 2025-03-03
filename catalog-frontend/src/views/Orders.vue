@@ -1,38 +1,35 @@
-<script>
+<script setup>
 import { ref, onMounted } from 'vue';
-import axios from 'axios';
+import { authState } from '@/store/useAuth';
+import { useRouter } from 'vue-router';
+import { getOrders } from '@/services/orderService';
 
-export default {
-    name: 'Orders',
-    setup() {
-        const orders = ref([]);
+const orders = ref([]);
+const router = useRouter();
+const isLogged = ref(false);
 
-        const fetchOrders = async () => {
-            try {
-                const response = await axios.get(
-                    'http://localhost:5000/api/orders',
-                    {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem('token')}`,
-                        },
-                    },
-                );
-                orders.value = response.data; // Armazena os pedidos no estado
-            } catch (error) {
-                console.error('Erro ao carregar os pedidos:', error);
-            }
-        };
-
-        onMounted(() => {
-            fetchOrders();
-        });
-
-        return { orders };
-    },
+const fetchOrders = async () => {
+    try {
+        if (!isLogged.value) {
+            return router.push('/login');
+        }
+        const response = await getOrders();
+        orders.value = response.data;
+        console.log(response.data);
+    } catch (error) {
+        console.error('Erro ao carregar os pedidos:', error);
+    }
 };
+
+onMounted(async () => {
+    await authState.checkAuthStatus();
+    isLogged.value = authState.isAuthenticated.value;
+    console.log('Está autenticado? ', isLogged.value);
+    await fetchOrders();
+});
 </script>
 <template>
-    <div>
+    <div id="view">
         <h1>Meus Pedidos</h1>
         <!-- Verifique se orders não é vazio ou indefinido antes de renderizar -->
         <div v-if="orders && orders.length > 0">
@@ -53,9 +50,9 @@ export default {
                             }}
                         </p>
                     </div>
-                    <div>
+                    <div id="all-order-items">
                         <p><strong>Itens do pedido:</strong></p>
-                        <ul id="order-items">
+                        <ul id="order-item">
                             <li
                                 id="name-item"
                                 v-for="item in order.items"
@@ -76,6 +73,17 @@ export default {
 </template>
 
 <style scoped>
+#view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    color: var(--green-spring);
+    text-shadow: 5px 5px 5px black;
+}
+
 li {
     list-style: none;
 }
@@ -85,6 +93,7 @@ li {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
 #order {
@@ -93,34 +102,61 @@ li {
     justify-content: space-around;
     align-items: center;
 
-    width: 80%;
+    width: 100%;
 
-    background-color: rgba(71, 71, 71, 0.455);
-    border: 2px solid black;
+    background-color: #d9d9d9;
+    box-shadow:
+        5px 5px 5px var(--blue-smoke),
+        -5px 5px 5px var(--blue-smoke),
+        5px -5px 5px var(--blue-smoke);
+    border-radius: 15px;
+
     margin: 1rem 0;
-}
-
-#order-items {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: flex-end;
-    row-gap: 1rem;
-
-    max-height: 8rem;
-    min-height: fit-content;
-
-    padding: 0.5rem;
-    margin: 1rem;
-
-    color: white;
-    background-color: rgb(83, 83, 83);
+    padding: 1rem;
 }
 
 #name-item {
+    padding: 0.5rem;
+    text-align: left;
+
     width: 100%;
-    text-align: center;
+
+    background-color: var(--green-spring);
+    border-radius: 15px;
 }
+#order-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 1rem;
+
+    padding: 0;
+    margin: 0;
+
+    width: 90%;
+
+    text-align: left;
+}
+
+#all-order-items {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    border-radius: 15px;
+    padding: 0.5rem 1rem;
+
+    background-color: var(--blue-smoke);
+
+    height: 12rem;
+    width: 45%;
+}
+
+#all-order-items > p {
+    color: #000;
+    font-size: 1.2rem;
+}
+
 #price-total {
     font-size: 1.5rem;
 }
@@ -132,7 +168,7 @@ li {
 }
 @media (min-width: 500px) {
     #order-items {
-        width: 80%;
+        width: 100%;
     }
 }
 </style>

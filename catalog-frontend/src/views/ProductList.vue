@@ -5,20 +5,17 @@ import { addToCart } from '../services/cartService.js';
 import { authState } from '@/store/useAuth.js';
 import { useRouter } from 'vue-router';
 
-let isLogged = authState.isAuthenticated.value;
+const isLogged = ref(false);
 const router = useRouter();
-// Variável reativa responsável por receber os produtos para exibição
 const products = ref([]);
 
 // Método responsável por carregar os produtos
 const loadProducts = async () => {
-    // Aguarda até que todos os produtos sejam buscados
-    // e os armazena no array {products}
     products.value = await getProducts();
 };
 
 const addProductToCart = (product) => {
-    if (!isLogged) {
+    if (!isLogged.value) {
         alert('Faça login para acessar seu carrinho.');
         return router.push('/login');
     }
@@ -26,17 +23,21 @@ const addProductToCart = (product) => {
     alert('Produto adicionado ao carrinho!');
 };
 
-onMounted(loadProducts);
+onMounted(async () => {
+    await authState.checkAuthStatus();
+    isLogged.value = authState.isAuthenticated.value;
+    console.log(isLogged.value);
+    loadProducts();
+});
 </script>
 
 <template>
     <div id="view">
-        <h2>Lista de Produtos</h2>
         <router-link to="/products/add" class="btn-add"
             >Adicionar Produto</router-link
         >
         <ul id="container-products">
-            <li v-for="product in products" :key="product._id">
+            <li id="product" v-for="product in products" :key="product._id">
                 <div id="container-img-product">
                     <img
                         :src="product.imageUrl"
@@ -59,27 +60,56 @@ onMounted(loadProducts);
 
 <style scoped>
 ul {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
     list-style: none;
-    padding: 0;
+    width: 100%;
 }
 li {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+
     padding: 1rem;
-    min-width: 15rem;
-    width: fit-content;
+    width: 100%;
+    height: 100%;
+    box-shadow: 5px 5px 10px var(--xanadu);
+    border-radius: 10px;
+
+    color: var(--blue-smoke);
+
+    background-color: #d9d9d9;
 }
+
+li:hover {
+    scale: 1.1;
+}
+
 button {
-    background-color: green;
-    color: white;
+    background-color: var(--green-spring);
+    color: #fff;
     border: none;
     padding: 0.5rem 1rem;
+    border-radius: 10px;
+    transition: background-color 0.3s ease-in;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: var(--xanadu);
 }
 
 #view {
-    padding: 0 2rem;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter', serif;
+    font-weight: 300;
+    width: 90%;
 }
 
 img {
@@ -92,6 +122,7 @@ img {
     height: 8rem;
 
     margin-bottom: 1rem;
+    border: 1px solid var(--xanadu);
 }
 
 #info-numbers {
@@ -108,13 +139,26 @@ img {
 #p-price {
     font-size: 1.4rem;
     font-weight: 800;
-    width: 90%;
+    width: 100%;
+    text-shadow: 1px 5px 10px var(--blue-smoke);
 }
 
 #container-products {
+    width: 80%;
     display: grid;
-    width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    grid-auto-flow: row;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+}
+#title-section {
+    color: #ffffffa1;
+    font-weight: 400;
+    font-size: 2rem;
+}
+
+.btn-add {
+    display: none;
 }
 </style>

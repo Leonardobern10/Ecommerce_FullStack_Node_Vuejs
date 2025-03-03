@@ -15,6 +15,7 @@ orderRouter.post('/', authMiddleware, async (req, res) => {
         const newOrder = new Order({ user: req.user.id, items, totalAmount });
 
         await newOrder.save();
+
         res.status(201).json({
             message: 'Pedido realizado com sucesso!',
             order: newOrder,

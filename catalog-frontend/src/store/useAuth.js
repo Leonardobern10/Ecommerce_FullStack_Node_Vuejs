@@ -1,21 +1,31 @@
 import { ref } from 'vue';
+import axios from 'axios';
 
 export const authState = {
-    isAuthenticated: ref(false), // Vai começar como falso até verificar os cookies
+    isAuthenticated: ref(false),
 
-    // Função que verifica se o usuário está autenticado
-    checkAuthStatus() {
-        // Se o cookie do token estiver presente, isso significa que o usuário está autenticado
-        // Isso depende do seu backend configurar o cookie corretamente
-        this.isAuthenticated.value = document.cookie.includes('token');
+    async checkAuthStatus() {
+        try {
+            const response = await axios.get(
+                'http://localhost:5000/api/auth/userStatus',
+                { withCredentials: true },
+            );
+
+            if (response.status === 200) {
+                this.isAuthenticated.value = true;
+            }
+
+            console.log(response.status);
+        } catch (error) {
+            this.isAuthenticated.value = false;
+        }
     },
 
     login() {
-        this.isAuthenticated.value = true; // Defina como autênticado
+        this.isAuthenticated.value = true;
     },
 
     logout() {
-        this.isAuthenticated.value = false; // Defina como não autenticado
-        // Você também pode limpar os cookies manualmente, mas o backend pode já limpar o cookie ao fazer logout
+        this.isAuthenticated.value = false;
     },
 };

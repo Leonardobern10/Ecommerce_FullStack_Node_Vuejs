@@ -10,12 +10,13 @@
             rápida.
         </p>
 
-        <router-link to="/products" class="link">Ver Produtos</router-link>
+        <router-link to="/products" id="link">Ver Produtos</router-link>
     </div>
 </template>
 
 <style scoped>
 .home {
+    font-weight: 300;
     text-align: center;
     margin-top: 50px;
 }
@@ -30,17 +31,20 @@ p {
     color: #666;
 }
 
-.link {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-top: 20px;
-    background-color: #007bff;
-    color: white;
+#link {
     text-decoration: none;
-    border-radius: 5px;
+    display: inline-block;
+    background-color: var(--green-spring);
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin: 2rem;
+    border-radius: 10px;
+    transition: background-color 0.3s ease-in;
 }
 
-.link:hover {
-    background-color: #0056b3;
+#link:hover {
+    cursor: pointer;
+    background-color: var(--xanadu);
 }
 </style>

@@ -30,11 +30,16 @@ defineProps(['name', 'price', 'quantity', 'imageUrl']);
 
 <style scoped>
 #container {
-    height: 7rem;
+    height: 100%;
     width: 35rem;
-    max-width: 40rem;
 
-    border: 2px solid black;
+    padding: 1rem;
+
+    box-shadow:
+        4px 4px 4px var(--blue-smoke),
+        -4px 4px 4px var(--blue-smoke);
+    background-color: #d9d9d9;
+    border-radius: 15px;
 
     display: flex;
     flex-direction: row;
@@ -43,8 +48,9 @@ defineProps(['name', 'price', 'quantity', 'imageUrl']);
 }
 
 #container-img {
-    width: 3rem;
-    height: 80%;
+    border: 1px solid var(--blue-smoke);
+    width: 20%;
+    height: 10rem;
 }
 img {
     width: 100%;
@@ -59,5 +65,6 @@ img {
 
 #description {
     width: 50%;
+    color: var(--blue-smoke);
 }
 </style>

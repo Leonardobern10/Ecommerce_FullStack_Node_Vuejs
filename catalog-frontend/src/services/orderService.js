@@ -11,16 +11,11 @@ const API_URL = 'http://localhost:5000/api/orders';
  * e que o Token é valido para aquela sessão.
  * @returns - O objeto ORDER criado.
  */
-export const createOrder = async (orderData, token) => {
+export const createOrder = async (orderData) => {
     // Faz um POST para a rota de pedidos passando os dados do pedido e a rota
-    return await axios.post(API_URL, orderData, {
-        // Informa um cabeçalho preenchendo o AUTHORIZATION com um Bearer Token montado
-        headers: { Authorization: `Bearer ${token}` },
-    });
+    return await axios.post(API_URL, orderData, { withCredentials: true });
 };
 
-export const getOrders = async (token) => {
-    return await axios.get(API_URL, {
-        headers: { Authorization: `Bearer ${token}` },
-    });
+export const getOrders = async () => {
+    return await axios.get(API_URL, { withCredentials: true });
 };

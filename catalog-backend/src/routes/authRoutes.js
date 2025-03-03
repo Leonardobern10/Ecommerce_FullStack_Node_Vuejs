@@ -2,6 +2,7 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../model/User.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
+import cookie from 'cookie';
 
 const authRouter = express.Router();
 
@@ -61,11 +62,19 @@ authRouter.post('/login', async (req, res) => {
         user.refreshTokens.push(refreshToken);
         await user.save();
 
-        res.cookie('token', accessToken, {
+        res.cookie('accessToken', accessToken, {
             httpOnly: true,
-            secure: true,
-            sameSite: 'Strict',
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'Lax',
             maxAge: 15 * 60 * 1000,
+            path: '/',
+        });
+
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'Strict',
+            maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
         // Retorna o token em formato json
@@ -80,7 +89,8 @@ authRouter.post('/login', async (req, res) => {
  *
  */
 authRouter.post('/refresh', async (req, res) => {
-    const { refreshToken } = req.body;
+    const cookies = cookie.parse(req.headers.cookie || '');
+    const refreshToken = cookies.refreshToken;
 
     if (!refreshToken)
         return res
@@ -103,7 +113,7 @@ authRouter.post('/refresh', async (req, res) => {
 
         const newAccessToken = generateAccessToken(user._id);
 
-        res.cookie('token', newAccessToken, {
+        res.cookie('accessToken', newAccessToken, {
             httpOnly: true,
             secure: true,
             sameSite: 'Strict',
@@ -129,11 +139,15 @@ authRouter.post('/logout', authMiddleware, async (req, res) => {
             { $pull: { refreshTokens: refreshToken } },
         );
 
-        res.clearCookie('token');
+        res.clearCookie('accessToken');
+        res.clearCookie('refreshToken');
         res.json({ message: 'Logout bem-sucedido.' });
     } catch (error) {
         res.status(500).json({ message: 'Erro ao realizar logour' });
     }
 });
 
+authRouter.get('/userStatus', authMiddleware, (req, res) => {
+    res.status(200).json({ message: 'Usuario autenticado' });
+});
 export default authRouter;
