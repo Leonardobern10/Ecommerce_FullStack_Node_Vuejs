@@ -3,9 +3,7 @@ import cookie from 'cookie';
 
 export const authMiddleware = (req, res, next) => {
     const cookies = cookie.parse(req.headers.cookie || '');
-
     const accessToken = cookies.accessToken;
-    console.log('Esse é o token:', accessToken);
 
     if (!accessToken) {
         return res
@@ -25,10 +23,7 @@ export const authMiddleware = (req, res, next) => {
 
 export const logoutMiddleware = (req, res, next) => {
     const cookies = cookie.parse(req.headers.cookie || '');
-    console.log(cookies);
-
     const refreshToken = cookies.refreshToken;
-    console.log('Esse é o token:', refreshToken);
 
     if (!refreshToken) {
         return res

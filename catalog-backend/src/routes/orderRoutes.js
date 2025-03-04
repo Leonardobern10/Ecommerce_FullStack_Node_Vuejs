@@ -13,7 +13,6 @@ orderRouter.post('/', authMiddleware, async (req, res) => {
         }
 
         const newOrder = new Order({ user: req.user.id, items, totalAmount });
-
         await newOrder.save();
 
         res.status(201).json({
@@ -30,7 +29,6 @@ orderRouter.get('/', authMiddleware, async (req, res) => {
         const orders = await Order.find({ user: req.user.id }).populate(
             'items.product',
         );
-        console.log('Pedidos retornados:', orders);
         res.json(orders);
     } catch (error) {
         res.status(500).json({ message: 'Erro ao buscar pedidos.', error });
