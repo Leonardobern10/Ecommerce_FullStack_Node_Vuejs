@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { authState } from '@/store/useAuth.js';
 
+const URL_LOGIN = 'http://localhost:5000/api/auth/login';
 const email = ref('');
 const password = ref('');
 const isLoading = ref(false);
@@ -15,7 +16,7 @@ async function login() {
 
     try {
         const response = await axios.post(
-            'http://localhost:5000/api/auth/login',
+            URL_LOGIN,
             { email: email.value, password: password.value },
             { withCredentials: true },
         );
@@ -40,8 +41,7 @@ async function login() {
                 v-model="password"
                 type="password"
                 placeholder="Senha"
-                required
-            />
+                required />
             <button type="submit" :disabled="isLoading">
                 {{ isLoading ? 'Entrando...' : 'Entrar' }}
             </button>

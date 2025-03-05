@@ -6,11 +6,9 @@ import { useRouter } from 'vue-router';
 import CartItemView from './CartItemView.vue';
 import { authState } from '@/store/useAuth.js';
 
-// Direcionador de endereços
-const router = useRouter();
-const isLogged = ref(false);
-// Responsável por receber os produtos
-const cart = ref([]);
+const router = useRouter(); // Direcionador de endereços
+const isLogged = ref(false); // Armazena o estado do usuario
+const cart = ref([]); // Responsável por receber os produtos
 
 // Carrega os itens do carrinho
 const loadCart = () => {
@@ -72,8 +70,7 @@ onMounted(loadCart);
                     :name="item.name"
                     :price="item.price"
                     :quantity="item.quantity"
-                    :image-url="item.imageUrl"
-                />
+                    :image-url="item.imageUrl" />
             </li>
         </ul>
         <p v-else>Seu carrinho está vazio.</p>

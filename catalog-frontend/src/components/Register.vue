@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+const URL_REGISTER = 'http://localhost:5000/api/auth/register';
 const name = ref('');
 const email = ref('');
 const password = ref('');
@@ -10,7 +11,7 @@ const router = useRouter();
 
 async function register() {
     try {
-        await axios.post('http://localhost:5000/api/auth/register', {
+        await axios.post(URL_REGISTER, {
             name: name.value,
             email: email.value,
             password: password.value,
@@ -33,8 +34,7 @@ async function register() {
                 v-model="password"
                 type="password"
                 placeholder="Senha"
-                required
-            />
+                required />
             <button type="submit">Registrar</button>
         </form>
     </div>

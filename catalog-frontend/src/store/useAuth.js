@@ -1,15 +1,16 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
+const URL_USERSTATUS = 'http://localhost:5000/api/auth/userStatus';
+
 export const authState = {
     isAuthenticated: ref(false),
 
     async checkAuthStatus() {
         try {
-            const response = await axios.get(
-                'http://localhost:5000/api/auth/userStatus',
-                { withCredentials: true },
-            );
+            const response = await axios.get(URL_USERSTATUS, {
+                withCredentials: true,
+            });
 
             if (response.status === 200) {
                 this.isAuthenticated.value = true;
