@@ -4,12 +4,15 @@ import { getProducts } from '../services/productService.js';
 import { addToCart } from '../services/cartService.js';
 import { authState } from '@/store/useAuth.js';
 import { useRouter } from 'vue-router';
+import { useProductStore } from '@/store/userProductStore.js';
 import PATH from '@/constants/PATH.js';
 import MESSAGE from '@/constants/MESSAGE.js';
 
 const isLogged = ref(false);
 const router = useRouter();
 const products = ref([]);
+const productStore = useProductStore();
+const button = document.getElementsByTagName('button')[0];
 
 // Método responsável por carregar os produtos
 const loadProducts = async () => {
@@ -23,6 +26,11 @@ const addProductToCart = (product) => {
     }
     addToCart(product);
     alert(MESSAGE.SUCESS.CART.ADD);
+};
+
+const acessProduct = (id) => {
+    productStore.save(id);
+    router.push(`/products/${id}`);
 };
 
 onMounted(async () => {
@@ -39,7 +47,11 @@ onMounted(async () => {
             >Adicionar Produto</router-link
         >
         <ul id="container-products">
-            <li id="product" v-for="product in products" :key="product._id">
+            <li
+                @click="acessProduct(product._id)"
+                id="product"
+                v-for="product in products"
+                :key="product._id">
                 <div id="container-img-product">
                     <img
                         :src="product.imageUrl"
@@ -51,7 +63,7 @@ onMounted(async () => {
                         R$ {{ Number.parseFloat(product.price).toFixed(2) }}
                     </p>
                 </div>
-                <button @click="addProductToCart(product)">
+                <button @click.stop="addProductToCart(product)">
                     Adicionar ao Carrinho
                 </button>
             </li>
