@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue';
 import CartItemView from './CartItemView.vue';
 
 defineProps([
@@ -29,8 +28,7 @@ defineProps([
                         :name="name"
                         :price="price"
                         :quantity="quantity"
-                        :image-url="imageUrl"
-                    />
+                        :image-url="imageUrl" />
                 </li>
             </ul>
         </div>

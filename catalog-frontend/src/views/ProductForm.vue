@@ -6,6 +6,8 @@ import {
     getProducts,
 } from '../services/productService.js';
 import { useRoute, useRouter } from 'vue-router';
+import PATH from '@/constants/PATH.js';
+import MESSAGE from '@/constants/MESSAGE.js';
 
 const route = useRoute();
 const router = useRouter();
@@ -34,15 +36,15 @@ const saveProduct = async () => {
     try {
         if (isEdit.value) {
             await updateProduct(route.params.id, product.value);
-            alert('Produto atualizado com sucesso!');
+            alert(MESSAGE.SUCESS.PRODUCTS.UPDATE);
         } else {
             await createProduct(product.value);
-            alert('Produto cadastrado com sucesso!');
+            alert(MESSAGE.SUCESS.PRODUCTS.ADD);
         }
-        router.push('/products');
+        router.push(PATH.PRODUCTS.ROOT);
     } catch (error) {
         console.error(error);
-        alert('Falha ao registrar produto!');
+        alert(MESSAGE.ERROR.PRODUCTS.ADD);
     }
 };
 </script>
@@ -55,33 +57,28 @@ const saveProduct = async () => {
                 v-model="product.name"
                 type="text"
                 placeholder="Nome do produto"
-                required
-            />
+                required />
             <input
                 v-model="product.description"
                 type="text"
                 placeholder="Descricao do produto"
-                required
-            />
+                required />
             <input
                 v-model="product.price"
                 type="number"
                 step="0.01"
                 placeholder="Preço"
-                required
-            />
+                required />
             <input
                 v-model="product.stock"
                 type="number"
                 placeholder="Quantidade"
-                required
-            />
+                required />
             <input
                 v-model="product.imageUrl"
                 type="text"
                 placeholder="Url da imagem"
-                required
-            />
+                required />
             <button type="submit">
                 {{ isEdit ? 'Salvar Alterações' : 'Adicionar' }}
             </button>

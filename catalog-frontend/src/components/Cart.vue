@@ -5,6 +5,8 @@ import { createOrder } from '@/services/orderService.js';
 import { useRouter } from 'vue-router';
 import CartItemView from './CartItemView.vue';
 import { authState } from '@/store/useAuth.js';
+import PATH from '@/constants/PATH.js';
+import MESSAGE from '@/constants/MESSAGE.js';
 
 const router = useRouter(); // Direcionador de endereços
 const isLogged = ref(false); // Armazena o estado do usuario
@@ -30,11 +32,10 @@ const totalAmount = computed(() =>
 const checkout = async () => {
     await authState.checkAuthStatus();
     isLogged.value = authState.isAuthenticated.value;
-    console.log('userAuthenticaded??', isLogged.value);
 
     if (!isLogged.value) {
-        alert('Você precisa estar logado para finalizar a compra.');
-        router.push('/login');
+        alert(MESSAGE.ALERT.ORDER.NEED_AUTHENTICATE);
+        router.push(PATH.LOGIN);
         return;
     }
 
@@ -48,11 +49,11 @@ const checkout = async () => {
         };
 
         await createOrder(orderData);
-        alert('Pedido realizado com sucesso!');
+        alert(MESSAGE.SUCESS.ORDER);
         clear();
-        router.push('/');
+        router.push(PATH.HOME);
     } catch (error) {
-        alert('Erro ao finalizar compra. Tente novamente.');
+        alert(MESSAGE.ERROR.ORDER.DEFAULT);
         console.error(error);
     }
 };

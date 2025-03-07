@@ -3,8 +3,10 @@ import axios from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { authState } from '@/store/useAuth.js';
+import { URL } from '@/constants/URL';
+import PATH from '@/constants/PATH';
+import MESSAGE from '@/constants/MESSAGE';
 
-const URL_LOGIN = 'http://localhost:5000/api/auth/login';
 const email = ref('');
 const password = ref('');
 const isLoading = ref(false);
@@ -15,17 +17,17 @@ async function login() {
     isLoading.value = true;
 
     try {
-        const response = await axios.post(
-            URL_LOGIN,
+        await axios.post(
+            URL.LOGIN,
             { email: email.value, password: password.value },
             { withCredentials: true },
         );
         authState.isAuthenticated.value = true;
         authState.checkAuthStatus();
-        router.push('/products');
+        router.push(PATH.PRODUCTS.ROOT);
     } catch (error) {
         console.error('Erro no login:', error);
-        alert('Login falhou! Verifique suas credenciais.');
+        alert(MESSAGE.ERROR.LOGIN.CHECK_CREDENTIALS);
     } finally {
         isLoading.value = false;
     }
@@ -83,7 +85,7 @@ input:focus {
     border-right-style: ridge;
 }
 button {
-    width: 5rem;
+    width: fit-content;
     border: 2px solid #d9d9d9;
     border-radius: 5px;
     padding: 0.3rem;

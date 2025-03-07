@@ -1,9 +1,11 @@
 <script setup>
+import { URL } from '@/constants/URL';
+import PATH from '@/constants/PATH';
 import axios from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import MESSAGE from '@/constants/MESSAGE';
 
-const URL_REGISTER = 'http://localhost:5000/api/auth/register';
 const name = ref('');
 const email = ref('');
 const password = ref('');
@@ -11,14 +13,14 @@ const router = useRouter();
 
 async function register() {
     try {
-        await axios.post(URL_REGISTER, {
+        await axios.post(URL.REGISTER, {
             name: name.value,
             email: email.value,
             password: password.value,
         });
-        router.push('/login');
+        router.push(PATH.LOGIN);
     } catch (error) {
-        alert('Erro ao registrar');
+        alert(MESSAGE.ERROR.REGISTER.DEFAULT);
         console.log(error);
     }
 }

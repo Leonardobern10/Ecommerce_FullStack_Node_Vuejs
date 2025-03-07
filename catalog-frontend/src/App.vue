@@ -1,39 +1,38 @@
 <template>
     <div id="app">
         <nav class="navbar">
-            <router-link to="/" class="navbar-link">Home</router-link>
-            <router-link to="/products" class="navbar-link"
+            <router-link :to="PATH.HOME" class="navbar-link">Home</router-link>
+            <router-link :to="PATH.PRODUCTS.ROOT" class="navbar-link"
                 >Produtos</router-link
             >
             <router-link
                 v-if="authState.isAuthenticated.value"
-                to="/cart"
+                :to="PATH.CART"
                 class="navbar-link"
                 >Carrinho</router-link
             >
             <router-link
                 v-if="authState.isAuthenticated.value"
-                to="/orders"
+                :to="PATH.ORDERS"
                 class="navbar-link"
                 >Meus pedidos</router-link
             >
             <router-link
                 v-if="!authState.isAuthenticated.value"
-                to="/login"
+                :to="PATH.LOGIN"
                 class="navbar-link"
                 >Login</router-link
             >
             <router-link
                 v-if="!authState.isAuthenticated.value"
-                to="/register"
+                :to="PATH.REGISTER"
                 class="navbar-link"
                 >Registrar</router-link
             >
             <button
                 v-if="authState.isAuthenticated.value"
                 id="btn-logout"
-                @click="logout"
-            >
+                @click="logout">
                 Logout
             </button>
         </nav>
@@ -46,23 +45,25 @@
 import { useRouter } from 'vue-router';
 import { authState } from '@/store/useAuth.js';
 import { onMounted, ref } from 'vue';
+import { URL } from './constants/URL';
+import PATH from './constants/PATH';
 import axios from 'axios';
+import MESSAGE from './constants/MESSAGE';
 
 // Responsável por fazer o redirecionamento para o endereço correto
 const router = useRouter();
 let userIsLogged = ref(false);
-const API_URL_LOGOUT = 'http://localhost:5000/api/auth/logout';
 
 // Função executada quando o botao [Logout] é pressionado.
 const logout = async () => {
     try {
-        await axios.post(API_URL_LOGOUT, {}, { withCredentials: true });
+        await axios.post(URL.LOGOUT, {}, { withCredentials: true });
         authState.logout();
         userIsLogged.value = false;
-        router.push('/login');
+        router.push(PATH.LOGIN);
     } catch (error) {
-        console.error('Erro ao fazer logout!');
-        alert('Erro ao fazer logout!');
+        console.error(MESSAGE.ERROR.LOGOUT);
+        alert(MESSAGE.ERROR.LOGOUT);
     }
     // É chamado o método logout()
 

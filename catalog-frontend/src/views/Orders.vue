@@ -3,6 +3,8 @@ import { ref, onMounted } from 'vue';
 import { authState } from '@/store/useAuth';
 import { useRouter } from 'vue-router';
 import { getOrders } from '@/services/orderService';
+import PATH from '@/constants/PATH';
+import MESSAGE from '@/constants/MESSAGE';
 
 const orders = ref([]);
 const router = useRouter();
@@ -11,13 +13,13 @@ const isLogged = ref(false);
 const fetchOrders = async () => {
     try {
         if (!isLogged.value) {
-            return router.push('/login');
+            return router.push(PATH.LOGIN);
         }
         const response = await getOrders();
         orders.value = response.data;
         console.log(response.data);
     } catch (error) {
-        console.error('Erro ao carregar os pedidos:', error);
+        console.error(MESSAGE.ERROR.ORDER.GET_PRODUCTS, error);
     }
 };
 
@@ -56,8 +58,7 @@ onMounted(async () => {
                             <li
                                 id="name-item"
                                 v-for="item in order.items"
-                                :key="item.product._id"
-                            >
+                                :key="item.product._id">
                                 {{ item.quantity }}x {{ item.product.name }}
                             </li>
                         </ul>

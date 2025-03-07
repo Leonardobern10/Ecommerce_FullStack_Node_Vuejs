@@ -4,6 +4,8 @@ import { getProducts } from '../services/productService.js';
 import { addToCart } from '../services/cartService.js';
 import { authState } from '@/store/useAuth.js';
 import { useRouter } from 'vue-router';
+import PATH from '@/constants/PATH.js';
+import MESSAGE from '@/constants/MESSAGE.js';
 
 const isLogged = ref(false);
 const router = useRouter();
@@ -16,11 +18,11 @@ const loadProducts = async () => {
 
 const addProductToCart = (product) => {
     if (!isLogged.value) {
-        alert('Faça login para acessar seu carrinho.');
-        return router.push('/login');
+        alert(MESSAGE.ALERT.CART.NEED_AUTHENTICATE);
+        return router.push(PATH.LOGIN);
     }
     addToCart(product);
-    alert('Produto adicionado ao carrinho!');
+    alert(MESSAGE.SUCESS.CART.ADD);
 };
 
 onMounted(async () => {
@@ -41,8 +43,7 @@ onMounted(async () => {
                 <div id="container-img-product">
                     <img
                         :src="product.imageUrl"
-                        :alt="`imagem do ${product.name}`"
-                    />
+                        :alt="`imagem do ${product.name}`" />
                 </div>
                 {{ product.name }}
                 <div id="info-numbers">

@@ -1,5 +1,5 @@
 <script setup>
-// Este componente não precisa de lógica adicional por enquanto
+import PATH from '@/constants/PATH';
 </script>
 
 <template>
@@ -10,7 +10,9 @@
             rápida.
         </p>
 
-        <router-link to="/products" id="link">Ver Produtos</router-link>
+        <router-link :to="PATH.PRODUCTS.ROOT" id="link"
+            >Ver Produtos</router-link
+        >
     </div>
 </template>
 
