@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { authState } from '@/store/useAuth';
+import { useAuthStore } from '@/store/useAuthStore';
 import { useRouter } from 'vue-router';
 import { getOrders } from '@/services/orderService';
 import PATH from '@/constants/PATH';
@@ -9,6 +9,7 @@ import MESSAGE from '@/constants/MESSAGE';
 const orders = ref([]);
 const router = useRouter();
 const isLogged = ref(false);
+const auth = useAuthStore();
 
 const fetchOrders = async () => {
     try {
@@ -24,8 +25,8 @@ const fetchOrders = async () => {
 };
 
 onMounted(async () => {
-    await authState.checkAuthStatus();
-    isLogged.value = authState.isAuthenticated.value;
+    await auth.checkAuthStatus();
+    isLogged.value = auth.authenticated;
     console.log('Está autenticado? ', isLogged.value);
     await fetchOrders();
 });

@@ -1,3 +1,36 @@
+<script setup>
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/store/useAuthStore.js';
+import { onMounted, ref } from 'vue';
+import { URL } from './constants/URL';
+import PATH from './constants/PATH';
+import axios from 'axios';
+import MESSAGE from './constants/MESSAGE';
+
+// Responsável por fazer o redirecionamento para o endereço correto
+const router = useRouter();
+const auth = useAuthStore();
+let userIsLogged = ref(false);
+
+// Função executada quando o botao [Logout] é pressionado.
+const logout = async () => {
+    try {
+        await axios.post(URL.LOGOUT, {}, { withCredentials: true });
+        auth.logout();
+        userIsLogged.value = false;
+        router.push(PATH.LOGIN);
+    } catch (error) {
+        console.error(MESSAGE.ERROR.LOGOUT);
+        alert(MESSAGE.ERROR.LOGOUT);
+    }
+};
+
+onMounted(async () => {
+    await auth.checkAuthStatus();
+    userIsLogged.value = auth.authenticated;
+});
+</script>
+
 <template>
     <div id="app">
         <nav class="navbar">
@@ -40,41 +73,6 @@
         <router-view />
     </div>
 </template>
-
-<script setup>
-import { useRouter } from 'vue-router';
-import { authState } from '@/store/useAuth.js';
-import { onMounted, ref } from 'vue';
-import { URL } from './constants/URL';
-import PATH from './constants/PATH';
-import axios from 'axios';
-import MESSAGE from './constants/MESSAGE';
-
-// Responsável por fazer o redirecionamento para o endereço correto
-const router = useRouter();
-let userIsLogged = ref(false);
-
-// Função executada quando o botao [Logout] é pressionado.
-const logout = async () => {
-    try {
-        await axios.post(URL.LOGOUT, {}, { withCredentials: true });
-        authState.logout();
-        userIsLogged.value = false;
-        router.push(PATH.LOGIN);
-    } catch (error) {
-        console.error(MESSAGE.ERROR.LOGOUT);
-        alert(MESSAGE.ERROR.LOGOUT);
-    }
-    // É chamado o método logout()
-
-    // O usuario é redirecionado para a pagina de login
-};
-
-onMounted(async () => {
-    await authState.checkAuthStatus();
-    userIsLogged.value = authState.isAuthenticated.value;
-});
-</script>
 
 <style scoped>
 #app {

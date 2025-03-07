@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { getProducts } from '../services/productService.js';
 import { addToCart } from '../services/cartService.js';
-import { authState } from '@/store/useAuth.js';
+import { useAuthStore } from '@/store/useAuthStore.js';
 import { useRouter } from 'vue-router';
 import { useProductStore } from '@/store/userProductStore.js';
 import PATH from '@/constants/PATH.js';
@@ -12,7 +12,7 @@ const isLogged = ref(false);
 const router = useRouter();
 const products = ref([]);
 const productStore = useProductStore();
-const button = document.getElementsByTagName('button')[0];
+const auth = useAuthStore();
 
 // Método responsável por carregar os produtos
 const loadProducts = async () => {
@@ -34,9 +34,8 @@ const acessProduct = (id) => {
 };
 
 onMounted(async () => {
-    await authState.checkAuthStatus();
-    isLogged.value = authState.isAuthenticated.value;
-    console.log(isLogged.value);
+    await auth.checkAuthStatus();
+    isLogged.value = auth.authenticated;
     loadProducts();
 });
 </script>

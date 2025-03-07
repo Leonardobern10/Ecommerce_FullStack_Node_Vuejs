@@ -4,13 +4,14 @@ import { getCart, clearCart } from '../services/cartService.js';
 import { createOrder } from '@/services/orderService.js';
 import { useRouter } from 'vue-router';
 import CartItemView from './CartItemView.vue';
-import { authState } from '@/store/useAuth.js';
+import { useAuthStore } from '@/store/useAuthStore.js';
 import PATH from '@/constants/PATH.js';
 import MESSAGE from '@/constants/MESSAGE.js';
 
 const router = useRouter(); // Direcionador de endereços
 const isLogged = ref(false); // Armazena o estado do usuario
 const cart = ref([]); // Responsável por receber os produtos
+const auth = useAuthStore();
 
 // Carrega os itens do carrinho
 const loadCart = () => {
@@ -30,8 +31,8 @@ const totalAmount = computed(() =>
 
 // Finaliza a compra
 const checkout = async () => {
-    await authState.checkAuthStatus();
-    isLogged.value = authState.isAuthenticated.value;
+    await auth.checkAuthStatus();
+    isLogged.value = auth.authenticated;
 
     if (!isLogged.value) {
         alert(MESSAGE.ALERT.ORDER.NEED_AUTHENTICATE);

@@ -7,6 +7,7 @@ import { useProductStore } from '@/store/userProductStore';
 const productStore = useProductStore();
 const route = useRoute();
 const product = ref({});
+
 const searchProduct = async () => {
     product.value = await getProduct(route.params.id);
     console.log(product.value);
@@ -14,10 +15,8 @@ const searchProduct = async () => {
 
 onMounted(async () => {
     try {
-        console.log(productStore.product);
         searchProduct();
         productStore.clean();
-        console.log(productStore.product);
     } catch (error) {
         console.error(error);
     }
