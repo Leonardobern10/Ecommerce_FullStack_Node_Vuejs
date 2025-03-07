@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
 
-// Criação de uma collection para armazenar documentos
-// do tipo produto
 const productSchema = new mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
@@ -10,5 +8,4 @@ const productSchema = new mongoose.Schema({
     imageUrl: { type: String },
 });
 
-// exportação da constante com o nome [Product] se portando como uma entidade
 export default mongoose.model('Product', productSchema);

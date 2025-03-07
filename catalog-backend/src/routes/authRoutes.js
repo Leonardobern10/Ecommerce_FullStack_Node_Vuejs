@@ -26,17 +26,12 @@ const generateRefreshToken = (userId) => {
 // Método que cuida do acesso à rota '/register' mediante
 // o metodo http [POST]
 authRouter.post('/register', async (req, res) => {
-    // Faz um destructuring obtendo campos no corpo da requisicao
     const { name, email, password } = req.body;
     try {
-        // Instancia um objeto User
         const user = new User({ name, email, password });
-        // Salva o objeto como um documento na collection User
         await user.save();
-        // Retorna o status http CREATED e uma mensagem de confirmação
         res.status(201).json({ message: `Usuário registrado com sucesso!` });
     } catch (error) {
-        // Lança um INTERNAL PROCESSOR ERROR e uma mensagem de erro
         res.status(500).json({ message: error.message });
         console.log(error);
     }
@@ -45,17 +40,10 @@ authRouter.post('/register', async (req, res) => {
 // Método que cuida do acesso à rota '/login' mediante
 // o metodo http [POST]
 authRouter.post('/login', async (req, res) => {
-    // Faz um destructuring obtendo os dados do corpo da requisição
     const { email, password } = req.body;
     try {
-        // Faz a solicitação de um documento com o email obtido
-        // e aguarda até o resultado ficar pronto. O resultado
-        // é armazenado na constante.
         const user = await User.findOne({ email });
-
-        // Se a constante estiver vazia ou as senhas não forem equivalentes
         if (!user || !(await user.matchPassword(password))) {
-            // Lança um status BAD REQUEST e uma mensagem de erro
             return res.status(401).json({ message: 'Credenciais inválidas' });
         }
 
@@ -76,8 +64,9 @@ authRouter.post('/login', async (req, res) => {
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'Strict',
+            sameSite: 'Lax',
             maxAge: 7 * 24 * 60 * 60 * 1000,
+            path: '/',
         });
 
         // Retorna o token em formato json
@@ -87,10 +76,7 @@ authRouter.post('/login', async (req, res) => {
     }
 });
 
-/**
- * Renovação do Access Token
- *
- */
+// Renovação do Access Token
 authRouter.post('/refresh', async (req, res) => {
     const cookies = cookie.parse(req.headers.cookie || '');
     const refreshToken = cookies.refreshToken;

@@ -4,6 +4,7 @@ import { authMiddleware } from '../middlewares/authMiddleware.js';
 
 const orderRouter = express.Router();
 
+// Rota que cuida de criação de um pedido
 orderRouter.post('/', authMiddleware, async (req, res) => {
     try {
         const { items, totalAmount } = req.body;
@@ -24,6 +25,7 @@ orderRouter.post('/', authMiddleware, async (req, res) => {
     }
 });
 
+// Rota que permite a consulta aos pedidos
 orderRouter.get('/', authMiddleware, async (req, res) => {
     try {
         const orders = await Order.find({ user: req.user.id }).populate(

@@ -26,6 +26,7 @@ productRouter.get('/', async (req, res) => {
     }
 });
 
+// Atualizar um produto
 productRouter.put('/:id', async (req, res) => {
     try {
         const product = await Product.findByIdAndUpdate(
