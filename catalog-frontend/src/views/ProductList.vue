@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { getProducts } from '../services/productService.js';
 import { addToCart } from '../services/cartService.js';
 import { authState } from '@/store/useAuth.js';
@@ -33,6 +33,11 @@ const acessProduct = (id) => {
     router.push(`/products/${id}`);
 };
 
+const getValueOnPix = (price) => Number(price - price * 0.05).toFixed(2);
+const getValueFinanced = (price) => Number(price / 10).toFixed(2);
+const presentationForValueFinanced = (price) =>
+    `R$ ${Number(price).toFixed(2)} em até 10x de R$ ${getValueFinanced(price)}`;
+
 onMounted(async () => {
     await authState.checkAuthStatus();
     isLogged.value = authState.isAuthenticated.value;
@@ -59,8 +64,15 @@ onMounted(async () => {
                 </div>
                 {{ product.name }}
                 <div id="info-numbers">
-                    <p id="p-price">
-                        R$ {{ Number.parseFloat(product.price).toFixed(2) }}
+                    <p class="p-price">
+                        <strong>
+                            R$
+                            {{ getValueOnPix(product.price) }}</strong
+                        >
+                        no pix
+                    </p>
+                    <p class="p-price">
+                        {{ presentationForValueFinanced(product.price) }}
                     </p>
                 </div>
                 <button @click.stop="addProductToCart(product)">
@@ -73,31 +85,27 @@ onMounted(async () => {
 
 <style scoped>
 ul {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-
-    list-style: none;
-    width: 100%;
 }
 li {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    row-gap: 0.2rem;
 
     padding: 1rem;
-    width: 100%;
+    width: 15rem;
     height: 100%;
     border-radius: 10px;
 
-    color: var(--blue-smoke);
+    color: #000;
 
-    background-color: #d9d9d9;
+    background-color: transparent;
     transition: box-shadow 0.3s ease;
 }
 
 li:hover {
-    animation: piscar 5s ease-in-out infinite 0.5s;
+    animation: piscar 5s ease-in;
     scale: 1;
     cursor: pointer;
 }
@@ -137,31 +145,39 @@ img {
     height: 8rem;
 
     margin-bottom: 1rem;
-    border: 1px solid var(--xanadu);
 }
 
 #info-numbers {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
+
+    row-gap: 0.2px;
+    line-height: 0.2rem;
 }
 
 #info-numbers p {
     padding: 0 1rem;
 }
 
-#p-price {
-    font-size: 1.4rem;
-    font-weight: 800;
+.p-price {
+    font-size: 0.9rem;
+    font-weight: 200;
     width: 100%;
-    text-shadow: 1px 5px 10px var(--blue-smoke);
+
+    letter-spacing: 0.1px;
+}
+
+.p-price > strong {
+    font-size: 1.2rem;
 }
 
 #container-products {
-    width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    grid-template-columns: repeat(3, 1fr);
+
+    width: 100%;
     grid-auto-flow: row;
     justify-content: space-between;
     align-items: center;
