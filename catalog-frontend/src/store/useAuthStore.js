@@ -12,16 +12,16 @@ export const useAuthStore = defineStore('authStore', {
                 });
 
                 if (response.status === 200) {
-                    this.isAuthenticated.value = true;
+                    this.authenticated = true;
                 }
 
                 if (response.status === 401) {
-                    this.isAuthenticated.value = false;
+                    this.authenticated = false;
                 }
 
                 console.log(response.status);
             } catch (error) {
-                this.isAuthenticated.value = false;
+                this.authenticated = false;
             }
         },
         login() {

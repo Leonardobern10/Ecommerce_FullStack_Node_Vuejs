@@ -140,6 +140,7 @@ const logout = async () => {
 onMounted(async () => {
     await authState.checkAuthStatus();
     userIsLogged.value = authState.isAuthenticated.value;
+    console.log(userIsLogged.value);
 });
 </script>
 
