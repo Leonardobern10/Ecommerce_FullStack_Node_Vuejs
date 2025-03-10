@@ -1,52 +1,346 @@
 <script setup>
 import PATH from '@/constants/PATH';
+import images from '@/constants/IMAGES';
+import NewestProduct from '@/components/NewestProduct.vue';
+import IconContainer from '@/components/IconContainer.vue';
+import iconClock from '../assets/icons/icon_clock.svg';
+import iconHeadset from '../assets/icons/icon_headset.svg';
+import iconTruck from '../assets/icons/icon_truck.svg';
+import clockMetal from '../assets/images/clock_metal.png';
+import clockWeather from '../assets/images/clock_weather.png';
+import clockSmart from '../assets/images/clock_smartwatch.png';
+
+const icons = [
+    {
+        icon: iconClock,
+        title: 'qualidade e quantidade',
+        content:
+            'os melhores modelos, lançamentos e as principais marcas para garatir seu estilo.',
+    },
+    {
+        icon: iconTruck,
+        title: 'entrega rápida e grátis',
+        content:
+            'frete grátis para todo o Brasil, com entrega aproximada de, no máximo, 5 dias.',
+    },
+    {
+        icon: iconHeadset,
+        title: 'suporte 24 horas',
+        content:
+            'tire suas dúdivas à qualquer momento, em qualquer dia, com respostas em tempo real.',
+    },
+];
+
+const categories = [
+    { image: clockWeather, text: 'couro' },
+    { image: clockSmart, text: 'smart' },
+    { image: clockMetal, text: 'metal' },
+];
 </script>
 
 <template>
     <div class="home">
-        <h1>Bem-vindo ao nosso Catálogo de Produtos!</h1>
-        <p>
-            Explore nossos produtos e faça suas compras de maneira simples e
-            rápida.
-        </p>
-
-        <router-link :to="PATH.PRODUCTS.ROOT" id="link"
-            >Ver Produtos</router-link
-        >
+        <div id="container-home">
+            <section id="banner-init">
+                <div id="container-text-presentation">
+                    <h1>Seu estilo começa pelo pulso.</h1>
+                    <div id="shop-description">
+                        <p>os principais modelos do mercado</p>
+                        <div id="line-vertical"></div>
+                        <p><span>+100</span> clientes</p>
+                    </div>
+                </div>
+                <div id="container-img">
+                    <img
+                        src="../assets/images/foto_banner_principal.png"
+                        alt="" />
+                </div>
+            </section>
+            <section id="newest-products">
+                <div id="container-newest">
+                    <div id="container-info-newest">
+                        <p id="title-newest"><strong>Lançamentos</strong></p>
+                        <p id="text-newest">
+                            Confira os novos produtos da nossa loja
+                        </p>
+                        <button>Conferir</button>
+                    </div>
+                    <NewestProduct />
+                    <NewestProduct />
+                    <NewestProduct />
+                </div>
+            </section>
+            <section id="about-company">
+                <div id="container-about-company">
+                    <div id="container-about-company-description">
+                        <p>sobre nós</p>
+                        <p>peça agora e garanta seu estilo</p>
+                    </div>
+                    <div id="container-icons">
+                        <IconContainer
+                            v-for="item in icons"
+                            :key="item.title"
+                            :icon="item.icon"
+                            :title="item.title"
+                            :content="item.content" />
+                    </div>
+                </div>
+            </section>
+            <section id="category">
+                <div id="category-description">
+                    <p>categorias</p>
+                    <p>encontre o que está procurando</p>
+                </div>
+                <div id="container-category">
+                    <div
+                        v-for="item in categories"
+                        :key="item.image"
+                        class="category-type">
+                        <img :src="item.image" :alt="item.text" />
+                        <p>{{ item.text }}</p>
+                    </div>
+                </div>
+            </section>
+            <!--
+                <section id="reviews">
+                    <div>
+                        <p></p>
+                        <div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </section>
+            -->
+        </div>
     </div>
 </template>
 
 <style scoped>
 .home {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
     font-weight: 300;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 1rem;
 }
+#container-home {
+    width: 100%;
 
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+    justify-content: space-between;
+    align-items: center;
+}
+#banner-init {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 100%;
+    width: 80%;
+    background-color: var(--xanadu);
+    border-radius: 20px;
+}
+#container-text-presentation {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 50%;
+    height: 100%;
+
+    text-align: left;
+
+    color: #000;
+}
 h1 {
+    width: 85%;
+    font-size: 3rem;
+    font-family: 'BioRhyme', serif;
+    font-weight: 400;
+    color: #000000;
+}
+#shop-description {
+    width: 60%;
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    column-gap: 2rem;
+    align-items: center;
+
+    padding-right: 2rem;
+    margin-bottom: 4rem;
+}
+#shop-description p:first-child {
+    width: fit-content;
+    line-height: 1.5rem;
+    font-size: 1.7rem;
+}
+#shop-description p:last-child {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    line-height: 1.5rem;
+}
+#line-vertical {
+    content: '|';
+    width: 2px;
+    height: 4rem;
+
+    background-color: #000;
+}
+span {
     font-size: 2rem;
-    color: #333;
+    font-weight: 400;
 }
+#container-img {
+    width: 50%;
+    height: 100%;
+}
+img {
+    height: 100%;
+    width: 100%;
+}
+#newest-products {
+    width: 80%;
+    height: 100%;
+}
+#container-newest {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+#container-info-newest {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
 
-p {
+    width: 20%;
+    height: 40%;
+
+    letter-spacing: 0.1px;
+}
+#title-newest {
+    text-align: start;
+    line-height: 0.2rem;
+    font-size: 2rem;
+    margin: 0;
+}
+#text-newest {
+    width: 70%;
+    text-align: start;
     font-size: 1.2rem;
-    color: #666;
 }
-
-#link {
-    text-decoration: none;
-    display: inline-block;
+button {
+    align-self: center;
     background-color: var(--green-spring);
     color: #fff;
     border: none;
-    padding: 0.5rem 1rem;
-    margin: 2rem;
+    padding: 0.5rem 2rem;
     border-radius: 10px;
     transition: background-color 0.3s ease-in;
+    font-size: 1.2rem;
 }
-
-#link:hover {
+button:hover {
     cursor: pointer;
     background-color: var(--xanadu);
+}
+#about-company {
+    width: 101.8%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    background:
+        linear-gradient(to top, rgb(0, 0, 0.1), rgba(0, 0, 0, 0.2)),
+        url('../assets/images/man_style_photo_2.svg') left center no-repeat,
+        url('../assets/images/man_style_photo_1.svg') right center no-repeat;
+    background-color: #000000d3;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-clip: border-box;
+}
+
+#container-about-company {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    row-gap: 5rem;
+}
+
+#container-icons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 65rem;
+}
+
+#container-about-company-description {
+    margin-top: 2rem;
+    line-height: 0.1rem;
+    color: #fff;
+}
+#container-about-company-description p:first-child {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+#container-about-company-description p:last-child {
+    font-weight: 200;
+    color: #ffffff77;
+    font-size: 1rem;
+}
+#category {
+    width: 101.8%;
+
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    row-gap: 8rem;
+}
+#category-description {
+    color: #000;
+}
+#container-category {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    background-color: var(--xanadu);
+
+    height: 28rem;
+}
+
+#category-description p:first-child {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 0.7rem;
+}
+.category-type p {
+    font-size: 1.2rem;
 }
 </style>

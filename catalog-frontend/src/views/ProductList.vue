@@ -74,7 +74,7 @@ onMounted(async () => {
 <style scoped>
 ul {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
 
     list-style: none;
     width: 100%;
@@ -99,6 +99,7 @@ li {
 li:hover {
     animation: piscar 5s ease-in-out infinite 0.5s;
     scale: 1;
+    cursor: pointer;
 }
 
 button {
@@ -123,7 +124,7 @@ button:hover {
     align-items: center;
     font-family: 'Inter', serif;
     font-weight: 300;
-    width: 90%;
+    width: 70vw;
 }
 
 img {
@@ -158,13 +159,13 @@ img {
 }
 
 #container-products {
-    width: 80%;
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
     grid-auto-flow: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 3rem;
+    gap: 5rem;
 }
 #title-section {
     color: #ffffffa1;

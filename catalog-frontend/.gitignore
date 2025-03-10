@@ -17,6 +17,7 @@ coverage
 src/constants/
 /cypress/videos/
 /cypress/screenshots/
+imagesReference/
 
 # Editor directories and files
 .vscode/*
