@@ -163,8 +163,6 @@ header {
     align-items: center;
 
     padding: 1rem 0;
-
-    border: 2px solid blue;
 }
 .container-logo {
     background-image: var(--logo-shop-watch);
