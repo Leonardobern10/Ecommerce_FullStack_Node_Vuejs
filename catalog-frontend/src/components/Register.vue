@@ -5,6 +5,7 @@ import axios from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import MESSAGE from '@/constants/MESSAGE';
+import Input from './Input.vue';
 
 const name = ref('');
 const email = ref('');
@@ -30,9 +31,9 @@ async function register() {
     <div>
         <h2>Cadastrar</h2>
         <form @submit.prevent="register">
-            <input v-model="name" type="text" placeholder="Nome" required />
-            <input v-model="email" type="email" placeholder="Email" required />
-            <input
+            <Input v-model="name" type="text" placeholder="Nome" />
+            <Input v-model="email" type="email" placeholder="Email" required />
+            <Input
                 v-model="password"
                 type="password"
                 placeholder="Senha"

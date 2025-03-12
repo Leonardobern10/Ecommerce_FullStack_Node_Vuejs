@@ -154,15 +154,17 @@ onMounted(async () => {
 }
 
 header {
-    width: 100%;
+    width: 80%;
     height: 2rem;
 
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
 
     padding: 1rem 0;
+
+    border: 2px solid blue;
 }
 .container-logo {
     background-image: var(--logo-shop-watch);
@@ -175,27 +177,37 @@ header {
 }
 
 .navbar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 40%;
+    width: 50%;
 }
 
+#container-sections {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
 .navbar-link {
     color: #000000ad;
     text-decoration: none;
-    margin: 0 1.3rem;
     font-size: 1rem;
     letter-spacing: 0.1px;
     transition: text-shadow 0.1s ease-in-out;
     font-weight: 400;
+    white-space: nowrap;
 }
 
 .navbar-link:hover {
     text-shadow: 2px 2px 2px var(--xanadu);
 }
 
+#container-login {
+    width: 15%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
 #btn-logout {
     align-self: stretch;
 

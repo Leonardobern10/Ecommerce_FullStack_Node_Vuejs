@@ -6,6 +6,7 @@ import { useAuthStore } from '@/store/useAuthStore.js';
 import { URL } from '@/constants/URL';
 import PATH from '@/constants/PATH';
 import MESSAGE from '@/constants/MESSAGE';
+import Input from './Input.vue';
 
 const email = ref('');
 const password = ref('');
@@ -39,12 +40,8 @@ async function login() {
     <div id="view">
         <h2>Login</h2>
         <form @submit.prevent="login">
-            <input v-model="email" type="email" placeholder="Email" required />
-            <input
-                v-model="password"
-                type="password"
-                placeholder="Senha"
-                required />
+            <Input v-model="email" type="email" placeholder="Email" />
+            <Input v-model="password" type="password" placeholder="Senha" />
             <button type="submit" :disabled="isLoading">
                 {{ isLoading ? 'Entrando...' : 'Entrar' }}
             </button>
@@ -68,22 +65,6 @@ form {
     margin: auto;
 
     padding: 1rem 0;
-}
-input {
-    display: block;
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 0.7rem;
-    font-size: 16px;
-    border: none;
-    border-radius: 15px;
-}
-
-input:focus {
-    background-color: #d9d9d9;
-    border: none;
-    border-left-style: ridge;
-    border-right-style: ridge;
 }
 button {
     width: fit-content;

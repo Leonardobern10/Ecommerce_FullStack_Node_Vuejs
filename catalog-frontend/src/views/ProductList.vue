@@ -12,13 +12,13 @@ const isLogged = ref(false);
 const router = useRouter();
 const products = ref([]);
 const productStore = useProductStore();
-const button = document.getElementsByTagName('button')[0];
 
 // Método responsável por carregar os produtos
 const loadProducts = async () => {
     products.value = await getProducts();
 };
 
+// Adiciona um produto ao carrinho
 const addProductToCart = (product) => {
     if (!isLogged.value) {
         alert(MESSAGE.ALERT.CART.NEED_AUTHENTICATE);
@@ -28,13 +28,19 @@ const addProductToCart = (product) => {
     alert(MESSAGE.SUCESS.CART.ADD);
 };
 
+// Acessa a view de um produto específico
 const acessProduct = (id) => {
     productStore.save(id);
     router.push(`/products/${id}`);
 };
 
+// Calcula o valor com desconto para compras no pix
 const getValueOnPix = (price) => Number(price - price * 0.05).toFixed(2);
+
+// Calcula o valor à prazo
 const getValueFinanced = (price) => Number(price / 10).toFixed(2);
+
+// Gera a representação das parcelas
 const presentationForValueFinanced = (price) =>
     `R$ ${Number(price).toFixed(2)} em até 10x de R$ ${getValueFinanced(price)}`;
 
@@ -84,8 +90,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-ul {
-}
 li {
     display: flex;
     flex-direction: column;
