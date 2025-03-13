@@ -1,6 +1,10 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import { getProducts } from '../services/productService.js';
+import {
+    getProducts,
+    pixValue,
+    viewFinancedValue,
+} from '../services/productService.js';
 import { addToCart } from '../services/cartService.js';
 import { authState } from '@/store/useAuth.js';
 import { useRouter } from 'vue-router';
@@ -35,16 +39,6 @@ const acessProduct = (id) => {
     productStore.save(id);
     router.push(`/products/${id}`);
 };
-
-// Calcula o valor com desconto para compras no pix
-const getValueOnPix = (price) => Number(price - price * 0.05).toFixed(2);
-
-// Calcula o valor à prazo
-const getValueFinanced = (price) => Number(price / 10).toFixed(2);
-
-// Gera a representação das parcelas
-const presentationForValueFinanced = (price) =>
-    `R$ ${Number(price).toFixed(2)} em até 10x de R$ ${getValueFinanced(price)}`;
 
 // Ordenação
 const sortProducts = () => (products.value = mergeSort(products.value));
@@ -103,12 +97,12 @@ onMounted(async () => {
                         <p class="p-price">
                             <strong>
                                 R$
-                                {{ getValueOnPix(product.price) }}</strong
+                                {{ pixValue(product.price) }}</strong
                             >
                             no pix
                         </p>
                         <p class="p-price">
-                            {{ presentationForValueFinanced(product.price) }}
+                            {{ viewFinancedValue(product.price) }}
                         </p>
                     </div>
                     <button @click.stop="addProductToCart(product)">

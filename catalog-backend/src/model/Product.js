@@ -10,7 +10,4 @@ const productSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
 });
 
-productSchema.methods.findSimilarBrands = function (cb) {
-    return mongoose.model('Product').find({ brand: this.brand }, cb);
-};
 export default mongoose.model('Product', productSchema);

@@ -24,3 +24,10 @@ export const updateProduct = async (id, product) => {
 export const deleteProduct = async (id) => {
     await axios.delete(`${URL.PRODUCTS}/${id}`);
 };
+
+export const pixValue = (price) => Number(price - price * 0.05).toFixed(2);
+
+export const financedValue = (price) => Number(price / 10).toFixed(2);
+
+export const viewFinancedValue = (price) =>
+    `R$ ${Number(price).toFixed(2)} em até 10x de R$ ${financedValue(price)}`;

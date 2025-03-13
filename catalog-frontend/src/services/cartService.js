@@ -41,6 +41,10 @@ export const updateQuantity = (productId, quantity) => {
     }
 };
 
+export const updateCart = (cart) => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+};
+
 // Remove os itens do carrinho
 export const clearCart = () => {
     localStorage.removeItem(KEY.CART);

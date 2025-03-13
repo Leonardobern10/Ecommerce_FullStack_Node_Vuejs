@@ -1,5 +1,4 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -15,13 +14,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Configuração de middlewares
-app.use(
-    cors({
-        origin: 'http://localhost:5173',
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        credentials: true,
-    }),
-);
+app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(cookieParser()); // Permite manipulação de cookies
 app.use(express.json());
 
