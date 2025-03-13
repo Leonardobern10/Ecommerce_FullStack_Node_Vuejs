@@ -7,11 +7,13 @@ import { useRouter } from 'vue-router';
 import { useProductStore } from '@/store/userProductStore.js';
 import PATH from '@/constants/PATH.js';
 import MESSAGE from '@/constants/MESSAGE.js';
+import { mergeSort } from '@/services/sort.js';
 
 const isLogged = ref(false);
 const router = useRouter();
 const products = ref([]);
 const productStore = useProductStore();
+const searchBrands = ref('');
 
 // Método responsável por carregar os produtos
 const loadProducts = async () => {
@@ -44,6 +46,18 @@ const getValueFinanced = (price) => Number(price / 10).toFixed(2);
 const presentationForValueFinanced = (price) =>
     `R$ ${Number(price).toFixed(2)} em até 10x de R$ ${getValueFinanced(price)}`;
 
+// Ordenação
+const sortProducts = () => (products.value = mergeSort(products.value));
+const sortProductsInvert = () =>
+    (products.value = mergeSort(products.value).reverse());
+
+// Computed que filtra os produtos dinamicamente
+const filteredProducts = computed(() => {
+    if (!searchBrands.value.trim()) return products.value;
+
+    return products.value.filter((el) => el.brand === searchBrands.value);
+});
+
 onMounted(async () => {
     await authState.checkAuthStatus();
     isLogged.value = authState.isAuthenticated.value;
@@ -57,35 +71,52 @@ onMounted(async () => {
         <router-link to="/products/add" class="btn-add"
             >Adicionar Produto</router-link
         >
-        <ul id="container-products">
-            <li
-                @click="acessProduct(product._id)"
-                id="product"
-                v-for="product in products"
-                :key="product._id">
-                <div id="container-img-product">
-                    <img
-                        :src="product.imageUrl"
-                        :alt="`imagem do ${product.name}`" />
+        <div id="container">
+            <nav id="container-options-view">
+                <p class="options-view" @click="sortProducts">Menor preço</p>
+                <p class="options-view" @click="sortProductsInvert">
+                    Maior preço
+                </p>
+                <p class="options-view" @click="sortProducts">Mais recentes</p>
+                <div id="container-search-brand">
+                    <p>Procure pela marca de sua preferência:</p>
+                    <input
+                        id="input-brand"
+                        v-model="searchBrands"
+                        type="text"
+                        placeholder="Digite o nome da marca..." />
                 </div>
-                {{ product.name }}
-                <div id="info-numbers">
-                    <p class="p-price">
-                        <strong>
-                            R$
-                            {{ getValueOnPix(product.price) }}</strong
-                        >
-                        no pix
-                    </p>
-                    <p class="p-price">
-                        {{ presentationForValueFinanced(product.price) }}
-                    </p>
-                </div>
-                <button @click.stop="addProductToCart(product)">
-                    Adicionar ao Carrinho
-                </button>
-            </li>
-        </ul>
+            </nav>
+            <ul id="container-products">
+                <li
+                    @click="acessProduct(product._id)"
+                    id="product"
+                    v-for="product in filteredProducts"
+                    :key="product._id">
+                    <div id="container-img-product">
+                        <img
+                            :src="product.imageUrl"
+                            :alt="`imagem do ${product.name}`" />
+                    </div>
+                    {{ product.name }}
+                    <div id="info-numbers">
+                        <p class="p-price">
+                            <strong>
+                                R$
+                                {{ getValueOnPix(product.price) }}</strong
+                            >
+                            no pix
+                        </p>
+                        <p class="p-price">
+                            {{ presentationForValueFinanced(product.price) }}
+                        </p>
+                    </div>
+                    <button @click.stop="addProductToCart(product)">
+                        Adicionar ao Carrinho
+                    </button>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -136,9 +167,77 @@ button:hover {
     align-items: center;
     font-family: 'Inter', serif;
     font-weight: 300;
-    width: 70vw;
+    width: 80vw;
 }
 
+#container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 4rem;
+    width: 100%;
+
+    border-radius: 15px;
+}
+
+#container-options-view {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    border-radius: 15px;
+
+    background-color: var(--green-spring);
+    opacity: 0.8;
+}
+#container-options-view p:first-child {
+    padding-left: 2rem;
+}
+.options-view {
+    font-size: 1rem;
+}
+
+.options-view:hover {
+    cursor: pointer;
+}
+#container-search-brand {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    align-items: center;
+
+    width: 50%;
+    height: 100%;
+    background-color: #000;
+    color: #ffffffc0;
+    border: none;
+    border-radius: 15px;
+    padding: 0 2rem;
+}
+
+#container-search-brand p {
+    font-size: 1.2rem;
+}
+#input-brand {
+    width: 25%;
+    height: 1rem;
+    border-radius: 10px;
+    padding: 0.4rem;
+    border: none;
+    outline: none;
+
+    background-color: var(--xanadu);
+    color: #000;
+}
+#input-brand:focus {
+    background-color: #000;
+    color: var(--green-spring);
+    color: #fff;
+}
+#input-brand::placeholder {
+    color: #fff;
+}
 img {
     width: 100%;
     height: 100%;
