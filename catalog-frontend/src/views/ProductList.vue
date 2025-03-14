@@ -1,23 +1,26 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import {
+    acessProductById,
     getProducts,
     pixValue,
+    sortProductsByPrice,
     viewFinancedValue,
 } from '../services/productService.js';
-import { addToCart } from '../services/cartService.js';
+import { addOnCart } from '../services/cartService.js';
 import { authState } from '@/store/useAuth.js';
 import { useRouter } from 'vue-router';
 import { useProductStore } from '@/store/userProductStore.js';
-import PATH from '@/constants/PATH.js';
-import MESSAGE from '@/constants/MESSAGE.js';
-import { mergeSort } from '@/services/sort.js';
+import { filterProducts } from '../services/productService.js';
 
 const isLogged = ref(false);
 const router = useRouter();
 const products = ref([]);
 const productStore = useProductStore();
-const searchBrands = ref('');
+const searchBrandQuery = ref('');
+const filteredProducts = computed(() =>
+    filterProducts(searchBrandQuery, products, 'brand'),
+);
 
 // Método responsável por carregar os produtos
 const loadProducts = async () => {
@@ -25,37 +28,24 @@ const loadProducts = async () => {
 };
 
 // Adiciona um produto ao carrinho
-const addProductToCart = (product) => {
-    if (!isLogged.value) {
-        alert(MESSAGE.ALERT.CART.NEED_AUTHENTICATE);
-        return router.push(PATH.LOGIN);
-    }
-    addToCart(product);
-    alert(MESSAGE.SUCESS.CART.ADD);
-};
+const addProductToCart = async (product) =>
+    await addOnCart(product, isLogged, alert, router);
 
 // Acessa a view de um produto específico
-const acessProduct = (id) => {
-    productStore.save(id);
-    router.push(`/products/${id}`);
-};
+const accessProduct = async (id) =>
+    await acessProductById(id, productStore, router);
 
 // Ordenação
-const sortProducts = () => (products.value = mergeSort(products.value));
-const sortProductsInvert = () =>
-    (products.value = mergeSort(products.value).reverse());
+const sortProductsLowToHigh = async () =>
+    (products.value = await sortProductsByPrice(products));
 
-// Computed que filtra os produtos dinamicamente
-const filteredProducts = computed(() => {
-    if (!searchBrands.value.trim()) return products.value;
-    return products.value.filter((el) => el.brand === searchBrands.value);
-});
+const sortProductsHighToLow = async () =>
+    (products.value = await sortProductsByPrice(products).reverse());
 
 onMounted(async () => {
     await authState.checkAuthStatus();
     isLogged.value = authState.isAuthenticated.value;
-    console.log(isLogged.value);
-    loadProducts();
+    await loadProducts();
 });
 </script>
 
@@ -66,23 +56,27 @@ onMounted(async () => {
         >
         <div id="container">
             <nav id="container-options-view">
-                <p class="options-view" @click="sortProducts">Menor preço</p>
-                <p class="options-view" @click="sortProductsInvert">
+                <p class="options-view" @click="sortProductsLowToHigh">
+                    Menor preço
+                </p>
+                <p class="options-view" @click="sortProductsHighToLow">
                     Maior preço
                 </p>
-                <p class="options-view" @click="sortProducts">Mais recentes</p>
+                <p class="options-view" @click="sortProductsLowToHigh">
+                    Mais recentes
+                </p>
                 <div id="container-search-brand">
                     <p>Procure pela marca de sua preferência:</p>
                     <input
                         id="input-brand"
-                        v-model="searchBrands"
+                        v-model="searchBrandQuery"
                         type="text"
                         placeholder="Digite o nome da marca..." />
                 </div>
             </nav>
             <ul id="container-products">
                 <li
-                    @click="acessProduct(product._id)"
+                    @click="accessProduct(product._id)"
                     id="product"
                     v-for="product in filteredProducts"
                     :key="product._id">
