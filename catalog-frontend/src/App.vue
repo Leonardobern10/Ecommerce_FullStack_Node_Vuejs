@@ -1,8 +1,63 @@
+<script setup>
+import { useRouter } from 'vue-router';
+import { authState } from '@/store/useAuth.js';
+import { onMounted, onUnmounted, ref } from 'vue';
+import { URL } from './constants/URL';
+import PATH from './constants/PATH';
+import axios from 'axios';
+import MESSAGE from './constants/MESSAGE';
+import logoInstagram from './assets/icons/instagram1.svg';
+import logoTwitter from './assets/icons/twitter1.svg';
+import logoFacebook from './assets/icons/facebook1.svg';
+
+let userIsLogged = ref(false);
+// Responsável por fazer o redirecionamento para o endereço correto
+const router = useRouter();
+const screenWidth = ref(window.innerWidth);
+const screenHeight = ref(window.innerHeight);
+const socialNetworksLogos = [
+    { nome: logoFacebook },
+    { nome: logoInstagram },
+    { nome: logoTwitter },
+];
+
+const updateScreenSize = () => {
+    screenWidth.value = window.innerWidth;
+    screenHeight.value = window.innerHeight;
+};
+
+// Função executada quando o botao [Logout] é pressionado.
+const logout = async () => {
+    try {
+        await axios.post(URL.LOGOUT, {}, { withCredentials: true });
+        authState.logout();
+        userIsLogged.value = false;
+        router.push(PATH.LOGIN);
+    } catch (error) {
+        console.error(MESSAGE.ERROR.LOGOUT);
+        alert(MESSAGE.ERROR.LOGOUT);
+    }
+    // É chamado o método logout()
+
+    // O usuario é redirecionado para a pagina de login
+};
+
+onMounted(async () => {
+    window.addEventListener('resize', updateScreenSize);
+    await authState.checkAuthStatus();
+    userIsLogged.value = authState.isAuthenticated.value;
+});
+
+onUnmounted(() => {
+    window.removeEventListener('resize', updateScreenSize);
+});
+</script>
+
 <template>
     <div id="app">
         <header>
             <div class="container-logo"></div>
-            <nav class="navbar">
+            <nav v-if="screenWidth > 600" class="navbar">
                 <div id="container-sections">
                     <router-link :to="PATH.HOME" class="navbar-link"
                         >Home</router-link
@@ -24,7 +79,7 @@
                     >
                 </div>
             </nav>
-            <div id="container-login">
+            <div v-if="screenWidth > 600" id="container-login">
                 <router-link
                     v-if="!authState.isAuthenticated.value"
                     :to="PATH.LOGIN"
@@ -44,6 +99,7 @@
                     Logout
                 </button>
             </div>
+            <div v-else id="menu-mobile"></div>
         </header>
         <main>
             <div>
@@ -88,7 +144,9 @@
                         </div>
                     </div>
                 </div>
-                <p>© 2025 ShopWatch - Todos os direitos reservados</p>
+                <p id="right-terms">
+                    © 2025 ShopWatch - Todos os direitos reservados
+                </p>
                 <p id="author">
                     Made with 🧠 by
                     <a href="https://www.linkedin.com/in/leonardo-bern/"
@@ -100,69 +158,141 @@
     </div>
 </template>
 
-<script setup>
-import { useRouter } from 'vue-router';
-import { authState } from '@/store/useAuth.js';
-import { onMounted, ref } from 'vue';
-import { URL } from './constants/URL';
-import PATH from './constants/PATH';
-import axios from 'axios';
-import MESSAGE from './constants/MESSAGE';
-import logoInstagram from './assets/icons/instagram1.svg';
-import logoTwitter from './assets/icons/twitter1.svg';
-import logoFacebook from './assets/icons/facebook1.svg';
-
-// Responsável por fazer o redirecionamento para o endereço correto
-const router = useRouter();
-let userIsLogged = ref(false);
-const socialNetworksLogos = [
-    { nome: logoFacebook },
-    { nome: logoInstagram },
-    { nome: logoTwitter },
-];
-
-// Função executada quando o botao [Logout] é pressionado.
-const logout = async () => {
-    try {
-        await axios.post(URL.LOGOUT, {}, { withCredentials: true });
-        authState.logout();
-        userIsLogged.value = false;
-        router.push(PATH.LOGIN);
-    } catch (error) {
-        console.error(MESSAGE.ERROR.LOGOUT);
-        alert(MESSAGE.ERROR.LOGOUT);
-    }
-    // É chamado o método logout()
-
-    // O usuario é redirecionado para a pagina de login
-};
-
-onMounted(async () => {
-    await authState.checkAuthStatus();
-    userIsLogged.value = authState.isAuthenticated.value;
-    console.log(userIsLogged.value);
-});
-</script>
-
 <style scoped>
+@media (max-width: 600px) {
+    header {
+        width: 90%;
+        height: 2rem;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: 1rem 0;
+    }
+    .navbar {
+        width: 30%;
+    }
+    #container-sections {
+        justify-content: space-between;
+    }
+    #menu-mobile {
+        content: url('./assets/icons/menu_icon.svg');
+    }
+    footer {
+        margin-top: 4rem;
+    }
+    #container-footer > div {
+        width: 90%;
+
+        flex-direction: column;
+        row-gap: 1rem;
+        padding: 2rem 0;
+    }
+    #container-logo-social-networks {
+        justify-content: space-evenly;
+        width: 100%;
+    }
+    #info-footer {
+        row-gap: 0.2rem;
+    }
+    #info-footer p {
+        width: 100%;
+    }
+    #navigation-footer {
+        width: 100%;
+        line-height: 0.3rem;
+    }
+    .title-navigation {
+        font-size: 1.1rem;
+    }
+    #author {
+        font-size: 0.7rem;
+    }
+
+    #logo-social-network {
+        width: 2rem;
+    }
+    #right-terms {
+        font-size: 0.7rem;
+        line-height: 0.2rem;
+    }
+}
+@media (min-width: 600px) {
+    header {
+        width: 100%;
+        height: 2rem;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: 1rem 0;
+    }
+    .navbar {
+        width: 50%;
+    }
+    #container-sections {
+        justify-content: space-evenly;
+    }
+    .navbar-link:hover {
+        text-shadow: 2px 2px 2px var(--xanadu);
+    }
+    #container-login {
+        width: 15%;
+    }
+    #btn-logout {
+        transition:
+            background-color 0.3s ease-in,
+            border 0.3s ease-in;
+    }
+    #btn-logout:hover {
+        cursor: pointer;
+        background-color: var(--xanadu);
+        border: 1px solid #fff;
+    }
+    footer {
+        margin-top: 8rem;
+    }
+    #container-footer > div {
+        width: 80%;
+
+        flex-direction: row;
+        padding: 5rem 0;
+    }
+    #container-logo-social-networks {
+        justify-content: space-between;
+        width: 10rem;
+    }
+    #info-footer {
+        row-gap: 1rem;
+    }
+    #info-footer p {
+        width: 70%;
+    }
+    #navigation-footer {
+        column-gap: 2rem;
+    }
+    .title-navigation {
+        font-size: 1.3rem;
+    }
+    #logo-footer {
+        width: 70px;
+        height: 50px;
+    }
+    #logo-social-network:hover,
+    .option-navigation:hover {
+        cursor: pointer;
+    }
+}
 #app {
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-}
-
-header {
-    width: 80%;
-    height: 2rem;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 1rem 0;
 }
 .container-logo {
     background-image: var(--logo-shop-watch);
@@ -173,16 +303,10 @@ header {
     width: 50px;
     height: 30px;
 }
-
-.navbar {
-    width: 50%;
-}
-
 #container-sections {
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
     align-items: center;
 }
 .navbar-link {
@@ -194,13 +318,7 @@ header {
     font-weight: 400;
     white-space: nowrap;
 }
-
-.navbar-link:hover {
-    text-shadow: 2px 2px 2px var(--xanadu);
-}
-
 #container-login {
-    width: 15%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -218,18 +336,7 @@ header {
     font-size: 1rem;
     font-weight: 200;
     letter-spacing: 0.5px;
-
-    transition:
-        background-color 0.3s ease-in,
-        border 0.3s ease-in;
 }
-
-#btn-logout:hover {
-    cursor: pointer;
-    background-color: var(--xanadu);
-    border: 1px solid #fff;
-}
-
 main {
     width: 100%;
     height: 100%;
@@ -239,7 +346,10 @@ main {
     justify-content: space-between;
     align-items: center;
 }
-
+footer {
+    width: 100%;
+    height: 100%;
+}
 #container-footer {
     margin-top: 2rem;
 
@@ -252,72 +362,40 @@ main {
     justify-content: space-evenly;
     align-items: center;
 }
-
 #container-footer > div {
-    width: 80%;
-
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
-    padding: 5rem 0;
 }
-
 #container-logo-social-networks {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
-
-    width: 10rem;
 }
-footer {
-    width: 100%;
-    height: 100%;
-
-    margin-top: 8rem;
-}
-
 #info-footer {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    row-gap: 1rem;
 }
-
-#info-footer p {
-    width: 70%;
-}
-
 #navigation-footer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    column-gap: 2rem;
     color: #000000ad;
 }
-
 .title-navigation {
     font-weight: 600;
-    font-size: 1.3rem;
     color: black;
 }
-
 #logo-footer {
     width: 70px;
     height: 50px;
 }
-
 #author {
     line-height: 0.1rem;
 }
 #author a {
     text-decoration: none;
-}
-
-#logo-social-network:hover,
-.option-navigation:hover {
-    cursor: pointer;
 }
 </style>

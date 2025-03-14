@@ -123,6 +123,137 @@ const categories = [
 </template>
 
 <style scoped>
+@media (max-width: 600px) {
+    #banner-init {
+        flex-direction: column-reverse;
+        width: 100%;
+    }
+    #container-text-presentation {
+        width: 100%;
+    }
+    h1 {
+        font-size: 2rem;
+    }
+    #shop-description {
+        width: 70%;
+    }
+    #shop-description p:first-child {
+        font-size: 1.2rem;
+    }
+    #container-img {
+        width: 100%;
+    }
+    #container-newest {
+        flex-direction: column;
+    }
+    #container-info-newest {
+        align-items: center;
+        width: 100%;
+    }
+    #text-newest {
+        width: 100%;
+        font-size: 1rem;
+    }
+    button {
+        padding: 0.3rem 1rem;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+    #about-company {
+        width: 100%;
+        background:
+            linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 1)),
+            url('../assets/images/man_style_photo_2.svg') top center no-repeat,
+            url('../assets/images/man_style_photo_1.svg') bottom center
+                no-repeat;
+    }
+    #container-about-company {
+        row-gap: 3rem;
+    }
+    #container-icons {
+        width: 100%;
+    }
+    #category {
+        width: 80%;
+    }
+    #container-category {
+        height: 100%;
+        row-gap: 0.7rem;
+        flex-direction: column;
+    }
+}
+@media (min-width: 600px) {
+    #banner-init {
+        width: 80%;
+        flex-direction: row;
+    }
+    #container-text-presentation {
+        width: 50%;
+    }
+    h1 {
+        font-size: 3rem;
+    }
+    #shop-description {
+        width: 60%;
+        font-size: 1.5rem;
+    }
+    #shop-description p:first-child {
+        font-size: 1.7rem;
+    }
+    #container-img {
+        width: 50%;
+    }
+    #container-newest {
+        flex-direction: row;
+    }
+    #container-info-newest {
+        align-items: flex-start;
+        width: 20%;
+    }
+    #text-newest {
+        width: 70%;
+        font-size: 1.2rem;
+    }
+    button {
+        padding: 0.5rem 2rem;
+        font-size: 1.2rem;
+        transition: background-color 0.3s ease-in;
+    }
+    button:hover {
+        cursor: pointer;
+        background-color: var(--xanadu);
+    }
+    #about-company {
+        width: 101.8%;
+        background:
+            linear-gradient(to top, rgb(0, 0, 0.1), rgba(0, 0, 0, 0.2)),
+            url('../assets/images/man_style_photo_2.svg') left center no-repeat,
+            url('../assets/images/man_style_photo_1.svg') right center no-repeat;
+    }
+    #container-about-company {
+        row-gap: 5rem;
+        padding-bottom: 5rem;
+    }
+    #container-icons {
+        width: 65rem;
+    }
+    #category {
+        width: 101.8%;
+    }
+    #category-description {
+        color: #000;
+    }
+    #container-category {
+        flex-direction: row;
+        height: 28rem;
+        background-color: var(--xanadu);
+
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+}
+
 .home {
     display: flex;
     flex-direction: column;
@@ -146,12 +277,10 @@ const categories = [
 }
 #banner-init {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
 
     height: 100%;
-    width: 80%;
     background-color: var(--xanadu);
     border-radius: 20px;
 }
@@ -160,24 +289,17 @@ const categories = [
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-
-    width: 50%;
     height: 100%;
-
     text-align: left;
-
     color: #000;
 }
 h1 {
     width: 85%;
-    font-size: 3rem;
     font-family: 'BioRhyme', serif;
     font-weight: 400;
     color: #000000;
 }
 #shop-description {
-    width: 60%;
-    font-size: 1.5rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -190,7 +312,6 @@ h1 {
 #shop-description p:first-child {
     width: fit-content;
     line-height: 1.5rem;
-    font-size: 1.7rem;
 }
 #shop-description p:last-child {
     display: flex;
@@ -210,12 +331,7 @@ span {
     font-weight: 400;
 }
 #container-img {
-    width: 50%;
     height: 100%;
-}
-img {
-    height: 100%;
-    width: 100%;
 }
 #newest-products {
     width: 80%;
@@ -223,7 +339,6 @@ img {
 }
 #container-newest {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
@@ -231,9 +346,7 @@ img {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    align-items: flex-start;
 
-    width: 20%;
     height: 40%;
 
     letter-spacing: 0.1px;
@@ -245,57 +358,37 @@ img {
     margin: 0;
 }
 #text-newest {
-    width: 70%;
     text-align: start;
-    font-size: 1.2rem;
 }
 button {
     align-self: center;
     background-color: var(--green-spring);
     color: #fff;
     border: none;
-    padding: 0.5rem 2rem;
     border-radius: 10px;
-    transition: background-color 0.3s ease-in;
-    font-size: 1.2rem;
-}
-button:hover {
-    cursor: pointer;
-    background-color: var(--xanadu);
 }
 #about-company {
-    width: 101.8%;
     height: 100%;
     margin: 0;
     padding: 0;
 
-    background:
-        linear-gradient(to top, rgb(0, 0, 0.1), rgba(0, 0, 0, 0.2)),
-        url('../assets/images/man_style_photo_2.svg') left center no-repeat,
-        url('../assets/images/man_style_photo_1.svg') right center no-repeat;
     background-color: #000000d3;
     background-repeat: no-repeat;
     background-size: contain;
     background-clip: border-box;
 }
-
 #container-about-company {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    row-gap: 5rem;
 }
-
 #container-icons {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-
-    width: 65rem;
 }
-
 #container-about-company-description {
     margin-top: 2rem;
     line-height: 0.1rem;
@@ -311,10 +404,7 @@ button:hover {
     font-size: 1rem;
 }
 #category {
-    width: 101.8%;
-
     height: 100%;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -326,15 +416,9 @@ button:hover {
 }
 #container-category {
     display: flex;
-    flex-direction: row;
     justify-content: space-around;
     align-items: center;
-
-    background-color: var(--xanadu);
-
-    height: 28rem;
 }
-
 #category-description p:first-child {
     font-size: 2.5rem;
     font-weight: 800;

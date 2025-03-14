@@ -11,24 +11,26 @@
 </template>
 
 <style scoped>
+@media (max-width: 600px) {
+    #container {
+        width: 70%;
+    }
+}
+@media (min-width: 600px) {
+    #container {
+        width: 20%;
+        column-gap: 1rem;
+    }
+}
+#container-description {
+    text-align: start;
+    line-height: 0.7rem;
+}
 #container {
-    width: 20%;
     height: 100%;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    column-gap: 1rem;
-}
-
-img {
-    height: 100%;
-    width: 100%;
-}
-
-#container-description {
-    text-align: start;
-    line-height: 0.7rem;
 }
 </style>
