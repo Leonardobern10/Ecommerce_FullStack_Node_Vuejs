@@ -353,8 +353,19 @@ onUnmounted(() => {
     align-items: center;
 
     height: 100%;
-    background-color: var(--xanadu);
+    background: rgb(72, 78, 70);
+    background: linear-gradient(
+        90deg,
+        rgba(117, 128, 112, 1) 0%,
+        rgba(115, 128, 122, 1) 53%,
+        rgba(0, 0, 0, 1) 100%
+    );
     border-radius: 20px;
+    box-shadow:
+        15px 15px 10px #000,
+        2px 2px 5px #000,
+        2px 2px 5px #000,
+        2px 2px 5px #000;
 }
 #container-text-presentation {
     display: flex;
@@ -363,13 +374,14 @@ onUnmounted(() => {
     align-items: center;
     height: 100%;
     text-align: left;
-    color: #000;
+    color: #000000a4;
 }
 h1 {
     width: 85%;
     font-family: 'BioRhyme', serif;
     font-weight: 400;
-    color: #000000;
+    color: #000000a4;
+    text-shadow: 10px 25px 1px #0000003f;
 }
 #shop-description {
     display: flex;

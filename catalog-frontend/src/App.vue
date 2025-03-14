@@ -225,7 +225,7 @@ onUnmounted(() => {
 }
 @media (min-width: 600px) {
     header {
-        width: 100%;
+        width: 80%;
         height: 2rem;
 
         display: flex;

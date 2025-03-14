@@ -114,6 +114,10 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+@media (max-width: 600px) {
+}
+@media (min-width: 600px) {
+}
 li {
     display: flex;
     flex-direction: column;
