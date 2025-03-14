@@ -1,6 +1,6 @@
 <script setup>
+import { onMounted, onUnmounted, ref } from 'vue';
 import PATH from '@/constants/PATH';
-import images from '@/constants/IMAGES';
 import NewestProduct from '@/components/NewestProduct.vue';
 import IconContainer from '@/components/IconContainer.vue';
 import iconClock from '../assets/icons/icon_clock.svg';
@@ -9,15 +9,11 @@ import iconTruck from '../assets/icons/icon_truck.svg';
 import clockMetal from '../assets/images/clock_metal.png';
 import clockWeather from '../assets/images/clock_weather.png';
 import clockSmart from '../assets/images/clock_smartwatch.png';
-import { onMounted, onUnmounted, ref } from 'vue';
+import changeItem from '@/services/itemService';
 
 let screenWidth = ref(window.innerWidth);
 let currentIndexItem = ref(0);
 let currentItem = ref({});
-
-const updateScreenSize = () => {
-    screenWidth.value = window.innerWidth;
-};
 
 const icons = [
     {
@@ -39,13 +35,11 @@ const icons = [
             'tire suas dúdivas à qualquer momento, em qualquer dia, com respostas em tempo real.',
     },
 ];
-
 const categories = [
     { image: clockWeather, text: 'couro' },
     { image: clockSmart, text: 'smart' },
     { image: clockMetal, text: 'metal' },
 ];
-
 const allNewestProducts = [
     {
         name: 'Relógio Inteligente Tranya ES10',
@@ -65,26 +59,31 @@ const allNewestProducts = [
 ];
 
 const nextItem = () => {
-    currentIndexItem.value =
-        currentIndexItem.value < allNewestProducts.length - 1
-            ? currentIndexItem.value + 1
-            : 0;
-    currentItem.value = allNewestProducts[currentIndexItem.value];
-    console.log(currentIndexItem);
+    currentItem = changeItem(
+        'next',
+        currentIndexItem,
+        allNewestProducts,
+        currentItem,
+    );
+    console.log(currentIndexItem.value);
 };
-
+const updateScreenSize = () => {
+    screenWidth.value = window.innerWidth;
+};
 const previousItem = () => {
-    currentIndexItem.value =
-        currentIndexItem.value > 0
-            ? currentIndexItem.value - 1
-            : allNewestProducts.length - 1;
-    currentItem.value = allNewestProducts[currentIndexItem.value];
-    console.log(currentIndexItem);
+    currentItem = changeItem(
+        'previous',
+        currentIndexItem,
+        allNewestProducts,
+        currentItem,
+    );
+    console.log(currentIndexItem.value);
 };
 
 onMounted(() => {
     window.addEventListener('resize', updateScreenSize);
     currentItem.value = allNewestProducts[currentIndexItem.value];
+    console.log(currentIndexItem.value);
 });
 
 onUnmounted(() => {

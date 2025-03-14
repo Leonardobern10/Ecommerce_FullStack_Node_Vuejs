@@ -19,7 +19,7 @@ onUnmounted(() => removeEventListener('resize', updateScreenSize));
             v-if="screenWidth < 600"
             class="button-product"
             id="button-previous-product"
-            @click="emitNextItem">
+            @click="emitPreviousItem">
             <div></div>
         </button>
         <div id="container">
@@ -35,7 +35,7 @@ onUnmounted(() => removeEventListener('resize', updateScreenSize));
             v-if="screenWidth < 600"
             class="button-product"
             id="button-next-product"
-            @click="emitPreviousItem">
+            @click="emitNextItem">
             <div></div>
         </button>
     </div>
