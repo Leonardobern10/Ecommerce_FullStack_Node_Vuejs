@@ -86,11 +86,9 @@ img {
     justify-content: space-between;
     align-items: center;
 }
-
 #price {
     font-size: 2rem;
 }
-
 button {
     border: none;
     border-radius: 5px;
@@ -106,7 +104,6 @@ button {
         background-color 0.3s ease-in,
         border 0.3s ease-in;
 }
-
 button:hover {
     cursor: pointer;
     background-color: var(--xanadu);

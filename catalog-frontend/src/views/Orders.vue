@@ -31,6 +31,7 @@ onMounted(async () => {
     await fetchOrders();
 });
 </script>
+
 <template>
     <div id="view">
         <h1>Meus Pedidos</h1>
@@ -80,16 +81,13 @@ onMounted(async () => {
     flex-direction: column;
     align-items: center;
 }
-
 h1 {
     color: var(--green-spring);
     text-shadow: 5px 5px 5px black;
 }
-
 li {
     list-style: none;
 }
-
 #container {
     display: flex;
     flex-direction: column;
@@ -97,7 +95,6 @@ li {
     align-items: center;
     width: 100%;
 }
-
 #order {
     display: flex;
     flex-direction: row;
@@ -116,7 +113,6 @@ li {
     margin: 1rem 0;
     padding: 1rem;
 }
-
 #name-item {
     padding: 0.5rem;
     text-align: left;
@@ -139,7 +135,6 @@ li {
 
     text-align: left;
 }
-
 #all-order-items {
     display: flex;
     flex-direction: column;
@@ -151,16 +146,13 @@ li {
     height: 12rem;
     width: 45%;
 }
-
 #all-order-items > p {
     color: #000;
     font-size: 1.2rem;
 }
-
 #price-total {
     font-size: 1.5rem;
 }
-
 @media (max-width: 500px) {
     #order-items {
         width: 100%;

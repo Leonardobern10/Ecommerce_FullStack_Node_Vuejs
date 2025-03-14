@@ -48,7 +48,6 @@ const sortProductsInvert = () =>
 // Computed que filtra os produtos dinamicamente
 const filteredProducts = computed(() => {
     if (!searchBrands.value.trim()) return products.value;
-
     return products.value.filter((el) => el.brand === searchBrands.value);
 });
 
@@ -132,13 +131,11 @@ li {
     background-color: transparent;
     transition: box-shadow 0.3s ease;
 }
-
 li:hover {
     animation: piscar 5s ease-in;
     scale: 1;
     cursor: pointer;
 }
-
 button {
     background-color: var(--green-spring);
     color: #fff;
@@ -147,12 +144,10 @@ button {
     border-radius: 10px;
     transition: background-color 0.3s ease-in;
 }
-
 button:hover {
     cursor: pointer;
     background-color: var(--xanadu);
 }
-
 #view {
     margin-top: 2rem;
     display: flex;
@@ -163,7 +158,6 @@ button:hover {
     font-weight: 300;
     width: 80vw;
 }
-
 #container {
     display: flex;
     flex-direction: column;
@@ -172,7 +166,6 @@ button:hover {
 
     border-radius: 15px;
 }
-
 #container-options-view {
     display: flex;
     flex-direction: row;
@@ -190,7 +183,6 @@ button:hover {
 .options-view {
     font-size: 1rem;
 }
-
 .options-view:hover {
     cursor: pointer;
 }
@@ -209,7 +201,6 @@ button:hover {
     border-radius: 15px;
     padding: 0 2rem;
 }
-
 #container-search-brand p {
     font-size: 1.2rem;
 }
@@ -236,14 +227,12 @@ img {
     width: 100%;
     height: 100%;
 }
-
 #container-img-product {
     width: 5rem;
     height: 8rem;
 
     margin-bottom: 1rem;
 }
-
 #info-numbers {
     display: flex;
     flex-direction: column;
@@ -253,11 +242,9 @@ img {
     row-gap: 0.2px;
     line-height: 0.2rem;
 }
-
 #info-numbers p {
     padding: 0 1rem;
 }
-
 .p-price {
     font-size: 0.9rem;
     font-weight: 200;
@@ -265,11 +252,9 @@ img {
 
     letter-spacing: 0.1px;
 }
-
 .p-price > strong {
     font-size: 1.2rem;
 }
-
 #container-products {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -285,7 +270,6 @@ img {
     font-weight: 400;
     font-size: 2rem;
 }
-
 .btn-add {
     display: none;
 }

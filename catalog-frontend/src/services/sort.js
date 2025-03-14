@@ -25,7 +25,3 @@ function merge(left, right) {
 
     return sortedArray.concat(left.slice(i)).concat(right.slice(j));
 }
-
-// 🔥 Teste
-let arr = [38, 27, 43, 3, 9, 82, 10];
-console.log(mergeSort(arr));
