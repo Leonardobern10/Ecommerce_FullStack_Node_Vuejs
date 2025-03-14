@@ -9,6 +9,15 @@ import iconTruck from '../assets/icons/icon_truck.svg';
 import clockMetal from '../assets/images/clock_metal.png';
 import clockWeather from '../assets/images/clock_weather.png';
 import clockSmart from '../assets/images/clock_smartwatch.png';
+import { onMounted, onUnmounted, ref } from 'vue';
+
+let screenWidth = ref(window.innerWidth);
+let currentIndexItem = ref(0);
+let currentItem = ref({});
+
+const updateScreenSize = () => {
+    screenWidth.value = window.innerWidth;
+};
 
 const icons = [
     {
@@ -36,6 +45,51 @@ const categories = [
     { image: clockSmart, text: 'smart' },
     { image: clockMetal, text: 'metal' },
 ];
+
+const allNewestProducts = [
+    {
+        name: 'Relógio Inteligente Tranya ES10',
+        image: 'https://m.media-amazon.com/images/I/61Ktqu1XprL._AC_SL1500_.jpg',
+        price: '152.95',
+    },
+    {
+        name: 'Xiaomi Smart Band 9 Active',
+        image: 'https://m.media-amazon.com/images/I/51WOvToYRFL._AC_SL1500_.jpg',
+        price: '170.05',
+    },
+    {
+        name: 'Relógio Analógico Technos Steel',
+        image: 'https://m.media-amazon.com/images/I/61E7fAt9EHL._AC_SX679_.jpg',
+        price: '288.80',
+    },
+];
+
+const nextItem = () => {
+    currentIndexItem.value =
+        currentIndexItem.value < allNewestProducts.length - 1
+            ? currentIndexItem.value + 1
+            : 0;
+    currentItem.value = allNewestProducts[currentIndexItem.value];
+    console.log(currentIndexItem);
+};
+
+const previousItem = () => {
+    currentIndexItem.value =
+        currentIndexItem.value > 0
+            ? currentIndexItem.value - 1
+            : allNewestProducts.length - 1;
+    currentItem.value = allNewestProducts[currentIndexItem.value];
+    console.log(currentIndexItem);
+};
+
+onMounted(() => {
+    window.addEventListener('resize', updateScreenSize);
+    currentItem.value = allNewestProducts[currentIndexItem.value];
+});
+
+onUnmounted(() => {
+    window.removeEventListener('resize', updateScreenSize);
+});
 </script>
 
 <template>
@@ -63,11 +117,29 @@ const categories = [
                         <p id="text-newest">
                             Confira os novos produtos da nossa loja
                         </p>
-                        <button>Conferir</button>
+                        <button>
+                            <router-link
+                                id="button-link"
+                                :to="PATH.PRODUCTS.ROOT"
+                                >Conferir</router-link
+                            >
+                        </button>
                     </div>
-                    <NewestProduct />
-                    <NewestProduct />
-                    <NewestProduct />
+                    <NewestProduct
+                        v-if="screenWidth < 600"
+                        @next-item="nextItem"
+                        @previous-item="previousItem"
+                        :img="currentItem.image"
+                        :price="currentItem.price"
+                        :name="currentItem.name" />
+                    <NewestProduct
+                        v-else
+                        v-for="product in allNewestProducts"
+                        :key="product.name"
+                        :img="product.image"
+                        :name="product.name"
+                        :price="product.price"
+                        :screen-width="screenWidth" />
                 </div>
             </section>
             <section id="about-company">
@@ -426,5 +498,9 @@ button {
 }
 .category-type p {
     font-size: 1.2rem;
+}
+#button-link {
+    text-decoration: none;
+    color: inherit;
 }
 </style>

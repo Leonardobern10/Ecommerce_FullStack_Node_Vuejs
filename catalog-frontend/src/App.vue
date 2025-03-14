@@ -1,7 +1,7 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { authState } from '@/store/useAuth.js';
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, onUpdated, ref } from 'vue';
 import { URL } from './constants/URL';
 import PATH from './constants/PATH';
 import axios from 'axios';
@@ -48,6 +48,8 @@ onMounted(async () => {
     userIsLogged.value = authState.isAuthenticated.value;
 });
 
+onUpdated(() => screenWidth.value);
+
 onUnmounted(() => {
     window.removeEventListener('resize', updateScreenSize);
 });
@@ -56,7 +58,9 @@ onUnmounted(() => {
 <template>
     <div id="app">
         <header>
-            <div class="container-logo"></div>
+            <router-link :to="PATH.HOME">
+                <div class="container-logo"></div>
+            </router-link>
             <nav v-if="screenWidth > 600" class="navbar">
                 <div id="container-sections">
                     <router-link :to="PATH.HOME" class="navbar-link"
