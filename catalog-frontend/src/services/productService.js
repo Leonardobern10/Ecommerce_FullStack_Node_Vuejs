@@ -35,7 +35,7 @@ export const financedValue = (price) => Number(price / 10).toFixed(2);
 export const viewFinancedValue = (price) =>
     `R$ ${Number(price).toFixed(2)} em até 10x de R$ ${financedValue(price)}`;
 
-export const accessProductById = (id, store, router) => {
+export const accessProductById = (id, store) => {
     store.save(id);
     return router.push(`/products/${id}`);
 };
@@ -61,4 +61,10 @@ export const saveProduct = async (edit, route, product, router, cb) => {
         console.error(error);
         cb(MESSAGE.ERROR.PRODUCTS.ADD);
     }
+};
+
+export const loadProducts = async (auth, state, array) => {
+    await auth.checkAuthStatus();
+    state.value = auth.isAuthenticated.value;
+    array.value = await getProducts();
 };

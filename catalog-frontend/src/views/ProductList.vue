@@ -2,19 +2,17 @@
 import { ref, onMounted, computed } from 'vue';
 import {
     accessProductById,
-    getProducts,
+    loadProducts,
     pixValue,
     sortProductsByPrice,
     viewFinancedValue,
 } from '../services/productService.js';
 import { addOnCart } from '../services/cartService.js';
 import { authState } from '@/store/useAuth.js';
-import { useRouter } from 'vue-router';
 import { useProductStore } from '@/store/userProductStore.js';
 import { filterProducts } from '../services/productService.js';
 
 const isLogged = ref(false);
-const router = useRouter();
 const products = ref([]);
 const productStore = useProductStore();
 const searchBrandQuery = ref('');
@@ -22,18 +20,12 @@ const filteredProducts = computed(() =>
     filterProducts(searchBrandQuery, products, 'brand'),
 );
 
-// Método responsável por carregar os produtos
-const loadProducts = async () => {
-    products.value = await getProducts();
-};
-
 // Adiciona um produto ao carrinho
 const addProductToCart = async (product) =>
-    await addOnCart(product, isLogged, alert, router);
+    await addOnCart(product, isLogged, alert);
 
 // Acessa a view de um produto específico
-const accessProduct = async (id) =>
-    await accessProductById(id, productStore, router);
+const accessProduct = async (id) => await accessProductById(id, productStore);
 
 // Ordenação
 const sortProductsLowToHigh = async () =>
@@ -42,11 +34,7 @@ const sortProductsLowToHigh = async () =>
 const sortProductsHighToLow = async () =>
     (products.value = await sortProductsByPrice(products).reverse());
 
-onMounted(async () => {
-    await authState.checkAuthStatus();
-    isLogged.value = authState.isAuthenticated.value;
-    await loadProducts();
-});
+onMounted(async () => await loadProducts(authState, isLogged, products));
 </script>
 
 <template>

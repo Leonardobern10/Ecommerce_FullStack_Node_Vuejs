@@ -1,6 +1,9 @@
 import KEY from '@/constants/KEY';
 import MESSAGE from '@/constants/MESSAGE';
 import PATH from '@/constants/PATH';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 // Obtém os itens do carrinho
 export const getCart = () => {
@@ -21,7 +24,7 @@ export const addToCart = (product) => {
     localStorage.setItem(KEY.CART, JSON.stringify(cart));
 };
 
-export const addOnCart = (product, state, cb, router) => {
+export const addOnCart = (product, state, cb) => {
     if (!state.value) {
         cb(MESSAGE.ALERT.CART.NEED_AUTHENTICATE);
         return router.push(PATH.LOGIN);
