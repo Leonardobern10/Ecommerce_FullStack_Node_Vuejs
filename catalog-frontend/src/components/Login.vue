@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/store/useAuthStore.js';
 import Input from './Input.vue';
-import enterLogin from '@/services/loginService';
+import signIn from '@/services/loginService';
 
 const email = ref('');
 const password = ref('');
@@ -13,7 +13,7 @@ const auth = useAuthStore();
 
 // Faz login utilizando os dados do formulário
 const login = async () =>
-    await enterLogin(isLoading, email, password, auth, router, alert);
+    await signIn(isLoading, email, password, auth, router, alert);
 </script>
 
 <template>

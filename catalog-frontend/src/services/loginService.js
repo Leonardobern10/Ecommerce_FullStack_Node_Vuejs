@@ -3,7 +3,7 @@ import PATH from '@/constants/PATH';
 import { URL } from '@/constants/URL';
 import axios from 'axios';
 
-const enterLogin = async (loading, email, password, auth, router, cb) => {
+const signIn = async (loading, email, password, auth, router, cb) => {
     loading.value = true;
 
     try {
@@ -23,4 +23,4 @@ const enterLogin = async (loading, email, password, auth, router, cb) => {
     }
 };
 
-export default enterLogin;
+export default signIn;

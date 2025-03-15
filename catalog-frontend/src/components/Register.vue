@@ -1,30 +1,15 @@
 <script setup>
-import { URL } from '@/constants/URL';
-import PATH from '@/constants/PATH';
-import axios from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import MESSAGE from '@/constants/MESSAGE';
 import Input from './Input.vue';
+import signUp from '@/services/registerService';
 
 const name = ref('');
 const email = ref('');
 const password = ref('');
 const router = useRouter();
 
-async function register() {
-    try {
-        await axios.post(URL.REGISTER, {
-            name: name.value,
-            email: email.value,
-            password: password.value,
-        });
-        router.push(PATH.LOGIN);
-    } catch (error) {
-        alert(MESSAGE.ERROR.REGISTER.DEFAULT);
-        console.log(error);
-    }
-}
+const register = async () => await signUp(name, email, password, router, alert);
 </script>
 
 <template>
@@ -47,13 +32,6 @@ async function register() {
 form {
     max-width: 400px;
     margin: auto;
-}
-input {
-    display: block;
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 8px;
-    font-size: 16px;
 }
 button {
     display: block;
