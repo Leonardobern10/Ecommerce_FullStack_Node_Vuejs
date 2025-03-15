@@ -2,19 +2,15 @@
 import { useRouter } from 'vue-router';
 import { authState } from '@/store/useAuth.js';
 import { onMounted, onUnmounted, onUpdated, ref } from 'vue';
-import { URL } from './constants/URL';
 import PATH from './constants/PATH';
-import axios from 'axios';
-import MESSAGE from './constants/MESSAGE';
 import logoInstagram from './assets/icons/instagram1.svg';
 import logoTwitter from './assets/icons/twitter1.svg';
 import logoFacebook from './assets/icons/facebook1.svg';
+import signOut from './services/logoutService';
 
 let userIsLogged = ref(false);
-// Responsável por fazer o redirecionamento para o endereço correto
-const router = useRouter();
+
 const screenWidth = ref(window.innerWidth);
-const screenHeight = ref(window.innerHeight);
 const socialNetworksLogos = [
     { nome: logoFacebook },
     { nome: logoInstagram },
@@ -23,24 +19,10 @@ const socialNetworksLogos = [
 
 const updateScreenSize = () => {
     screenWidth.value = window.innerWidth;
-    screenHeight.value = window.innerHeight;
 };
 
 // Função executada quando o botao [Logout] é pressionado.
-const logout = async () => {
-    try {
-        await axios.post(URL.LOGOUT, {}, { withCredentials: true });
-        authState.logout();
-        userIsLogged.value = false;
-        router.push(PATH.LOGIN);
-    } catch (error) {
-        console.error(MESSAGE.ERROR.LOGOUT);
-        alert(MESSAGE.ERROR.LOGOUT);
-    }
-    // É chamado o método logout()
-
-    // O usuario é redirecionado para a pagina de login
-};
+const logout = async () => signOut(userIsLogged, alert);
 
 onMounted(async () => {
     window.addEventListener('resize', updateScreenSize);
