@@ -60,6 +60,13 @@ export const updateCart = (cart) => {
     localStorage.setItem('cart', JSON.stringify(cart));
 };
 
+export const updateItemQuantityOnCart = (productId, newQuantity, array) => {
+    const item = array.value.find((item) => item._id === productId);
+    if (item) {
+        item.quantity = newQuantity;
+        updateCart(array.value);
+    }
+};
 // Remove os itens do carrinho
 export const clearCart = () => {
     localStorage.removeItem(KEY.CART);
@@ -68,3 +75,6 @@ export const clearCart = () => {
 export const loadCart = async (array) => {
     array.value = await getCart();
 };
+
+export const getTotalValueOnCart = (array) =>
+    array.value.reduce((total, item) => total + item.price * item.quantity, 0);

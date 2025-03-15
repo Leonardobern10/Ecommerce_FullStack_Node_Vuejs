@@ -1,10 +1,11 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import {
-    getCart,
     clearCart,
     removeFromCart,
     loadCart,
+    getTotalValueOnCart,
+    updateItemQuantityOnCart,
 } from '../services/cartService.js';
 import { checkoutOrder, createOrder } from '@/services/orderService.js';
 import { updateCart } from '../services/cartService.js';
@@ -25,18 +26,11 @@ const clear = () => {
 };
 
 // Calcula o valor total de compra para os itens no carrinho
-const totalAmount = computed(() =>
-    cart.value.reduce((total, item) => total + item.price * item.quantity, 0),
-);
+const totalAmount = computed(() => getTotalValueOnCart(cart));
 
 // 🔥 Função para atualizar a quantidade no carrinho
-const updateItemQuantity = (productId, newQuantity) => {
-    const item = cart.value.find((item) => item._id === productId);
-    if (item) {
-        item.quantity = newQuantity;
-        updateCart(cart.value); // Salva a alteração no localStorage ou API
-    }
-};
+const updateItemQuantity = (productId, newQuantity) =>
+    updateItemQuantityOnCart(productId, newQuantity, cart);
 
 const removeItem = (productId) => {
     cart.value = cart.value.filter((item) => item._id !== productId);
