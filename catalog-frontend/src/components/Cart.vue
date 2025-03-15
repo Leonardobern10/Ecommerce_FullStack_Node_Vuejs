@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { getCart, clearCart } from '../services/cartService.js';
-import { createOrder } from '@/services/orderService.js';
+import { getCart, clearCart, removeFromCart } from '../services/cartService.js';
+import { checkoutOrder, createOrder } from '@/services/orderService.js';
 import { updateCart } from '../services/cartService.js';
 import { useRouter } from 'vue-router';
 import CartItemView from './CartItemView.vue';
@@ -42,36 +42,21 @@ const updateItemQuantity = (productId, newQuantity) => {
 
 const removeItem = (productId) => {
     cart.value = cart.value.filter((item) => item._id !== productId);
-    updateCart(cart.value);
+    removeFromCart(productId);
 };
+
 // Finaliza a compra
 const checkout = async () => {
-    await auth.checkAuthStatus();
-    isLogged.value = auth.authenticated;
-
-    if (!isLogged.value) {
-        alert(MESSAGE.ALERT.ORDER.NEED_AUTHENTICATE);
-        router.push(PATH.LOGIN);
-        return;
-    }
-
-    try {
-        const orderData = {
-            items: cart.value.map((item) => ({
-                product: item._id,
-                quantity: item.quantity,
-            })),
-            totalAmount: totalAmount.value,
-        };
-
-        await createOrder(orderData);
-        alert(MESSAGE.SUCESS.ORDER);
-        clear();
-        router.push(PATH.HOME);
-    } catch (error) {
-        alert(MESSAGE.ERROR.ORDER.DEFAULT);
-        console.error(error);
-    }
+    await checkoutOrder(
+        auth,
+        isLogged,
+        alert,
+        router,
+        cart,
+        createOrder,
+        clear,
+        totalAmount,
+    );
 };
 
 // Verifica se o usuário está logado e carrega o carrinho
@@ -95,7 +80,7 @@ onMounted(loadCart);
             </li>
         </ul>
         <p v-else>Seu carrinho está vazio.</p>
-        <div id="resume-cart">
+        <div v-if="cart.length" id="resume-cart">
             <p>Resumo da compra</p>
             <hr />
             <div>

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import {
-    acessProductById,
+    accessProductById,
     getProducts,
     pixValue,
     sortProductsByPrice,
@@ -33,7 +33,7 @@ const addProductToCart = async (product) =>
 
 // Acessa a view de um produto específico
 const accessProduct = async (id) =>
-    await acessProductById(id, productStore, router);
+    await accessProductById(id, productStore, router);
 
 // Ordenação
 const sortProductsLowToHigh = async () =>
