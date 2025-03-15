@@ -2,33 +2,19 @@
 import { ref, onMounted } from 'vue';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useRouter } from 'vue-router';
-import { getOrders } from '@/services/orderService';
-import PATH from '@/constants/PATH';
-import MESSAGE from '@/constants/MESSAGE';
+import { fetchOrders } from '@/services/orderService';
 
 const orders = ref([]);
 const router = useRouter();
 const isLogged = ref(false);
 const auth = useAuthStore();
 
-const fetchOrders = async () => {
-    try {
-        if (!isLogged.value) {
-            return router.push(PATH.LOGIN);
-        }
-        const response = await getOrders();
-        orders.value = response.data;
-        console.log(response.data);
-    } catch (error) {
-        console.error(MESSAGE.ERROR.ORDER.GET_PRODUCTS, error);
-    }
-};
+const fetch = async () => await fetchOrders(isLogged, router, orders);
 
 onMounted(async () => {
     await auth.checkAuthStatus();
     isLogged.value = auth.authenticated;
-    console.log('Está autenticado? ', isLogged.value);
-    await fetchOrders();
+    await fetch();
 });
 </script>
 

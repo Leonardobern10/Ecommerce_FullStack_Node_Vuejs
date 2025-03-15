@@ -58,6 +58,9 @@ const allNewestProducts = [
     },
 ];
 
+const updateScreenSize = () => {
+    screenWidth.value = window.innerWidth;
+};
 const nextItem = () => {
     currentItem = changeItem(
         'next',
@@ -65,10 +68,6 @@ const nextItem = () => {
         allNewestProducts,
         currentItem,
     );
-    console.log(currentIndexItem.value);
-};
-const updateScreenSize = () => {
-    screenWidth.value = window.innerWidth;
 };
 const previousItem = () => {
     currentItem = changeItem(
@@ -77,13 +76,11 @@ const previousItem = () => {
         allNewestProducts,
         currentItem,
     );
-    console.log(currentIndexItem.value);
 };
 
 onMounted(() => {
     window.addEventListener('resize', updateScreenSize);
     currentItem.value = allNewestProducts[currentIndexItem.value];
-    console.log(currentIndexItem.value);
 });
 
 onUnmounted(() => {

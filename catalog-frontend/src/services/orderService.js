@@ -14,6 +14,19 @@ export const getOrders = async () => {
     return await axios.get(URL.ORDER, { withCredentials: true });
 };
 
+export const fetchOrders = async (state, router, array) => {
+    try {
+        if (!state.value) {
+            return await router.push(PATH.LOGIN);
+        }
+
+        const response = await getOrders();
+        array.value = response.data;
+    } catch (error) {
+        console.error(MESSAGE.ERROR.ORDER.GET_PRODUCTS);
+    }
+};
+
 export const checkoutOrder = async (
     auth,
     state,
