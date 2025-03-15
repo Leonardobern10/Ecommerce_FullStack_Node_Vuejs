@@ -1,24 +1,22 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { getCart, clearCart, removeFromCart } from '../services/cartService.js';
+import {
+    getCart,
+    clearCart,
+    removeFromCart,
+    loadCart,
+} from '../services/cartService.js';
 import { checkoutOrder, createOrder } from '@/services/orderService.js';
 import { updateCart } from '../services/cartService.js';
 import { useRouter } from 'vue-router';
 import CartItemView from './CartItemView.vue';
 import { useAuthStore } from '@/store/useAuthStore.js';
-import PATH from '@/constants/PATH.js';
-import MESSAGE from '@/constants/MESSAGE.js';
 import { financedValue } from '@/services/productService.js';
 
 const router = useRouter(); // Direcionador de endereços
 const isLogged = ref(false); // Armazena o estado do usuario
 const cart = ref([]); // Responsável por receber os produtos
 const auth = useAuthStore();
-
-// Carrega os itens do carrinho
-const loadCart = () => {
-    cart.value = getCart();
-};
 
 // Limpa o carrinho
 const clear = () => {
@@ -60,7 +58,7 @@ const checkout = async () => {
 };
 
 // Verifica se o usuário está logado e carrega o carrinho
-onMounted(loadCart);
+onMounted(async () => loadCart(cart));
 </script>
 
 <template>

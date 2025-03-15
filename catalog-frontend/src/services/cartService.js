@@ -64,3 +64,7 @@ export const updateCart = (cart) => {
 export const clearCart = () => {
     localStorage.removeItem(KEY.CART);
 };
+
+export const loadCart = async (array) => {
+    array.value = await getCart();
+};

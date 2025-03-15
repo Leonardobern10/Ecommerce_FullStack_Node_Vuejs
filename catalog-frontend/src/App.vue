@@ -17,10 +17,7 @@ const socialNetworksLogos = [
     { nome: logoTwitter },
 ];
 
-const updateScreenSize = () => {
-    screenWidth.value = window.innerWidth;
-};
-
+const updateScreenSize = () => (screenWidth.value = window.innerWidth);
 // Função executada quando o botao [Logout] é pressionado.
 const logout = async () => signOut(userIsLogged, alert);
 
