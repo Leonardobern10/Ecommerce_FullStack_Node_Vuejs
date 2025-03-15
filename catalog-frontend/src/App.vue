@@ -1,5 +1,4 @@
 <script setup>
-import { useRouter } from 'vue-router';
 import { authState } from '@/store/useAuth.js';
 import { onMounted, onUnmounted, onUpdated, ref } from 'vue';
 import PATH from './constants/PATH';
@@ -7,6 +6,7 @@ import logoInstagram from './assets/icons/instagram1.svg';
 import logoTwitter from './assets/icons/twitter1.svg';
 import logoFacebook from './assets/icons/facebook1.svg';
 import signOut from './services/logoutService';
+import { generateContent } from './services/appService';
 
 let userIsLogged = ref(false);
 
@@ -24,11 +24,7 @@ const updateScreenSize = () => {
 // Função executada quando o botao [Logout] é pressionado.
 const logout = async () => signOut(userIsLogged, alert);
 
-onMounted(async () => {
-    window.addEventListener('resize', updateScreenSize);
-    await authState.checkAuthStatus();
-    userIsLogged.value = authState.isAuthenticated.value;
-});
+onMounted(async () => await generateContent(updateScreenSize, userIsLogged));
 
 onUpdated(() => screenWidth.value);
 
