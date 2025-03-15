@@ -1,21 +1,13 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useAuthStore } from '@/store/useAuthStore';
-import { useRouter } from 'vue-router';
-import { fetchOrders } from '@/services/orderService';
+import { loadOrders } from '@/services/orderService';
 
 const orders = ref([]);
-const router = useRouter();
 const isLogged = ref(false);
 const auth = useAuthStore();
 
-const fetch = async () => await fetchOrders(isLogged, router, orders);
-
-onMounted(async () => {
-    await auth.checkAuthStatus();
-    isLogged.value = auth.authenticated;
-    await fetch();
-});
+onMounted(async () => await loadOrders(isLogged, auth, orders));
 </script>
 
 <template>
