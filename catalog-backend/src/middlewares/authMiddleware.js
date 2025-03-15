@@ -1,19 +1,25 @@
 import jwt from 'jsonwebtoken';
 import cookie from 'cookie';
+import User from '../model/User.js';
 
-export const authMiddleware = (req, res, next) => {
-    const cookies = cookie.parse(req.headers.cookie || '');
-    const accessToken = cookies.accessToken;
-
-    if (!accessToken) {
-        return res
-            .status(401)
-            .json({ message: 'Acesso negado. Token não fornecido.' });
-    }
-
+export const authMiddleware = async (req, res, next) => {
     try {
+        const cookies = cookie.parse(req.headers.cookie || '');
+        const accessToken = cookies.accessToken;
+
+        if (!accessToken) {
+            return res
+                .status(401)
+                .json({ message: 'Acesso negado. Token não fornecido.' });
+        }
+
         const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
-        req.user = decoded;
+        const user = await User.findById(decoded.id);
+
+        if (!user)
+            return res.status(401).json({ message: 'Usuário não encontrado.' });
+
+        req.user = user;
         next();
     } catch (error) {
         console.log('Erro na decodificação do token:', error);

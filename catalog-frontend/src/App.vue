@@ -7,7 +7,9 @@ import logoTwitter from './assets/icons/twitter1.svg';
 import logoFacebook from './assets/icons/facebook1.svg';
 import signOut from './services/logoutService';
 import { generateContent } from './services/appService';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 let userIsLogged = ref(false);
 
 const screenWidth = ref(window.innerWidth);
@@ -19,7 +21,7 @@ const socialNetworksLogos = [
 
 const updateScreenSize = () => (screenWidth.value = window.innerWidth);
 // Função executada quando o botao [Logout] é pressionado.
-const logout = async () => signOut(userIsLogged, alert);
+const logout = async () => signOut(userIsLogged, router, alert);
 
 onMounted(async () => await generateContent(updateScreenSize, userIsLogged));
 

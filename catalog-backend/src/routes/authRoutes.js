@@ -42,7 +42,7 @@ authRouter.post('/register', async (req, res) => {
 authRouter.post('/login', async (req, res) => {
     const { email, password } = req.body;
     try {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).select('+password');
         if (!user || !(await user.matchPassword(password))) {
             return res.status(401).json({ message: 'Credenciais inválidas' });
         }
@@ -50,29 +50,31 @@ authRouter.post('/login', async (req, res) => {
         const accessToken = generateAccessToken(user._id);
         const refreshToken = generateRefreshToken(user._id);
 
+        // Inicializar o array se não existir e adicionar o novo token
+        if (!user.refreshTokens) {
+            user.refreshTokens = [];
+        }
         user.refreshTokens.push(refreshToken);
         await user.save();
 
         res.cookie('accessToken', accessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'Lax',
+            sameSite: 'Strict',
             maxAge: 15 * 60 * 1000,
-            path: '/',
         });
 
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'Lax',
+            sameSite: 'Strict',
             maxAge: 7 * 24 * 60 * 60 * 1000,
-            path: '/',
         });
 
-        // Retorna o token em formato json
         res.json({ accessToken });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error('Erro no login:', error);
+        res.status(500).json({ message: 'Erro interno no servidor' });
     }
 });
 
@@ -104,7 +106,7 @@ authRouter.post('/refresh', async (req, res) => {
 
         res.cookie('accessToken', newAccessToken, {
             httpOnly: true,
-            secure: true,
+            secure: process.env.NODE_ENV === 'production',
             sameSite: 'Strict',
             maxAge: 15 * 60 * 1000,
         });
@@ -119,27 +121,68 @@ authRouter.post('/refresh', async (req, res) => {
 
 // Método que cuida do acesso à rota '/logout' mediante
 // o metodo http [POST]
-authRouter.post('/logout', logoutMiddleware, async (req, res) => {
-    const cookies = cookie.parse(req.headers.cookie || '');
-    const refreshToken = cookies.refreshToken;
-
-    if (!refreshToken) {
-        return res
-            .status(400)
-            .json({ message: 'Nenhum refresh token encontrado!' });
-    }
-
+// Método que cuida do acesso à rota '/logout'
+// No arquivo authRoutes.js - na função de logout:
+authRouter.post('/logout', async (req, res) => {
     try {
-        const user = await User.updateOne(
-            { _id: req.user.id },
-            { $pull: { refreshTokens: refreshToken } },
-        );
+        const cookies = cookie.parse(req.headers.cookie || '');
+        const refreshToken = cookies.refreshToken;
 
-        if (!user) {
+        if (!refreshToken) {
             return res
                 .status(400)
-                .json({ message: 'Usuario nao autenticado!' });
+                .json({ message: 'Nenhum refresh token encontrado!' });
         }
+
+        console.log('Token recebido para logout:', refreshToken);
+
+        // Buscar todos os usuários para diagnóstico
+        const allUsers = await User.find({}).select('_id email refreshTokens');
+        console.log('Todos os usuários e seus tokens:');
+
+        let foundUser = null;
+        allUsers.forEach((user) => {
+            console.log(`Usuário ID: ${user._id}, Email: ${user.email}`);
+            console.log('  RefreshTokens:', user.refreshTokens);
+
+            // Verificar se algum usuário tem o token
+            if (
+                user.refreshTokens &&
+                user.refreshTokens.includes(refreshToken)
+            ) {
+                console.log('  --> Token encontrado neste usuário!');
+                foundUser = user;
+            }
+        });
+
+        if (!foundUser) {
+            console.log('Token não encontrado em nenhum usuário');
+
+            // Como não encontramos o token, vamos apenas limpar os cookies do cliente
+            res.clearCookie('accessToken', {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'Lax',
+                path: '/',
+            });
+
+            res.clearCookie('refreshToken', {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'Lax',
+                path: '/',
+            });
+
+            // Mesmo que não tenhamos encontrado o token, vamos considerar o logout bem-sucedido
+            // já que o objetivo principal é remover os cookies do cliente
+            return res.json({ message: 'Cookies de autenticação removidos.' });
+        }
+
+        // Se encontrou o usuário, remove o token do array
+        foundUser.refreshTokens = foundUser.refreshTokens.filter(
+            (token) => token !== refreshToken,
+        );
+        await foundUser.save();
 
         res.clearCookie('accessToken', {
             httpOnly: true,
@@ -147,6 +190,7 @@ authRouter.post('/logout', logoutMiddleware, async (req, res) => {
             sameSite: 'Lax',
             path: '/',
         });
+
         res.clearCookie('refreshToken', {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
@@ -156,11 +200,13 @@ authRouter.post('/logout', logoutMiddleware, async (req, res) => {
 
         res.json({ message: 'Logout bem-sucedido.' });
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao realizar logour' });
+        console.error('Erro no logout:', error);
+        res.status(500).json({ message: 'Erro ao realizar logout' });
     }
 });
 
 authRouter.get('/userStatus', authMiddleware, (req, res) => {
     res.status(200).json({ message: 'Usuario autenticado' });
 });
+
 export default authRouter;
