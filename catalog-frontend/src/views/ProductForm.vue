@@ -1,13 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import {
-    createProduct,
-    updateProduct,
-    getProducts,
-} from '../services/productService.js';
+import { getProducts, saveProduct } from '../services/productService.js';
 import { useRoute, useRouter } from 'vue-router';
-import PATH from '@/constants/PATH.js';
-import MESSAGE from '@/constants/MESSAGE.js';
 
 const route = useRoute();
 const router = useRouter();
@@ -20,6 +14,9 @@ const product = ref({
     imageUrl: '',
 });
 
+const save = async () =>
+    await saveProduct(isEdit, route, product, router, alert);
+
 onMounted(async () => {
     try {
         if (route.params.id) {
@@ -31,28 +28,12 @@ onMounted(async () => {
         console.error(error);
     }
 });
-
-const saveProduct = async () => {
-    try {
-        if (isEdit.value) {
-            await updateProduct(route.params.id, product.value);
-            alert(MESSAGE.SUCESS.PRODUCTS.UPDATE);
-        } else {
-            await createProduct(product.value);
-            alert(MESSAGE.SUCESS.PRODUCTS.ADD);
-        }
-        router.push(PATH.PRODUCTS.ROOT);
-    } catch (error) {
-        console.error(error);
-        alert(MESSAGE.ERROR.PRODUCTS.ADD);
-    }
-};
 </script>
 
 <template>
     <div id="view-product-form">
         <h2>{{ isEdit ? 'Editar Produto' : 'Adicionar Produto' }}</h2>
-        <form @submit.prevent="saveProduct">
+        <form @submit.prevent="save">
             <input
                 v-model="product.name"
                 type="text"

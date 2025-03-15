@@ -10,7 +10,6 @@ const product = ref({});
 
 const searchProduct = async () => {
     product.value = await getProduct(route.params.id);
-    console.log(product.value);
 };
 
 onMounted(async () => {

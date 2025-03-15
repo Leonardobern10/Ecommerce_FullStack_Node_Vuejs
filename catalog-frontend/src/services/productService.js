@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { URL } from '@/constants/URL';
 import { mergeSort } from './sort';
+import MESSAGE from '@/constants/MESSAGE';
+import PATH from '@/constants/PATH';
 
 export const getProducts = async () => {
     const response = await axios.get(URL.PRODUCTS);
@@ -43,4 +45,20 @@ export const sortProductsByPrice = (array) => mergeSort([...array.value]);
 export const filterProducts = (search, array, target) => {
     if (!search.value.trim()) return array.value;
     return array.value.filter((el) => el[target] === search.value);
+};
+
+export const saveProduct = async (edit, route, product, router, cb) => {
+    try {
+        if (edit.value) {
+            await updateProduct(route.params.id, product.value);
+            cb(MESSAGE.SUCESS.PRODUCTS.UPDATE);
+        } else {
+            await createProduct(product.value);
+            cb(MESSAGE.SUCESS.PRODUCTS.ADD);
+        }
+        router.push(PATH.PRODUCTS.ROOT);
+    } catch (error) {
+        console.error(error);
+        cb(MESSAGE.ERROR.PRODUCTS.ADD);
+    }
 };
