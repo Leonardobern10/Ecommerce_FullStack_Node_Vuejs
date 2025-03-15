@@ -1,5 +1,7 @@
 <script setup>
-defineProps(['name', 'price', 'quantity']);
+import { defineProps } from 'vue';
+
+const props = defineProps(['name', 'price', 'quantity']);
 </script>
 
 <template>

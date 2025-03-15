@@ -4,8 +4,8 @@ import { defineProps, defineEmits, onMounted, onUnmounted, ref } from 'vue';
 const emits = defineEmits(['nextItem', 'previousItem']);
 const props = defineProps({ img: String, name: String, price: String });
 const screenWidth = ref(window.innerWidth);
-const updateScreenSize = () => (screenWidth.value = window.innerWidth);
 
+const updateScreenSize = () => (screenWidth.value = window.innerWidth);
 const emitNextItem = () => emits('nextItem');
 const emitPreviousItem = () => emits('previousItem');
 

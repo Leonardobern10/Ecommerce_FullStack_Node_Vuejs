@@ -1,12 +1,9 @@
 <script setup>
-import axios from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/store/useAuthStore.js';
-import { URL } from '@/constants/URL';
-import PATH from '@/constants/PATH';
-import MESSAGE from '@/constants/MESSAGE';
 import Input from './Input.vue';
+import enterLogin from '@/services/loginService';
 
 const email = ref('');
 const password = ref('');
@@ -15,25 +12,8 @@ const router = useRouter();
 const auth = useAuthStore();
 
 // Faz login utilizando os dados do formulário
-async function login() {
-    isLoading.value = true;
-
-    try {
-        await axios.post(
-            URL.LOGIN,
-            { email: email.value, password: password.value },
-            { withCredentials: true },
-        );
-        auth.authenticated = true;
-        auth.checkAuthStatus();
-        router.push(PATH.PRODUCTS.ROOT);
-    } catch (error) {
-        console.error('Erro no login:', error);
-        alert(MESSAGE.ERROR.LOGIN.CHECK_CREDENTIALS);
-    } finally {
-        isLoading.value = false;
-    }
-}
+const login = async () =>
+    await enterLogin(isLoading, email, password, auth, router, alert);
 </script>
 
 <template>
