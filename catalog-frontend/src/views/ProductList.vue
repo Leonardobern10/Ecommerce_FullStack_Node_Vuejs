@@ -73,18 +73,20 @@ onMounted(async () => await loadProducts(authState, isLogged, products));
                             :src="product.imageUrl"
                             :alt="`imagem do ${product.name}`" />
                     </div>
-                    {{ product.name }}
-                    <div id="info-numbers">
-                        <p class="p-price">
-                            <strong>
-                                R$
-                                {{ pixValue(product.price) }}</strong
-                            >
-                            no pix
-                        </p>
-                        <p class="p-price">
-                            {{ viewFinancedValue(product.price) }}
-                        </p>
+                    <div id="description-product-offer">
+                        {{ product.name }}
+                        <div id="info-numbers">
+                            <p class="p-price">
+                                <strong>
+                                    R$
+                                    {{ pixValue(product.price) }}</strong
+                                >
+                                no pix
+                            </p>
+                            <p class="p-price">
+                                {{ viewFinancedValue(product.price) }}
+                            </p>
+                        </div>
                     </div>
                     <button @click.stop="addProductToCart(product)">
                         Adicionar ao Carrinho
@@ -214,8 +216,8 @@ img {
     height: 100%;
 }
 #container-img-product {
-    width: 5rem;
-    height: 8rem;
+    width: 15rem;
+    height: 15rem;
 
     margin-bottom: 1rem;
 }
@@ -225,8 +227,7 @@ img {
     justify-content: space-between;
     align-items: center;
 
-    row-gap: 0.2px;
-    line-height: 0.2rem;
+    row-gap: 0.1px;
 }
 #info-numbers p {
     padding: 0 1rem;
@@ -258,5 +259,13 @@ img {
 }
 .btn-add {
     display: none;
+}
+#product {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    height: 100%;
 }
 </style>
