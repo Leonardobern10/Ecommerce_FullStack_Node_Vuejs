@@ -8,6 +8,7 @@ const router = useRouter();
 const isEdit = ref(false);
 const product = ref({
     name: '',
+    brand: '',
     price: 0,
     description: '',
     stock: 0,
@@ -38,6 +39,11 @@ onMounted(async () => {
                 v-model="product.name"
                 type="text"
                 placeholder="Nome do produto"
+                required />
+            <input
+                v-model="product.brand"
+                type="text"
+                placeholder="Marca do produto"
                 required />
             <input
                 v-model="product.description"

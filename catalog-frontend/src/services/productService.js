@@ -15,7 +15,9 @@ export const getProduct = async (id) => {
 };
 
 export const createProduct = async (product) => {
-    const response = await axios.post(URL.PRODUCTS, product);
+    const response = await axios.post(URL.PRODUCTS, product, {
+        withCredentials: true,
+    });
     return response.data;
 };
 
