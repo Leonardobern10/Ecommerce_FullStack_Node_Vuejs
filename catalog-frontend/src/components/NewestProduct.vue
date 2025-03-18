@@ -80,11 +80,14 @@ onUnmounted(() => removeEventListener('resize', updateScreenSize));
 }
 @media (min-width: 600px) {
     #container {
+        margin-top: 2rem;
         width: 100%;
+        height: 50%;
         column-gap: 1rem;
     }
     #container-img {
-        width: 10rem;
+        width: 8rem;
+        height: 8rem;
     }
     #product-name {
         width: 100%;

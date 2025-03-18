@@ -1,6 +1,7 @@
 <script setup>
 import { authState } from '@/store/useAuth.js';
 import { onMounted, onUnmounted, onUpdated, ref } from 'vue';
+import { watchEffect } from 'vue';
 import PATH from './constants/PATH';
 import logoInstagram from './assets/icons/instagram1.svg';
 import logoTwitter from './assets/icons/twitter1.svg';
@@ -8,8 +9,10 @@ import logoFacebook from './assets/icons/facebook1.svg';
 import signOut from './services/logoutService';
 import { generateContent } from './services/appService';
 import { useRouter } from 'vue-router';
+import { checkRole } from './services/roleService';
 import gsap from 'gsap';
 
+let permitted = ref(false);
 const router = useRouter();
 let userIsLogged = ref(false);
 
@@ -24,14 +27,35 @@ const updateScreenSize = () => (screenWidth.value = window.innerWidth);
 // Função executada quando o botao [Logout] é pressionado.
 const logout = async () => signOut(userIsLogged, router, alert);
 
+const hasRole = async () => {
+    let role = await checkRole();
+    if (role === 'admin') {
+        return true;
+    }
+    console.log('Role = ', role);
+    return false;
+};
+
 onMounted(async () => {
     gsap.from('#header', { y: -100, autoAlpha: 0, duration: 1.2, delay: 0.5 });
     await generateContent(updateScreenSize, userIsLogged);
+    permitted.value = await hasRole();
+    console.log('Resposta = ', permitted);
 });
 
-onUpdated(() => screenWidth.value);
+watchEffect(async () => {
+    if (authState.isAuthenticated.value) {
+        permitted.value = await hasRole();
+    } else {
+        permitted.value = false;
+    }
+});
 
-onUnmounted(() => {
+onUpdated(() => {
+    screenWidth.value, permitted.value;
+});
+
+onUnmounted(async () => {
     window.removeEventListener('resize', updateScreenSize);
 });
 </script>
@@ -61,6 +85,12 @@ onUnmounted(() => {
                         :to="PATH.ORDERS"
                         class="navbar-link"
                         >Meus pedidos</router-link
+                    >
+                    <router-link
+                        v-if="permitted && authState.isAuthenticated.value"
+                        :to="PATH.ADMIN"
+                        class="navbar-link"
+                        >Administration</router-link
                     >
                 </div>
             </nav>

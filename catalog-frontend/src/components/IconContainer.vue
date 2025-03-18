@@ -59,13 +59,14 @@ const props = defineProps({ icon: String, title: String, content: String });
         justify-content: center;
         align-items: center;
 
-        height: 20rem;
+        height: 30rem;
+        width: 20rem;
         row-gap: 0.7px;
         line-height: 1rem;
     }
     #icon {
         width: 7rem;
-        height: 150px;
+        height: 5rem;
     }
 
     #title {

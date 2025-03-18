@@ -195,13 +195,18 @@ authRouter.get('/userStatus', authMiddleware, (req, res) => {
 });
 
 authRouter.get('/me', authMiddleware, (req, res) => {
-    res.status(200).json({
-        id: req.user.id,
-        name: req.user.name,
-        email: req.user.email,
-        role: req.user.role,
-    });
-    console.log(req.user.role);
+    if (!req.user) {
+        return res.status(401).json({ error: 'Usuário não autenticado' });
+    }
+
+    return res
+        .status(200)
+        .json({
+            id: req.user.id,
+            name: req.user.name,
+            email: req.user.email,
+            role: req.user.role,
+        });
 });
 
 export default authRouter;

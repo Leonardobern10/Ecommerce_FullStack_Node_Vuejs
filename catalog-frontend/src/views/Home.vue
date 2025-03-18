@@ -11,10 +11,18 @@ import clockWeather from '../assets/images/clock_weather.png';
 import clockSmart from '../assets/images/clock_smartwatch.png';
 import changeItem from '@/services/itemService';
 import gsap from 'gsap';
+import { PixiPlugin, ScrollTrigger, TextPlugin } from 'gsap/all';
+import { checkRole } from '@/services/roleService';
 
 let screenWidth = ref(window.innerWidth);
 let currentIndexItem = ref(0);
 let currentItem = ref({});
+
+gsap.registerPlugin(TextPlugin);
+gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(PixiPlugin);
+
+const imagem = document.querySelector('#container-img');
 
 const icons = [
     {
@@ -80,6 +88,7 @@ const previousItem = () => {
 };
 
 onMounted(() => {
+    checkRole();
     window.addEventListener('resize', updateScreenSize);
     currentItem.value = allNewestProducts[currentIndexItem.value];
     gsap.from('#banner-init', {
@@ -89,6 +98,34 @@ onMounted(() => {
         autoAlpha: 0,
         ease: 'expo.out',
     });
+    gsap.to('h1', { duration: 3, text: 'Seu estilo começa pelo pulso' });
+    gsap.from('#newest-products', {
+        scrollTrigger: {
+            trigger: '#newest-products',
+            start: '-50px center',
+            end: 'center center',
+            toggleActions: 'restart pause resume pause',
+            markers: true,
+            scrub: true,
+        },
+        x: -200,
+        duration: 2,
+        opacity: 0,
+    });
+    gsap.from('#about-company', {
+        scrollTrigger: {
+            trigger: '#about-company',
+            start: '-50px center',
+            end: 'center center',
+            toggleActions: 'restart pause resume pause',
+            markers: true,
+            scrub: true,
+        },
+        x: -200,
+        duration: 2,
+        opacity: 0,
+    });
+    gsap.to('imagem-banner', { duration: 1, pixi: { hue: 180 } });
 });
 
 onUnmounted(() => {
@@ -101,7 +138,7 @@ onUnmounted(() => {
         <div id="container-home">
             <section id="banner-init">
                 <div id="container-text-presentation">
-                    <h1>Seu estilo começa pelo pulso</h1>
+                    <h1></h1>
                     <div id="shop-description">
                         <p>os principais modelos do mercado</p>
                         <div id="line-vertical"></div>
@@ -110,6 +147,7 @@ onUnmounted(() => {
                 </div>
                 <div id="container-img">
                     <img
+                        id="imagem-banner"
                         src="../assets/images/foto_banner_principal.png"
                         alt="" />
                 </div>
@@ -317,20 +355,22 @@ onUnmounted(() => {
     }
     #about-company {
         width: 101.8%;
-        height: 30rem;
+        height: 100vh;
         background:
             linear-gradient(to top, rgb(0, 0, 0.1), rgba(0, 0, 0, 0.2)),
             url('../assets/images/man_style_photo_2.svg') left center no-repeat,
             url('../assets/images/man_style_photo_1.svg') right center no-repeat;
     }
     #container-about-company {
-        row-gap: 1rem;
+        row-gap: 2rem;
+        padding: 1rem 0;
     }
     #container-icons {
-        width: 65rem;
+        width: 70rem;
     }
     #category {
         width: 101.8%;
+        height: 100vh;
     }
     #category-description {
         color: #000;
@@ -374,6 +414,15 @@ onUnmounted(() => {
 
     height: 100%;
     border: 2px solid rgb(0, 0, 0);
+
+    background: linear-gradient(
+        300deg,
+        rgb(0, 0, 0),
+        var(--xanadu),
+        rgb(0, 0, 0)
+    );
+    background-size: 180% 180%;
+    animation: gradient-animation 18s ease infinite;
 }
 #container-text-presentation {
     display: flex;
