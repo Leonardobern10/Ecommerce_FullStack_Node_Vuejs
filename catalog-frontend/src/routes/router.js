@@ -35,7 +35,12 @@ router.beforeEach(async (to, from, next) => {
     if (role === 'admin') permitted = true;
     console.log(permitted);
 
-    if (to.path === '/admin' && !permitted) {
+    if (
+        (to.path === '/admin' ||
+            to.path === '/products/add' ||
+            to.path === '/products/edit') &&
+        !permitted
+    ) {
         next('/');
     } else {
         next();
