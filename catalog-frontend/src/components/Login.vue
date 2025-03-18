@@ -11,7 +11,7 @@ const isLoading = ref(false);
 const router = useRouter();
 const auth = useAuthStore();
 
-// Faz login utilizando os dados do formulário
+// Método para login utilizando os dados do formulário
 const login = async () =>
     await signIn(isLoading, email, password, auth, router, alert);
 </script>

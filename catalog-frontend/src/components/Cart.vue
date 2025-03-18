@@ -8,7 +8,6 @@ import {
     updateItemQuantityOnCart,
 } from '../services/cartService.js';
 import { checkoutOrder, createOrder } from '@/services/orderService.js';
-import { updateCart } from '../services/cartService.js';
 import { useRouter } from 'vue-router';
 import CartItemView from './CartItemView.vue';
 import { useAuthStore } from '@/store/useAuthStore.js';

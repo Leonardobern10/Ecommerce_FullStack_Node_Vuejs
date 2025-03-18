@@ -10,6 +10,7 @@ import clockMetal from '../assets/images/clock_metal.png';
 import clockWeather from '../assets/images/clock_weather.png';
 import clockSmart from '../assets/images/clock_smartwatch.png';
 import changeItem from '@/services/itemService';
+import gsap from 'gsap';
 
 let screenWidth = ref(window.innerWidth);
 let currentIndexItem = ref(0);
@@ -81,6 +82,13 @@ const previousItem = () => {
 onMounted(() => {
     window.addEventListener('resize', updateScreenSize);
     currentItem.value = allNewestProducts[currentIndexItem.value];
+    gsap.from('#banner-init', {
+        x: -100,
+        delay: 0.2,
+        duration: 1.2,
+        autoAlpha: 0,
+        ease: 'expo.out',
+    });
 });
 
 onUnmounted(() => {
@@ -93,7 +101,7 @@ onUnmounted(() => {
         <div id="container-home">
             <section id="banner-init">
                 <div id="container-text-presentation">
-                    <h1>Seu estilo começa pelo pulso.</h1>
+                    <h1>Seu estilo começa pelo pulso</h1>
                     <div id="shop-description">
                         <p>os principais modelos do mercado</p>
                         <div id="line-vertical"></div>
@@ -229,6 +237,7 @@ onUnmounted(() => {
     }
     #about-company {
         width: 100%;
+        height: 100%;
         background:
             linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 1)),
             url('../assets/images/man_style_photo_2.svg') top center no-repeat,
@@ -252,11 +261,23 @@ onUnmounted(() => {
 }
 @media (min-width: 600px) {
     #banner-init {
+        margin-top: 2rem;
         width: 80%;
         flex-direction: row;
+
+        background: rgba(0, 0, 0, 0.815);
+        background: linear-gradient(
+            90deg,
+            rgba(117, 128, 112, 1) 0%,
+            rgba(0, 0, 0, 1) 100%,
+            rgba(115, 128, 122, 1) 53%
+        );
+        border-radius: 20px;
+        box-shadow: 0 20px 20px #00000094;
     }
     #container-text-presentation {
         width: 50%;
+        height: 100%;
     }
     h1 {
         font-size: 3rem;
@@ -270,6 +291,9 @@ onUnmounted(() => {
     }
     #container-img {
         width: 50%;
+        height: 100%;
+        border-radius: 15px;
+        opacity: 0.7;
     }
     #container-newest {
         flex-direction: row;
@@ -293,14 +317,14 @@ onUnmounted(() => {
     }
     #about-company {
         width: 101.8%;
+        height: 30rem;
         background:
             linear-gradient(to top, rgb(0, 0, 0.1), rgba(0, 0, 0, 0.2)),
             url('../assets/images/man_style_photo_2.svg') left center no-repeat,
             url('../assets/images/man_style_photo_1.svg') right center no-repeat;
     }
     #container-about-company {
-        row-gap: 5rem;
-        padding-bottom: 5rem;
+        row-gap: 1rem;
     }
     #container-icons {
         width: 65rem;
@@ -339,7 +363,7 @@ onUnmounted(() => {
 
     display: flex;
     flex-direction: column;
-    row-gap: 3rem;
+    row-gap: 8rem;
     justify-content: space-between;
     align-items: center;
 }
@@ -349,19 +373,7 @@ onUnmounted(() => {
     align-items: center;
 
     height: 100%;
-    background: rgb(72, 78, 70);
-    background: linear-gradient(
-        90deg,
-        rgba(117, 128, 112, 1) 0%,
-        rgba(115, 128, 122, 1) 53%,
-        rgba(0, 0, 0, 1) 100%
-    );
-    border-radius: 20px;
-    box-shadow:
-        15px 15px 10px #000,
-        2px 2px 5px #000,
-        2px 2px 5px #000,
-        2px 2px 5px #000;
+    border: 2px solid rgb(0, 0, 0);
 }
 #container-text-presentation {
     display: flex;
@@ -377,7 +389,7 @@ h1 {
     font-family: 'BioRhyme', serif;
     font-weight: 400;
     color: #000000a4;
-    text-shadow: 10px 25px 1px #0000003f;
+    text-shadow: 10px 10px 5px #0000003f;
 }
 #shop-description {
     display: flex;
@@ -387,7 +399,7 @@ h1 {
     align-items: center;
 
     padding-right: 2rem;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
 }
 #shop-description p:first-child {
     width: fit-content;
@@ -448,7 +460,6 @@ button {
     border-radius: 10px;
 }
 #about-company {
-    height: 100%;
     margin: 0;
     padding: 0;
 

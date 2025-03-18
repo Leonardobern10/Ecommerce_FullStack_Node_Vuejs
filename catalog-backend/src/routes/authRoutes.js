@@ -1,27 +1,12 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../model/User.js';
-import {
-    authMiddleware,
-    logoutMiddleware,
-} from '../middlewares/authMiddleware.js';
+import { authMiddleware } from '../middlewares/authMiddleware.js';
 import cookie from 'cookie';
-
+import { generateAccessToken, generateRefreshToken } from '../utils/tokens.js';
 const authRouter = express.Router();
 
-// Gera um accessToken de curta duração
-const generateAccessToken = (userId) => {
-    return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
-        expiresIn: '15m',
-    });
-};
-
 // Gera um refreshToken de longa duração
-const generateRefreshToken = (userId) => {
-    return jwt.sign({ id: userId }, process.env.REFRESH_SECRET_KEY, {
-        expiresIn: '7d',
-    });
-};
 
 // Método que cuida do acesso à rota '/register' mediante
 // o metodo http [POST]
@@ -47,8 +32,8 @@ authRouter.post('/login', async (req, res) => {
             return res.status(401).json({ message: 'Credenciais inválidas' });
         }
 
-        const accessToken = generateAccessToken(user._id);
-        const refreshToken = generateRefreshToken(user._id);
+        const accessToken = generateAccessToken(user._id, user.role);
+        const refreshToken = generateRefreshToken(user._id, user.role);
 
         // Inicializar o array se não existir e adicionar o novo token
         if (!user.refreshTokens) {
@@ -207,6 +192,16 @@ authRouter.post('/logout', async (req, res) => {
 
 authRouter.get('/userStatus', authMiddleware, (req, res) => {
     res.status(200).json({ message: 'Usuario autenticado' });
+});
+
+authRouter.get('/me', authMiddleware, (req, res) => {
+    res.status(200).json({
+        id: req.user.id,
+        name: req.user.name,
+        email: req.user.email,
+        role: req.user.role,
+    });
+    console.log(req.user.role);
 });
 
 export default authRouter;

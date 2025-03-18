@@ -8,6 +8,7 @@ import logoFacebook from './assets/icons/facebook1.svg';
 import signOut from './services/logoutService';
 import { generateContent } from './services/appService';
 import { useRouter } from 'vue-router';
+import gsap from 'gsap';
 
 const router = useRouter();
 let userIsLogged = ref(false);
@@ -23,7 +24,10 @@ const updateScreenSize = () => (screenWidth.value = window.innerWidth);
 // Função executada quando o botao [Logout] é pressionado.
 const logout = async () => signOut(userIsLogged, router, alert);
 
-onMounted(async () => await generateContent(updateScreenSize, userIsLogged));
+onMounted(async () => {
+    gsap.from('#header', { y: -100, autoAlpha: 0, duration: 1.2, delay: 0.5 });
+    await generateContent(updateScreenSize, userIsLogged);
+});
 
 onUpdated(() => screenWidth.value);
 
@@ -34,7 +38,7 @@ onUnmounted(() => {
 
 <template>
     <div id="app">
-        <header>
+        <header id="header">
             <router-link :to="PATH.HOME">
                 <div class="container-logo"></div>
             </router-link>

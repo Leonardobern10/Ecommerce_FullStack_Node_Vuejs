@@ -35,9 +35,9 @@ export const financedValue = (price) => Number(price / 10).toFixed(2);
 export const viewFinancedValue = (price) =>
     `R$ ${Number(price).toFixed(2)} em até 10x de R$ ${financedValue(price)}`;
 
-export const accessProductById = (id, store) => {
+export const accessProductById = async (id, store, router) => {
     store.save(id);
-    return router.push(`/products/${id}`);
+    await router.push(`/products/${id}`);
 };
 
 export const sortProductsByPrice = (array) => mergeSort([...array.value]);

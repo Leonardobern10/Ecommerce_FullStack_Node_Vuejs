@@ -11,7 +11,9 @@ import { addOnCart } from '../services/cartService.js';
 import { authState } from '@/store/useAuth.js';
 import { useProductStore } from '@/store/userProductStore.js';
 import { filterProducts } from '../services/productService.js';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const isLogged = ref(false);
 const products = ref([]);
 const productStore = useProductStore();
@@ -25,7 +27,8 @@ const addProductToCart = async (product) =>
     await addOnCart(product, isLogged, alert);
 
 // Acessa a view de um produto específico
-const accessProduct = async (id) => await accessProductById(id, productStore);
+const accessProduct = async (id) =>
+    await accessProductById(id, productStore, router);
 
 // Ordenação
 const sortProductsLowToHigh = async () =>
@@ -39,9 +42,7 @@ onMounted(async () => await loadProducts(authState, isLogged, products));
 
 <template>
     <div id="view">
-        <router-link to="/products/add" class="btn-add"
-            >Adicionar Produto</router-link
-        >
+        <router-link to="/products/add">Adicionar Produto</router-link>
         <div id="container">
             <nav id="container-options-view">
                 <p class="options-view" @click="sortProductsLowToHigh">

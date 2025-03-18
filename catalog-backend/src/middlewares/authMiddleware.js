@@ -19,7 +19,13 @@ export const authMiddleware = async (req, res, next) => {
         if (!user)
             return res.status(401).json({ message: 'Usuário não encontrado.' });
 
-        req.user = user;
+        req.user = {
+            id: user._id,
+            role: user.role,
+            email: user.email,
+            name: user.name,
+        };
+
         next();
     } catch (error) {
         console.log('Erro na decodificação do token:', error);

@@ -1,5 +1,7 @@
 <script setup>
-defineProps({ icon: String, title: String, content: String });
+import { defineProps } from 'vue';
+
+const props = defineProps({ icon: String, title: String, content: String });
 </script>
 
 <template>

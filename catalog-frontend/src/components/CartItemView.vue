@@ -1,6 +1,6 @@
 <script setup>
-import { financedValue, pixValue } from '@/services/productService';
 import { defineProps, defineEmits } from 'vue';
+import { pixValue } from '@/services/productService';
 
 const props = defineProps(['name', 'price', 'quantity', 'imageUrl']);
 const emit = defineEmits(['update-quantity']);

@@ -1,19 +1,26 @@
 import express from 'express';
 import Product from '../model/Product.js';
+import { authMiddleware } from '../middlewares/authMiddleware.js';
+import { hasRole } from '../middlewares/roleMiddleware.js';
 
 const productRouter = express.Router();
 
 // Cadastrar produto
-productRouter.post('/', async (req, res) => {
-    try {
-        const product = new Product(req.body);
-        await product.save();
-        res.status(201).json(product);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-        console.error(error);
-    }
-});
+productRouter.post(
+    '/',
+    authMiddleware,
+    hasRole(['admin']),
+    async (req, res) => {
+        try {
+            const product = new Product(req.body);
+            await product.save();
+            res.status(201).json(product);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+            console.error(error);
+        }
+    },
+);
 
 // Listar todos os produtos
 productRouter.get('/', async (req, res) => {
@@ -38,19 +45,24 @@ productRouter.get('/:id', async (req, res) => {
 });
 
 // Atualizar um produto
-productRouter.put('/:id', async (req, res) => {
-    try {
-        const product = await Product.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true },
-        );
-        res.json(product);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-        console.error(error);
-    }
-});
+productRouter.put(
+    '/:id',
+    authMiddleware,
+    hasRole(['admin', 'editor']),
+    async (req, res) => {
+        try {
+            const product = await Product.findByIdAndUpdate(
+                req.params.id,
+                req.body,
+                { new: true },
+            );
+            res.json(product);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+            console.error(error);
+        }
+    },
+);
 
 // Deletar produto
 productRouter.delete('/:id', async (req, res) => {
