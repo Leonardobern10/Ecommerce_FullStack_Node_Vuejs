@@ -42,7 +42,6 @@ onMounted(async () => await loadProducts(authState, isLogged, products));
 
 <template>
     <div id="view">
-        <router-link to="/products/add">Adicionar Produto</router-link>
         <div id="container">
             <nav id="container-options-view">
                 <p class="options-view" @click="sortProductsLowToHigh">
