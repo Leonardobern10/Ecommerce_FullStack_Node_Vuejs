@@ -41,7 +41,7 @@ onMounted(async () => await loadOrders(isLogged, router, auth, orders));
                                 id="name-item"
                                 v-for="item in order.items"
                                 :key="item._id">
-                                {{ item.quantity }}x {{ item.name }}
+                                {{ item.quantity }}x {{ item.product.name }}
                             </li>
                         </ul>
                     </div>
