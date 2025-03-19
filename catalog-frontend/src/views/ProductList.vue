@@ -24,7 +24,7 @@ const filteredProducts = computed(() =>
 
 // Adiciona um produto ao carrinho
 const addProductToCart = async (product) =>
-    await addOnCart(product, isLogged, alert);
+    await addOnCart(product, router, isLogged, alert);
 
 // Acessa a view de um produto específico
 const accessProduct = async (id) =>

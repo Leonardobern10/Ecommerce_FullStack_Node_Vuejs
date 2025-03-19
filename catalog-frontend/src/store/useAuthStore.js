@@ -18,8 +18,6 @@ export const useAuthStore = defineStore('authStore', {
                 if (response.status === 401) {
                     this.authenticated = false;
                 }
-
-                console.log(response.status);
             } catch (error) {
                 this.authenticated = false;
             }

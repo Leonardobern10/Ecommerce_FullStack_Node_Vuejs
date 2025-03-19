@@ -40,7 +40,6 @@ onMounted(async () => {
     gsap.from('#header', { y: -100, autoAlpha: 0, duration: 1.2, delay: 0.5 });
     await generateContent(updateScreenSize, userIsLogged);
     permitted.value = await hasRole();
-    console.log('Resposta = ', permitted);
 });
 
 watchEffect(async () => {

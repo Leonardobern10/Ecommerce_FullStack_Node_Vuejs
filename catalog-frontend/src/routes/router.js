@@ -33,7 +33,6 @@ router.beforeEach(async (to, from, next) => {
     const role = await checkRole();
 
     if (role === 'admin') permitted = true;
-    console.log(permitted);
 
     if (
         (to.path === '/admin' ||
