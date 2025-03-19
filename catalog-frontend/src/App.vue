@@ -32,7 +32,6 @@ const hasRole = async () => {
     if (role === 'admin') {
         return true;
     }
-    console.log('Role = ', role);
     return false;
 };
 

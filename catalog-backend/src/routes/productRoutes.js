@@ -25,8 +25,19 @@ productRouter.post(
 // Listar todos os produtos
 productRouter.get('/', async (req, res) => {
     try {
-        const products = await Product.find();
-        res.json(products);
+        const page = Math.max(parseInt(req.query.page) || 1, 1);
+        const limit = Math.max(parseInt(req.query.limit) || 10, 1);
+        const skip = (page - 1) * limit;
+
+        const products = await Product.find().skip(skip).limit(limit);
+        const total = await Product.countDocuments();
+
+        res.json({
+            data: products,
+            currentPage: page,
+            totalPages: Math.ceil(total / limit),
+            totalItems: total,
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
         console.error(error);

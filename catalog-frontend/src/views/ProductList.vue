@@ -16,6 +16,11 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const isLogged = ref(false);
 const products = ref([]);
+
+const currentPage = ref(1);
+const totalPages = ref();
+const limit = ref(9);
+
 const productStore = useProductStore();
 const searchBrandQuery = ref('');
 const filteredProducts = computed(() =>
@@ -43,7 +48,35 @@ const sortProductsMostRecently = async () =>
         'createdAt',
     ).reverse());
 
-onMounted(async () => await loadProducts(authState, isLogged, products));
+const goToPage = (local) => {
+    if (local === 'next') nextPage();
+    if (local === 'previous') previousPage();
+
+    loadProducts(authState, isLogged, products, currentPage, totalPages, limit);
+};
+
+const nextPage = () => {
+    if (currentPage.value < totalPages.value) {
+        currentPage.value += 1;
+    }
+};
+
+const previousPage = () => {
+    if (currentPage.value > 1) {
+        currentPage.value -= 1;
+    }
+};
+
+onMounted(async () => {
+    await loadProducts(
+        authState,
+        isLogged,
+        products,
+        currentPage, // Passando ref corretamente
+        totalPages, // Passando ref corretamente
+        limit,
+    );
+});
 </script>
 
 <template>
@@ -99,6 +132,11 @@ onMounted(async () => await loadProducts(authState, isLogged, products));
                     </button>
                 </li>
             </ul>
+            <div class="pagination">
+                <button @click="goToPage('previous')">Anterior</button>
+                <span> Página {{ currentPage }} de {{ totalPages }}</span>
+                <button @click="goToPage('next')">Próxima</button>
+            </div>
         </div>
     </div>
 </template>
@@ -273,5 +311,8 @@ img {
     align-items: center;
 
     height: 100%;
+}
+.pagination {
+    margin-top: 20px;
 }
 </style>

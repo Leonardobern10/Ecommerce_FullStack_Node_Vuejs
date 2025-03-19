@@ -4,9 +4,16 @@ import { mergeSort } from './sort';
 import MESSAGE from '@/constants/MESSAGE';
 import PATH from '@/constants/PATH';
 
-export const getProducts = async () => {
-    const response = await axios.get(URL.PRODUCTS);
-    return response.data;
+export const getProducts = async (page, limit) => {
+    try {
+        const response = await axios.get(`${URL.PRODUCTS}`, {
+            params: { page, limit },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao buscar produtos:', error);
+        return { data: [], currentPage: 1, totalPages: 1 }; // Retorna um fallback seguro
+    }
 };
 
 export const getProduct = async (id) => {
@@ -66,8 +73,21 @@ export const saveProduct = async (edit, route, product, router, cb) => {
     }
 };
 
-export const loadProducts = async (auth, state, array) => {
+export const loadProducts = async (
+    auth,
+    state,
+    array,
+    pageRef,
+    totalRef,
+    limit,
+) => {
     await auth.checkAuthStatus();
     state.value = auth.isAuthenticated.value;
-    array.value = await getProducts();
+
+    const result = await getProducts(pageRef.value, limit.value); // Usa pageRef.value corretamente
+    array.value = result.data;
+
+    // ✅ Garante que os valores sejam atualizados corretamente
+    pageRef.value = result.currentPage;
+    totalRef.value = result.totalPages;
 };
