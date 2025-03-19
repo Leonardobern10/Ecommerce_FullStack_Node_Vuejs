@@ -2,12 +2,14 @@
 import { ref, onMounted } from 'vue';
 import { useAuthStore } from '@/store/useAuthStore';
 import { loadOrders } from '@/services/orderService';
+import { useRouter } from 'vue-router';
 
 const orders = ref([]);
 const isLogged = ref(false);
 const auth = useAuthStore();
+const router = useRouter();
 
-onMounted(async () => await loadOrders(isLogged, auth, orders));
+onMounted(async () => await loadOrders(isLogged, router, auth, orders));
 </script>
 
 <template>
@@ -38,8 +40,8 @@ onMounted(async () => await loadOrders(isLogged, auth, orders));
                             <li
                                 id="name-item"
                                 v-for="item in order.items"
-                                :key="item.product._id">
-                                {{ item.quantity }}x {{ item.product.name }}
+                                :key="item._id">
+                                {{ item.quantity }}x {{ item.name }}
                             </li>
                         </ul>
                     </div>

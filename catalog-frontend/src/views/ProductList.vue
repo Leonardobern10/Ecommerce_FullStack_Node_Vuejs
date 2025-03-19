@@ -4,7 +4,7 @@ import {
     accessProductById,
     loadProducts,
     pixValue,
-    sortProductsByPrice,
+    sortProductsByProp,
     viewFinancedValue,
 } from '../services/productService.js';
 import { addOnCart } from '../services/cartService.js';
@@ -32,10 +32,16 @@ const accessProduct = async (id) =>
 
 // Ordenação
 const sortProductsLowToHigh = async () =>
-    (products.value = await sortProductsByPrice(products));
+    (products.value = await sortProductsByProp(products, 'price'));
 
 const sortProductsHighToLow = async () =>
-    (products.value = await sortProductsByPrice(products).reverse());
+    (products.value = await sortProductsByProp(products, 'price').reverse());
+
+const sortProductsMostRecently = async () =>
+    (products.value = await sortProductsByProp(
+        products,
+        'createdAt',
+    ).reverse());
 
 onMounted(async () => await loadProducts(authState, isLogged, products));
 </script>
@@ -50,7 +56,7 @@ onMounted(async () => await loadProducts(authState, isLogged, products));
                 <p class="options-view" @click="sortProductsHighToLow">
                     Maior preço
                 </p>
-                <p class="options-view" @click="sortProductsLowToHigh">
+                <p class="options-view" @click="sortProductsMostRecently">
                     Mais recentes
                 </p>
                 <div id="container-search-brand">

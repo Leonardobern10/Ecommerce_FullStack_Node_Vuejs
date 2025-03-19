@@ -42,7 +42,8 @@ export const accessProductById = async (id, store, router) => {
     await router.push(`/products/${id}`);
 };
 
-export const sortProductsByPrice = (array) => mergeSort([...array.value]);
+export const sortProductsByProp = (array, prop) =>
+    mergeSort([...array.value], prop);
 
 export const filterProducts = (search, array, target) => {
     if (!search.value.trim()) return array.value;

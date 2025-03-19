@@ -2,9 +2,6 @@ import axios from 'axios';
 import { URL } from '@/constants/URL';
 import MESSAGE from '@/constants/MESSAGE';
 import PATH from '@/constants/PATH';
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
 
 // Cria um pedido e o armazena no banco
 export const createOrder = async (orderData) => {
@@ -17,12 +14,11 @@ export const getOrders = async () => {
     return await axios.get(URL.ORDER, { withCredentials: true });
 };
 
-export const fetchOrders = async (state, array) => {
+export const fetchOrders = async (state, router, array) => {
     try {
         if (!state.value) {
             return await router.push(PATH.LOGIN);
         }
-
         const response = await getOrders();
         array.value = response.data;
     } catch (error) {
@@ -30,10 +26,10 @@ export const fetchOrders = async (state, array) => {
     }
 };
 
-export const loadOrders = async (state, auth, array) => {
+export const loadOrders = async (state, router, auth, array) => {
     await auth.checkAuthStatus();
     state.value = auth.authenticated;
-    await fetchOrders(state, array);
+    await fetchOrders(state, router, array);
 };
 
 export const checkoutOrder = async (
