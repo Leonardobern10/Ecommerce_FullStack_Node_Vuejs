@@ -96,7 +96,10 @@ onMounted(() => {
         autoAlpha: 0,
         ease: 'expo.out',
     });
-    gsap.to('h1', { duration: 3, text: 'Seu estilo começa pelo pulso' });
+    gsap.to('h1', {
+        duration: 5,
+        text: 'Seu estilo começa pelo pulso. Seja destaque.',
+    });
     gsap.from('#newest-products', {
         scrollTrigger: {
             trigger: '#newest-products',
@@ -237,31 +240,48 @@ onUnmounted(() => {
     #banner-init {
         flex-direction: column-reverse;
         width: 100%;
+        border-radius: 20px;
     }
     #container-text-presentation {
         width: 100%;
     }
     h1 {
-        font-size: 2rem;
+        margin: 2rem 0;
+        width: 70%;
+        font-size: 1.7rem;
     }
     #shop-description {
-        width: 70%;
+        width: 80%;
+        padding: 0 1rem;
     }
     #shop-description p:first-child {
-        font-size: 1.2rem;
+        font-size: 1rem;
+        width: 40%;
+    }
+    span {
+        font-size: 1.7rem;
+        font-weight: 400;
+        width: 40%;
     }
     #container-img {
         width: 100%;
     }
+    #newest-products {
+        width: 100%;
+        height: 100%;
+    }
     #container-newest {
         flex-direction: column;
+        row-gap: 3rem;
     }
     #container-info-newest {
         align-items: center;
         width: 100%;
+        height: 40%;
+        row-gap: 2rem;
     }
     #text-newest {
-        width: 100%;
+        width: 80%;
         font-size: 1rem;
     }
     button {
@@ -270,6 +290,7 @@ onUnmounted(() => {
         margin-bottom: 1rem;
     }
     #about-company {
+        padding-bottom: 8rem;
         width: 100%;
         height: 100%;
         background:
@@ -279,7 +300,7 @@ onUnmounted(() => {
                 no-repeat;
     }
     #container-about-company {
-        row-gap: 3rem;
+        row-gap: 4rem;
     }
     #container-icons {
         width: 100%;
@@ -287,16 +308,20 @@ onUnmounted(() => {
     }
     #category {
         width: 80%;
+        row-gap: 8rem;
     }
     #container-category {
         height: 100%;
-        row-gap: 0.7rem;
+        row-gap: 3rem;
         flex-direction: column;
+    }
+    #category-description {
+        row-gap: 1rem;
     }
 }
 @media (min-width: 600px) {
     #banner-init {
-        margin-top: 2rem;
+        height: 80%;
         width: 80%;
         flex-direction: row;
 
@@ -306,15 +331,16 @@ onUnmounted(() => {
             rgba(0, 0, 0, 1) 100%,
             rgba(115, 128, 122, 1) 53%
         );
-        border-radius: 20px;
+        border-radius: 5px;
         box-shadow: 0 20px 20px #00000094;
     }
     #container-text-presentation {
         width: 50%;
-        height: 100%;
+        height: 70%;
     }
     h1 {
         font-size: 3rem;
+        width: 85%;
     }
     #shop-description {
         width: 60%;
@@ -323,17 +349,28 @@ onUnmounted(() => {
     #shop-description p:first-child {
         font-size: 1.7rem;
     }
+    span {
+        font-size: 2rem;
+        font-weight: 400;
+    }
     #container-img {
         width: 50%;
         height: 100%;
         border-radius: 15px;
     }
+    #newest-products {
+        width: 90%;
+        height: 100%;
+    }
     #container-newest {
         flex-direction: row;
+        height: 100%;
+        width: 100%;
     }
     #container-info-newest {
         align-items: flex-start;
         width: 20%;
+        height: 50%;
     }
     #text-newest {
         width: 70%;
@@ -349,7 +386,7 @@ onUnmounted(() => {
         background-color: var(--xanadu);
     }
     #about-company {
-        width: 101.8%;
+        width: 100%;
         height: 100vh;
         background:
             linear-gradient(to top, rgb(0, 0, 0.1), rgba(0, 0, 0, 0.2)),
@@ -357,7 +394,7 @@ onUnmounted(() => {
             url('../assets/images/man_style_photo_1.svg') right center no-repeat;
     }
     #container-about-company {
-        row-gap: 2rem;
+        row-gap: 1rem;
         padding: 1rem 0;
     }
     #container-icons {
@@ -365,11 +402,14 @@ onUnmounted(() => {
         flex-direction: row;
     }
     #category {
-        width: 101.8%;
+        width: 100%;
         height: 100vh;
+        row-gap: 15rem;
     }
     #category-description {
         color: #000;
+        display: flex;
+        flex-direction: column;
     }
     #container-category {
         flex-direction: row;
@@ -380,8 +420,10 @@ onUnmounted(() => {
         justify-content: space-around;
         align-items: center;
     }
+    #category-description {
+        row-gap: 3rem;
+    }
 }
-
 .home {
     display: flex;
     flex-direction: column;
@@ -408,9 +450,6 @@ onUnmounted(() => {
     justify-content: space-between;
     align-items: center;
 
-    height: 100%;
-    border: 2px solid rgb(0, 0, 0);
-
     background: linear-gradient(
         300deg,
         rgb(0, 0, 0),
@@ -425,16 +464,13 @@ onUnmounted(() => {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    height: 100%;
     text-align: left;
     color: #000000a4;
 }
 h1 {
-    width: 85%;
     font-family: 'BioRhyme', serif;
     font-weight: 400;
     color: #000000a4;
-    text-shadow: 10px 10px 5px #0000003f;
 }
 #shop-description {
     display: flex;
@@ -463,15 +499,7 @@ h1 {
 
     background-color: #000;
 }
-span {
-    font-size: 2rem;
-    font-weight: 400;
-}
 #container-img {
-    height: 100%;
-}
-#newest-products {
-    width: 80%;
     height: 100%;
 }
 #container-newest {
@@ -483,8 +511,6 @@ span {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-
-    height: 40%;
 
     letter-spacing: 0.1px;
 }
@@ -508,7 +534,7 @@ button {
     margin: 0;
     padding: 0;
 
-    background-color: #000000d3;
+    background-color: var(--xanadu);
     background-repeat: no-repeat;
     background-size: contain;
     background-clip: border-box;
@@ -518,6 +544,8 @@ button {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+
+    line-height: 2.3rem;
 }
 #container-icons {
     display: flex;
@@ -526,8 +554,12 @@ button {
     align-items: center;
 }
 #container-about-company-description {
-    margin-top: 2rem;
-    line-height: 0.1rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.1px;
+
+    padding-top: 5rem;
+
     color: #fff;
 }
 #container-about-company-description p:first-child {
@@ -545,9 +577,10 @@ button {
     flex-direction: column;
     justify-content: space-between;
     align-items: stretch;
-    row-gap: 8rem;
 }
 #category-description {
+    display: flex;
+    flex-direction: column;
     color: #000;
 }
 #container-category {

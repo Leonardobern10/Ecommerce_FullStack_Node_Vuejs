@@ -12,6 +12,7 @@ import { useRouter } from 'vue-router';
 import { hasPermission } from './services/roleService';
 import gsap from 'gsap';
 
+let menuMobileVisibility = ref(false);
 const useAuth = useAuthStore();
 const router = useRouter();
 let permitted = ref(false);
@@ -27,6 +28,11 @@ const updateScreenSize = () => (screenWidth.value = window.innerWidth);
 
 // Função executada quando o botao [Logout] é pressionado.
 const logout = async () => signOut(userIsLogged, useAuth, router, alert);
+
+const changeMobileMenuVisibility = () => {
+    menuMobileVisibility.value = !menuMobileVisibility.value;
+    console.log(menuMobileVisibility.value);
+};
 
 onMounted(async () => {
     gsap.from('#header', { y: -100, autoAlpha: 0, duration: 1.2, delay: 0.5 });
@@ -95,12 +101,21 @@ onUnmounted(() => {
                     Logout
                 </button>
             </div>
-            <div v-else id="menu-mobile"></div>
+            <div v-else @click="changeMobileMenuVisibility()" id="menu-mobile">
+                <div id="container-options-mobile" v-if="menuMobileVisibility">
+                    <nav>
+                        <ul>
+                            <li>Teste</li>
+                            <li>Teste</li>
+                            <li>Teste</li>
+                            <li>Teste</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
         </header>
         <main>
-            <div>
-                <router-view />
-            </div>
+            <router-view />
         </main>
         <footer>
             <div id="container-footer">
@@ -157,8 +172,7 @@ onUnmounted(() => {
 <style scoped>
 @media (max-width: 600px) {
     header {
-        width: 90%;
-        height: 2rem;
+        width: 90vw;
 
         display: flex;
         flex-direction: row;
@@ -166,6 +180,9 @@ onUnmounted(() => {
         align-items: center;
 
         padding: 1rem 0;
+    }
+    main {
+        width: 100%;
     }
     .navbar {
         width: 30%;
@@ -206,7 +223,6 @@ onUnmounted(() => {
     #author {
         font-size: 0.7rem;
     }
-
     #logo-social-network {
         width: 2rem;
     }
@@ -214,11 +230,18 @@ onUnmounted(() => {
         font-size: 0.7rem;
         line-height: 0.2rem;
     }
+    #container-options-mobile {
+        position: absolute;
+        width: 120px;
+        height: 100%;
+        display: block;
+        background-color: #d9d9d9;
+    }
 }
 @media (min-width: 600px) {
     header {
-        width: 80%;
-        height: 2rem;
+        max-width: 100%;
+        min-width: 80vw;
 
         display: flex;
         flex-direction: row;
@@ -226,6 +249,9 @@ onUnmounted(() => {
         align-items: center;
 
         padding: 1rem 0;
+    }
+    main {
+        width: 100%;
     }
     .navbar {
         width: 50%;
@@ -238,6 +264,7 @@ onUnmounted(() => {
     }
     #container-login {
         width: 15%;
+        min-width: 10%;
     }
     #btn-logout {
         transition:
@@ -284,11 +311,18 @@ onUnmounted(() => {
     }
 }
 #app {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    padding: 0;
+    height: 100%;
+
+    display: grid;
+    grid-template-rows: 2% auto 12%;
+    grid-template-columns: 100%;
+
+    justify-items: center;
     align-items: center;
+
+    justify-content: center;
+    align-content: space-between;
 }
 .container-logo {
     background-image: var(--logo-shop-watch);
@@ -319,6 +353,7 @@ onUnmounted(() => {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    column-gap: 1rem;
 }
 #btn-logout {
     align-self: stretch;
@@ -334,7 +369,6 @@ onUnmounted(() => {
     letter-spacing: 0.5px;
 }
 main {
-    width: 100%;
     height: 100%;
 
     display: flex;

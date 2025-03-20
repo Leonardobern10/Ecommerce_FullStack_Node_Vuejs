@@ -62,6 +62,9 @@ onUnmounted(() => removeEventListener('resize', updateScreenSize));
         flex-direction: column;
         column-gap: 1rem;
     }
+    #container-description {
+        row-gap: 2rem;
+    }
     .button-product {
         position: relative;
         top: 40%;
@@ -83,13 +86,14 @@ onUnmounted(() => removeEventListener('resize', updateScreenSize));
         border: none;
         background-color: transparent;
     }
+    #product-price-financed {
+        width: 100%;
+    }
 }
 @media (min-width: 600px) {
     #container {
-        margin-top: 2rem;
         width: 100%;
         height: 50%;
-        column-gap: 1rem;
     }
     #container-img {
         width: 8rem;
@@ -101,6 +105,12 @@ onUnmounted(() => removeEventListener('resize', updateScreenSize));
     #view {
         flex-direction: row;
     }
+    #product-price-financed {
+        width: 100%;
+    }
+    #container-description {
+        row-gap: 1rem;
+    }
 }
 #view {
     display: flex;
@@ -110,8 +120,12 @@ onUnmounted(() => removeEventListener('resize', updateScreenSize));
 }
 
 #container-description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     text-align: center;
-    line-height: 0.7rem;
+    line-height: 1.5rem;
 }
 
 #container {
@@ -126,7 +140,6 @@ onUnmounted(() => removeEventListener('resize', updateScreenSize));
     height: 15rem;
 }
 #product-price-financed {
-    width: 80%;
     line-height: 1rem;
 }
 </style>

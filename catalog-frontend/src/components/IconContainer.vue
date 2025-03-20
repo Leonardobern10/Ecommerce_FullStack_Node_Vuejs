@@ -30,8 +30,6 @@ const props = defineProps({ icon: String, title: String, content: String });
 
         height: 100%;
         line-height: 1rem;
-
-        margin-bottom: 4rem;
     }
     #icon {
         width: 5rem;
@@ -53,6 +51,7 @@ const props = defineProps({ icon: String, title: String, content: String });
         align-items: center;
         justify-content: center;
         height: 8rem;
+        row-gap: 0.5rem;
     }
 }
 @media (min-width: 600px) {
@@ -64,8 +63,8 @@ const props = defineProps({ icon: String, title: String, content: String });
 
         height: 30rem;
         width: 20rem;
-        row-gap: 0.7px;
-        line-height: 1rem;
+        row-gap: 1rem;
+        line-height: 1.5rem;
     }
     #icon {
         width: 7rem;
@@ -81,6 +80,10 @@ const props = defineProps({ icon: String, title: String, content: String });
         color: #ffffff70;
         font-size: 1rem;
         font-weight: 100;
+    }
+    #info {
+        width: 80%;
+        text-align: center;
     }
 }
 </style>
