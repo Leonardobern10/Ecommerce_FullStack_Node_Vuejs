@@ -9,14 +9,13 @@ import logoFacebook from './assets/icons/facebook1.svg';
 import signOut from './services/logoutService';
 import { generateContent } from './services/appService';
 import { useRouter } from 'vue-router';
-import { checkRole } from './services/roleService';
+import { hasPermission } from './services/roleService';
 import gsap from 'gsap';
 
 const useAuth = useAuthStore();
-let permitted = ref(false);
 const router = useRouter();
+let permitted = ref(false);
 let userIsLogged = ref(false);
-
 const screenWidth = ref(window.innerWidth);
 const socialNetworksLogos = [
     { nome: logoFacebook },
@@ -25,36 +24,19 @@ const socialNetworksLogos = [
 ];
 
 const updateScreenSize = () => (screenWidth.value = window.innerWidth);
+
 // Função executada quando o botao [Logout] é pressionado.
 const logout = async () => signOut(userIsLogged, useAuth, router, alert);
-
-const hasRole = async () => {
-    let role = await checkRole();
-    if (role === 'admin') {
-        return true;
-    }
-    return false;
-};
 
 onMounted(async () => {
     gsap.from('#header', { y: -100, autoAlpha: 0, duration: 1.2, delay: 0.5 });
     await generateContent(updateScreenSize, userIsLogged, useAuth);
-    permitted.value = await hasRole();
+    permitted.value = await hasPermission(useAuth, permitted);
 });
 
-watchEffect(async () => {
-    if (useAuth.authenticated) {
-        permitted.value = await hasRole();
-    } else {
-        permitted.value = false;
-    }
-});
+watchEffect(async () => await hasPermission(useAuth, permitted));
 
-onUpdated(() => {
-    screenWidth.value, permitted.value;
-});
-
-onUnmounted(async () => {
+onUnmounted(() => {
     window.removeEventListener('resize', updateScreenSize);
 });
 </script>

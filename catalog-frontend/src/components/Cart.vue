@@ -129,17 +129,14 @@ button {
 
     margin: 1rem 0;
 }
-
 button:hover {
     cursor: pointer;
     background-color: var(--xanadu);
     border: 1px solid #fff;
 }
-
 li {
     list-style: none;
 }
-
 #items-cart {
     width: 70%;
     display: flex;
@@ -149,7 +146,6 @@ li {
 
     padding: 0 1rem;
 }
-
 #resume-cart {
     margin-top: 1rem;
     width: 30%;
@@ -160,14 +156,12 @@ li {
     background-color: #8181813b;
     border-radius: 15px;
 }
-
 #resume-cart > div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
-
 #total-value {
     font-size: 1.3rem;
     font-weight: 800;

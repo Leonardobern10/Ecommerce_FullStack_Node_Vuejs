@@ -11,3 +11,19 @@ export const checkRole = async () => {
         return '';
     }
 };
+
+export const isAdmin = async () => {
+    let role = await checkRole();
+    if (role === 'admin') {
+        return true;
+    }
+    return false;
+};
+
+export const hasPermission = async (auth, permitted) => {
+    if (auth.authenticated) {
+        permitted.value = await isAdmin();
+    } else {
+        permitted.value = false;
+    }
+};
