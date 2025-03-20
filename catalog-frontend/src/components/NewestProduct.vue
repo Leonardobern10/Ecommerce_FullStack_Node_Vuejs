@@ -1,4 +1,5 @@
 <script setup>
+import { pixValue, viewFinancedValue } from '@/services/productService';
 import { defineProps, defineEmits, onMounted, onUnmounted, ref } from 'vue';
 
 const emits = defineEmits(['nextItem', 'previousItem']);
@@ -28,7 +29,12 @@ onUnmounted(() => removeEventListener('resize', updateScreenSize));
             </div>
             <div id="container-description">
                 <p id="product-name">{{ name }}</p>
-                <h3 id="product-price">R$ {{ price }}</h3>
+                <h3 id="product-price">
+                    R$ {{ pixValue(price) }} <span>no pix</span>
+                </h3>
+                <p id="product-price-financed">
+                    ou {{ viewFinancedValue(price) }}
+                </p>
             </div>
         </div>
         <button
@@ -118,5 +124,9 @@ onUnmounted(() => removeEventListener('resize', updateScreenSize));
 
 #container-img {
     height: 15rem;
+}
+#product-price-financed {
+    width: 80%;
+    line-height: 1rem;
 }
 </style>
