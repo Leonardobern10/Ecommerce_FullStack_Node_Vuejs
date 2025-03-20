@@ -98,7 +98,7 @@ onMounted(async () => {
                         id="input-brand"
                         v-model="searchBrandQuery"
                         type="text"
-                        placeholder="Digite o nome da marca..." />
+                        placeholder="Nome da marca..." />
                 </div>
             </nav>
             <ul id="container-products">
@@ -245,15 +245,15 @@ button:hover {
     outline: none;
 
     background-color: var(--xanadu);
-    color: #000;
+    color: #000000a2;
 }
 #input-brand:focus {
     background-color: #000;
     color: var(--green-spring);
-    color: #fff;
+    color: #ffffff88;
 }
 #input-brand::placeholder {
-    color: #fff;
+    color: #ffffff98;
 }
 img {
     width: 100%;

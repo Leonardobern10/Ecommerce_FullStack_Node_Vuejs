@@ -22,8 +22,6 @@ gsap.registerPlugin(TextPlugin);
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(PixiPlugin);
 
-const imagem = document.querySelector('#container-img');
-
 const icons = [
     {
         icon: iconClock,

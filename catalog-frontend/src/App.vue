@@ -1,5 +1,5 @@
 <script setup>
-import { authState } from '@/store/useAuth.js';
+import { useAuthStore } from './store/useAuthStore';
 import { onMounted, onUnmounted, onUpdated, ref } from 'vue';
 import { watchEffect } from 'vue';
 import PATH from './constants/PATH';
@@ -12,6 +12,7 @@ import { useRouter } from 'vue-router';
 import { checkRole } from './services/roleService';
 import gsap from 'gsap';
 
+const useAuth = useAuthStore();
 let permitted = ref(false);
 const router = useRouter();
 let userIsLogged = ref(false);
@@ -25,7 +26,7 @@ const socialNetworksLogos = [
 
 const updateScreenSize = () => (screenWidth.value = window.innerWidth);
 // Função executada quando o botao [Logout] é pressionado.
-const logout = async () => signOut(userIsLogged, router, alert);
+const logout = async () => signOut(userIsLogged, useAuth, router, alert);
 
 const hasRole = async () => {
     let role = await checkRole();
@@ -37,12 +38,12 @@ const hasRole = async () => {
 
 onMounted(async () => {
     gsap.from('#header', { y: -100, autoAlpha: 0, duration: 1.2, delay: 0.5 });
-    await generateContent(updateScreenSize, userIsLogged);
+    await generateContent(updateScreenSize, userIsLogged, useAuth);
     permitted.value = await hasRole();
 });
 
 watchEffect(async () => {
-    if (authState.isAuthenticated.value) {
+    if (useAuth.authenticated) {
         permitted.value = await hasRole();
     } else {
         permitted.value = false;
@@ -73,19 +74,19 @@ onUnmounted(async () => {
                         >Produtos</router-link
                     >
                     <router-link
-                        v-if="authState.isAuthenticated.value"
+                        v-if="useAuth.authenticated"
                         :to="PATH.CART"
                         class="navbar-link"
                         >Carrinho</router-link
                     >
                     <router-link
-                        v-if="authState.isAuthenticated.value"
+                        v-if="useAuth.authenticated"
                         :to="PATH.ORDERS"
                         class="navbar-link"
                         >Meus pedidos</router-link
                     >
                     <router-link
-                        v-if="permitted && authState.isAuthenticated.value"
+                        v-if="permitted && useAuth.authenticated"
                         :to="PATH.ADMIN"
                         class="navbar-link"
                         >Administration</router-link
@@ -94,19 +95,19 @@ onUnmounted(async () => {
             </nav>
             <div v-if="screenWidth > 600" id="container-login">
                 <router-link
-                    v-if="!authState.isAuthenticated.value"
+                    v-if="!useAuth.authenticated"
                     :to="PATH.LOGIN"
                     class="navbar-link"
                     >Login</router-link
                 >
                 <router-link
-                    v-if="!authState.isAuthenticated.value"
+                    v-if="!useAuth.authenticated"
                     :to="PATH.REGISTER"
                     class="navbar-link"
                     >Registrar</router-link
                 >
                 <button
-                    v-if="authState.isAuthenticated.value"
+                    v-if="useAuth.authenticated"
                     id="btn-logout"
                     @click="logout">
                     Logout
