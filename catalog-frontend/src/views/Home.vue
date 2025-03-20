@@ -283,6 +283,7 @@ onUnmounted(() => {
     }
     #container-icons {
         width: 100%;
+        flex-direction: column;
     }
     #category {
         width: 80%;
@@ -361,6 +362,7 @@ onUnmounted(() => {
     }
     #container-icons {
         width: 70rem;
+        flex-direction: row;
     }
     #category {
         width: 101.8%;
@@ -519,7 +521,7 @@ button {
 }
 #container-icons {
     display: flex;
-    flex-direction: row;
+
     justify-content: space-between;
     align-items: center;
 }
