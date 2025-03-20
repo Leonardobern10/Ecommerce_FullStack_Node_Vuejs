@@ -303,7 +303,6 @@ onUnmounted(() => {
         width: 80%;
         flex-direction: row;
 
-        background: rgba(0, 0, 0, 0.815);
         background: linear-gradient(
             90deg,
             rgba(117, 128, 112, 1) 0%,
@@ -331,7 +330,6 @@ onUnmounted(() => {
         width: 50%;
         height: 100%;
         border-radius: 15px;
-        opacity: 0.7;
     }
     #container-newest {
         flex-direction: row;
