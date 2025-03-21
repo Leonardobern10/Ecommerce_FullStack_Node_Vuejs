@@ -3,7 +3,7 @@
         <router-link class="object-panel" to="/products/add">
             Adicionar produto
         </router-link>
-        <router-link class="object-panel" to="/edit/:id"
+        <router-link class="object-panel" to="/products/edit"
             >Editar produto</router-link
         >
         <router-link class="object-panel" to="/">Vendas</router-link>

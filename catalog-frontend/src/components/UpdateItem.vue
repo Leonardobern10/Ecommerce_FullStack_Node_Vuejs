@@ -1,1 +1,3 @@
-<template></template>
+<template>
+    <div>ola</div>
+</template>

@@ -40,6 +40,7 @@ onMounted(async () => {
                 </div>
                 <button>Adicionar ao carrinho</button>
             </div>
+            <div>{{ console.log(product.value) }}</div>
         </div>
     </div>
 </template>
