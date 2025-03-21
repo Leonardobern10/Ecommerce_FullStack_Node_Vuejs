@@ -75,6 +75,35 @@ productRouter.put(
     },
 );
 
+productRouter.patch('/change/:id', authMiddleware, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { stock } = req.body;
+
+        if (stock === undefined || Number.isNaN(stock)) {
+            console.log('Estoque invalido');
+            return res.status(400).json({ mensagem: 'Estoque inválido' });
+        }
+
+        const updateProduct = await Product.findByIdAndUpdate(
+            id,
+            { $set: { stock } }, // Atualiza apenas o campo "stock"
+            { new: true, runValidators: true },
+        );
+        console.log(updateProduct);
+
+        if (!updateProduct) {
+            return res.status(404).json({ mensagem: 'Produto não encontrado' });
+        }
+
+        res.json(updateProduct);
+    } catch (erro) {
+        console.log('Erro no final');
+        res.status(400).json({ erro: erro.message });
+        console.log(erro.message);
+    }
+});
+
 // Deletar produto
 productRouter.delete('/:id', async (req, res) => {
     try {

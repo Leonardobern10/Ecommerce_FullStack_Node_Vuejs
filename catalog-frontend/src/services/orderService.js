@@ -2,6 +2,7 @@ import axios from 'axios';
 import { URL } from '@/constants/URL';
 import MESSAGE from '@/constants/MESSAGE';
 import PATH from '@/constants/PATH';
+import { changeProduct } from './productService';
 
 // Cria um pedido e o armazena no banco
 export const createOrder = async (orderData) => {
@@ -61,6 +62,12 @@ export const checkoutOrder = async (
         };
 
         await cb_CREATE(orderData);
+
+        await Promise.all(
+            array.value.map((item) =>
+                changeProduct(item._id, { stock: item.stock - item.quantity }),
+            ),
+        );
         cb_ALERT(MESSAGE.SUCESS.ORDER);
         cb_CLEAR();
         router.push(PATH.HOME);

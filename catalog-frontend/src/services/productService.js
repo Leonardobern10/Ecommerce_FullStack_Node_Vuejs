@@ -33,6 +33,20 @@ export const updateProduct = async (id, product) => {
     return response.data;
 };
 
+export const changeProduct = async (id, changes) => {
+    try {
+        const response = await axios.patch(
+            `${URL.PRODUCTS_CHANGE}/${id}`,
+            changes,
+            { withCredentials: true },
+        );
+        console.log('Aguardando a resposta: ', response.data);
+        return response.data;
+    } catch (erro) {
+        console.log(erro);
+    }
+};
+
 export const deleteProduct = async (id) => {
     await axios.delete(`${URL.PRODUCTS}/${id}`);
 };
