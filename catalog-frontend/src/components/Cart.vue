@@ -147,6 +147,9 @@ li {
     padding: 0 1rem;
 }
 #resume-cart {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
     margin-top: 1rem;
     width: 30%;
     height: fit-content;
@@ -168,7 +171,7 @@ li {
     color: #000000ab;
 }
 #price-values {
-    line-height: 0.1px;
+    line-height: 1rem;
     text-align: center;
 }
 #price-values > p:first-child {

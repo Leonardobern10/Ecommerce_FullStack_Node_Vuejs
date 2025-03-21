@@ -19,7 +19,7 @@ const products = ref([]);
 
 const currentPage = ref(1);
 const totalPages = ref();
-const limit = ref(9);
+const limit = ref(12);
 
 const productStore = useProductStore();
 const searchBrandQuery = ref('');
@@ -113,7 +113,7 @@ onMounted(async () => {
                             :alt="`imagem do ${product.name}`" />
                     </div>
                     <div id="description-product-offer">
-                        {{ product.name }}
+                        <p id="product-name">{{ product.name }}</p>
                         <div id="info-numbers">
                             <p class="p-price">
                                 <strong>
@@ -127,7 +127,9 @@ onMounted(async () => {
                             </p>
                         </div>
                     </div>
-                    <button @click.stop="addProductToCart(product)">
+                    <button
+                        id="button-add-product"
+                        @click.stop="addProductToCart(product)">
                         Adicionar ao Carrinho
                     </button>
                 </li>
@@ -181,7 +183,6 @@ button:hover {
     background-color: var(--xanadu);
 }
 #view {
-    margin-top: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -189,6 +190,7 @@ button:hover {
     font-family: 'Inter', serif;
     font-weight: 300;
     width: 80vw;
+    height: 100%;
 }
 #container {
     display: flex;
@@ -208,12 +210,13 @@ button:hover {
 
     background-color: var(--green-spring);
     opacity: 0.8;
+    height: 3rem;
 }
 #container-options-view p:first-child {
     padding-left: 2rem;
 }
 .options-view {
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 .options-view:hover {
     cursor: pointer;
@@ -222,7 +225,7 @@ button:hover {
     display: flex;
     flex-direction: row;
 
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
 
     width: 50%;
@@ -238,7 +241,7 @@ button:hover {
 }
 #input-brand {
     width: 25%;
-    height: 1rem;
+    height: 1.5rem;
     border-radius: 10px;
     padding: 0.4rem;
     border: none;
@@ -271,7 +274,10 @@ img {
     justify-content: space-between;
     align-items: center;
 
-    row-gap: 0.1px;
+    padding-left: 2rem;
+    row-gap: 0.5px;
+    width: 30rem;
+    text-align: start;
 }
 #info-numbers p {
     padding: 0 1rem;
@@ -293,8 +299,10 @@ img {
     width: 100%;
     grid-auto-flow: row;
     justify-content: space-between;
+    justify-items: center;
     align-items: center;
-    gap: 5rem;
+    align-content: center;
+    gap: 5rem 1rem;
 }
 #title-section {
     color: #ffffffa1;
@@ -311,8 +319,23 @@ img {
     align-items: center;
 
     height: 100%;
+    width: 30rem;
+}
+#product-name {
+    font-weight: 800;
+    font-size: 1.5rem;
 }
 .pagination {
-    margin-top: 20px;
+    margin: 2rem 0;
+}
+#description-product-offer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    row-gap: 2rem;
+}
+#button-add-product {
+    margin-top: 2rem;
 }
 </style>

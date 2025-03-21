@@ -46,8 +46,8 @@ const updateQuantity = (event) => {
     align-items: center;
     column-gap: 1rem;
 
-    height: 8rem;
-    width: 40rem;
+    height: 10rem;
+    width: 50rem;
 
     border-bottom: 2px solid rgb(0, 0, 0);
     padding: 2rem;
@@ -61,6 +61,8 @@ const updateQuantity = (event) => {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+
+    row-gap: 2rem;
 }
 
 #info-cart-product > div {
@@ -71,8 +73,8 @@ const updateQuantity = (event) => {
 }
 
 #container-img {
-    width: 4rem;
-    height: 5rem;
+    width: 8rem;
+    height: 8rem;
 }
 
 img {
@@ -91,7 +93,7 @@ input {
     background-color: var(--xanadu);
 }
 #price {
-    line-height: 0.1px;
+    line-height: 1.2rem;
     text-align: center;
 }
 

@@ -315,7 +315,7 @@ onUnmounted(() => {
     height: 100%;
 
     display: grid;
-    grid-template-rows: 2% auto 12%;
+    grid-template-rows: 4rem auto 30rem;
     grid-template-columns: 100%;
 
     justify-items: center;

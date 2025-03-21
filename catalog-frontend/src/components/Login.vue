@@ -35,6 +35,8 @@ const login = async () =>
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+
+    margin-top: 2rem;
 }
 form {
     display: flex;
@@ -50,13 +52,13 @@ button {
     width: fit-content;
     border: 2px solid #d9d9d9;
     border-radius: 5px;
-    padding: 0.3rem;
+    padding: 0.5rem 1rem;
     background-color: var(--green-spring);
     color: #fff;
     font-size: 1rem;
     font-weight: 200;
     letter-spacing: 0.5px;
-    margin-top: 2rem;
+    margin-top: 4rem;
     transition:
         background-color 0.3s ease-in,
         border 0.3s ease-in;
