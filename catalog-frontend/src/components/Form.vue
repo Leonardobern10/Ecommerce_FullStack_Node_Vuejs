@@ -1,29 +1,24 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineProps } from 'vue';
 import Input from './Input.vue';
 
 const props = defineProps({
-    components: Array,
-    model: String,
-    type: String,
-    placeholder: String,
-    buttonName: String,
+    fields: Array, // Lista de campos do formulario
+    buttonText: String, // Texto do botão
+    onSubmit: Function, // Função de submissão do formulário
 });
-const emit = defineEmits(['eventForm']);
-
-const emitEventForm = () => emit('eventForm');
 </script>
 
 <template>
     <div id="view">
-        <form @submit.prevent="emitEventForm">
+        <form @submit.prevent="onSubmit">
             <Input
-                v-for="component in components"
-                :key="component"
-                v-model="model"
-                :type="type"
-                :placeholder="placeholder" />
-            <button type="submit">{{ buttonName }}</button>
+                v-for="field in fields"
+                :key="field.model"
+                :model-value="field.value"
+                :type="field.type"
+                :placeholder="field.placeholder" />
+            <button type="submit">{{ buttonText }}</button>
         </form>
     </div>
 </template>

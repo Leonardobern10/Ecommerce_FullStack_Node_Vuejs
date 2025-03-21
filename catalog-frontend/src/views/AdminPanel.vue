@@ -24,6 +24,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
+    justify-items: center;
     gap: 1rem;
 }
 
@@ -33,9 +34,8 @@
     align-items: center;
     justify-content: center;
 
-    width: 23rem;
-    height: 20rem;
-    background-color: black;
+    width: 20rem;
+    background-color: var(--xanadu);
     color: white;
 
     font-size: 4rem;
