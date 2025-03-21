@@ -7,7 +7,7 @@ const props = defineProps({ icon: String, title: String, content: String });
 <template>
     <div id="container">
         <div id="icon">
-            <img :src="icon" alt="" />
+            <img :src="icon" :alt="`icone para ${icon}`" />
         </div>
         <div id="info">
             <p id="title">{{ title }}</p>

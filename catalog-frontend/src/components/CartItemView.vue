@@ -3,7 +3,7 @@ import { defineProps, defineEmits } from 'vue';
 import { pixValue } from '@/services/productService';
 
 const props = defineProps(['name', 'price', 'quantity', 'imageUrl']);
-const emit = defineEmits(['update-quantity']);
+const emit = defineEmits(['update-quantity', 'remove-item']);
 
 const updateQuantity = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
