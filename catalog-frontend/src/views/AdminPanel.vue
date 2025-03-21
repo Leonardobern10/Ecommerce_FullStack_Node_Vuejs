@@ -6,6 +6,7 @@
         <router-link class="object-panel" to="/products/edit"
             >Editar produto</router-link
         >
+        <router-link class="object-panel" to="/">Remover produto</router-link>
         <router-link class="object-panel" to="/">Vendas</router-link>
         <router-link class="object-panel" to="/">Estoque</router-link>
         <router-link class="object-panel" to="/">Relatórios</router-link>
