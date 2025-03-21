@@ -11,7 +11,7 @@ import { checkoutOrder, createOrder } from '@/services/orderService.js';
 import { useRouter } from 'vue-router';
 import CartItemView from './CartItemView.vue';
 import { useAuthStore } from '@/store/useAuthStore.js';
-import { financedValue } from '@/services/productService.js';
+import ResumeCard from './ResumeCard.vue';
 
 const router = useRouter(); // Direcionador de endereços
 const isLogged = ref(false); // Armazena o estado do usuario
@@ -71,31 +71,11 @@ onMounted(async () => loadCart(cart));
             </li>
         </ul>
         <p v-else>Seu carrinho está vazio.</p>
-        <div v-if="cart.length" id="resume-cart">
-            <p>Resumo da compra</p>
-            <hr />
-            <div>
-                <p>Produtos:</p>
-                <p>{{ cart.length }}</p>
-            </div>
-            <div>
-                <p>Frete:</p>
-                <p style="color: var(--xanadu)">Grátis</p>
-            </div>
-            <div>
-                <p id="total-value">
-                    <strong>Total:</strong>
-                </p>
-                <div id="price-values">
-                    <p>R$ {{ totalAmount.toFixed(2) }}</p>
-                    <p>em até 10x de R$ {{ financedValue(totalAmount) }}</p>
-                </div>
-            </div>
-            <div id="container-buttons">
-                <button @click="checkout" v-if="cart.length">
-                    Finalizar compra
-                </button>
-            </div>
+        <div v-if="cart.length">
+            <ResumeCard
+                :length="cart.length"
+                :total-amount="totalAmount"
+                @event-checkout="checkout" />
         </div>
     </div>
 </template>
@@ -145,40 +125,5 @@ li {
     align-items: center;
 
     padding: 0 1rem;
-}
-#resume-cart {
-    display: flex;
-    flex-direction: column;
-    row-gap: 1rem;
-    margin-top: 1rem;
-    width: 30%;
-    height: fit-content;
-
-    padding: 1rem 2rem;
-
-    background-color: #8181813b;
-    border-radius: 15px;
-}
-#resume-cart > div {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-#total-value {
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: #000000ab;
-}
-#price-values {
-    line-height: 1rem;
-    text-align: center;
-}
-#price-values > p:first-child {
-    font-size: 1.2rem;
-}
-#price-values > p:last-child {
-    font-size: 0.7rem;
-    opacity: 0.7;
 }
 </style>
