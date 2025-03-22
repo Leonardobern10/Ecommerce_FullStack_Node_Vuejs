@@ -6,7 +6,6 @@
             <h1>Sobre Nós</h1>
             <p>Precisão e elegância no tempo. Conheça nossa história.</p>
         </section>
-
         <section class="content">
             <div class="info">
                 <h2>Quem Somos</h2>

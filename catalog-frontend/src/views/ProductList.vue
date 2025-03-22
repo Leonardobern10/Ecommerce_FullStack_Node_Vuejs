@@ -3,9 +3,7 @@ import { ref, onMounted, computed } from 'vue';
 import {
     accessProductById,
     loadProducts,
-    pixValue,
     sortProductsByProp,
-    viewFinancedValue,
 } from '../services/productService.js';
 import { addOnCart } from '../services/cartService.js';
 import { authState } from '@/store/useAuth.js';
@@ -13,6 +11,7 @@ import { useProductStore } from '@/store/userProductStore.js';
 import { filterProducts } from '../services/productService.js';
 import { useRouter } from 'vue-router';
 import ProductOffer from '@/components/ProductOffer.vue';
+import { goToPage } from '@/services/pageService.js';
 
 const router = useRouter();
 const isLogged = ref(false);
@@ -49,24 +48,16 @@ const sortProductsMostRecently = async () =>
         'createdAt',
     ).reverse());
 
-const goToPage = (local) => {
-    if (local === 'next') nextPage();
-    if (local === 'previous') previousPage();
-
-    loadProducts(authState, isLogged, products, currentPage, totalPages, limit);
-};
-
-const nextPage = () => {
-    if (currentPage.value < totalPages.value) {
-        currentPage.value += 1;
-    }
-};
-
-const previousPage = () => {
-    if (currentPage.value > 1) {
-        currentPage.value -= 1;
-    }
-};
+const getPage = async (operation) =>
+    goToPage(
+        operation,
+        authState,
+        isLogged,
+        products,
+        currentPage,
+        totalPages,
+        limit,
+    );
 
 onMounted(async () => {
     await loadProducts(
@@ -104,7 +95,7 @@ onMounted(async () => {
             </nav>
             <ul id="container-products">
                 <ProductOffer
-                    v-for="product in products"
+                    v-for="product in filteredProducts"
                     :key="product.name"
                     :product="product"
                     @acessProduct="accessProduct(product._id)"
@@ -112,12 +103,12 @@ onMounted(async () => {
             </ul>
             <div class="pagination">
                 <button
-                    @click="goToPage('previous')"
+                    @click="getPage('previous')"
                     id="previous"
                     class="button-pagination"></button>
                 <span> Página {{ currentPage }} de {{ totalPages }}</span>
                 <button
-                    @click="goToPage('next')"
+                    @click="getPage('next')"
                     id="next"
                     class="button-pagination"></button>
             </div>

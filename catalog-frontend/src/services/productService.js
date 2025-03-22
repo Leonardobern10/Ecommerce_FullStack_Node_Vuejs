@@ -107,3 +107,25 @@ export const loadProducts = async (
     pageRef.value = result.currentPage;
     totalRef.value = result.totalPages;
 };
+
+export const saveUpdate = async (currentProduct, cb_ALERT) => {
+    try {
+        const updateProduct = await changeProduct(
+            currentProduct.value._id,
+            currentProduct.value,
+        );
+        currentProduct.value = updateProduct;
+        cb_ALERT('Produto atualizado com sucesso!');
+    } catch (error) {
+        cb_ALERT('Erro ao atualizar o produto!');
+    }
+};
+
+export const searchProduct = async (product, route, store) => {
+    try {
+        product.value = await getProduct(route.params.id);
+        store.clean();
+    } catch (error) {
+        console.error(error);
+    }
+};

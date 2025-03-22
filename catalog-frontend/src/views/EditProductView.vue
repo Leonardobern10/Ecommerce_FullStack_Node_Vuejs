@@ -1,7 +1,6 @@
 <script setup>
-import { getProduct, updateProduct } from '@/services/productService';
+import { getProduct, saveUpdate } from '@/services/productService';
 import { ref } from 'vue';
-import { changeProduct } from '../services/productService';
 
 const currentProduct = ref({});
 const idSearched = ref('');
@@ -10,19 +9,7 @@ const searchProduct = async () => {
     currentProduct.value = await getProduct(idSearched.value);
 };
 
-const saveChanges = async () => {
-    try {
-        const updatedProduct = await changeProduct(
-            currentProduct.value._id,
-            currentProduct.value,
-        );
-        currentProduct.value = updatedProduct; // Atualiza o estado com a resposta do backend
-        alert('Produto atualizado com sucesso!');
-    } catch (error) {
-        console.error('Erro ao atualizar produto:', error);
-        alert('Erro ao atualizar produto.');
-    }
-};
+const saveChanges = async () => await saveUpdate(currentProduct, alert);
 </script>
 
 <template>

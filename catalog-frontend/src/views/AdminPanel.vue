@@ -41,11 +41,11 @@ import PATH from '@/constants/PATH';
     align-items: center;
     justify-content: center;
 
-    width: 20rem;
+    width: 15rem;
     background-color: var(--xanadu);
     color: white;
 
-    font-size: 4rem;
+    font-size: clamp(1rem, 2rem, 2.5rem);
 
     text-decoration: none;
     text-align: center;

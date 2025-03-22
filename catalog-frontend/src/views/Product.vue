@@ -1,6 +1,6 @@
 <script setup>
-import { getProduct } from '@/services/productService';
-import { onMounted, ref } from 'vue';
+import { searchProduct } from '@/services/productService';
+import { onBeforeMount, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useProductStore } from '@/store/userProductStore';
 import { addOnCart } from '@/services/cartService';
@@ -12,18 +12,7 @@ const router = useRouter();
 const product = ref({});
 const useAuth = useAuthStore();
 
-const searchProduct = async () => {
-    product.value = await getProduct(route.params.id);
-};
-
-onMounted(async () => {
-    try {
-        searchProduct();
-        productStore.clean();
-    } catch (error) {
-        console.error(error);
-    }
-});
+onBeforeMount(async () => searchProduct(product, route, productStore));
 
 const addToCart = async (product) =>
     await addOnCart(product, router, useAuth, alert);

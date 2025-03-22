@@ -9,7 +9,7 @@ import iconTruck from '../assets/icons/icon_truck.svg';
 import clockMetal from '../assets/images/clock_metal.png';
 import clockWeather from '../assets/images/clock_weather.png';
 import clockSmart from '../assets/images/clock_smartwatch.png';
-import changeItem from '@/services/itemService';
+import { nextNewestItem, previousNewestItem } from '@/services/itemService';
 import gsap from 'gsap';
 import { PixiPlugin, ScrollTrigger, TextPlugin } from 'gsap/all';
 import { checkRole } from '@/services/roleService';
@@ -65,22 +65,10 @@ const allNewestProducts = [
 const updateScreenSize = () => {
     screenWidth.value = window.innerWidth;
 };
-const nextItem = () => {
-    currentItem = changeItem(
-        'next',
-        currentIndexItem,
-        allNewestProducts,
-        currentItem,
-    );
-};
-const previousItem = () => {
-    currentItem = changeItem(
-        'previous',
-        currentIndexItem,
-        allNewestProducts,
-        currentItem,
-    );
-};
+const nextItem = () =>
+    nextNewestItem(currentIndexItem, allNewestProducts, currentItem);
+const previousItem = () =>
+    previousNewestItem(currentIndexItem, allNewestProducts, currentItem);
 
 onMounted(() => {
     checkRole();
@@ -121,7 +109,6 @@ onMounted(() => {
         duration: 2,
         opacity: 0,
     });
-    gsap.to('imagem-banner', { duration: 1, pixi: { hue: 180 } });
 });
 
 onUnmounted(() => {
