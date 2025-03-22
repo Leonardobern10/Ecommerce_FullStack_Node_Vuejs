@@ -47,10 +47,12 @@ const updateQuantity = (event) => {
     column-gap: 1rem;
 
     height: 10rem;
-    width: 50rem;
+    width: 100%;
+    min-width: 70%;
 
-    border-bottom: 2px solid rgb(0, 0, 0);
-    padding: 2rem;
+    border-bottom: 1px solid black;
+
+    margin: 1rem 0;
 }
 #name-product {
     font-size: 1.2rem;

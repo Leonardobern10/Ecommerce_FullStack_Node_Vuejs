@@ -41,7 +41,15 @@ onMounted(async () => await loadOrders(isLogged, router, auth, orders));
                                 id="name-item"
                                 v-for="item in order.items"
                                 :key="item._id">
-                                {{ item.quantity }}x {{ item.product.name }}
+                                <div>
+                                    <div>
+                                        <img :src="item.imageUrl" alt="foto" />
+                                    </div>
+                                    <p>
+                                        {{ item.quantity }}x
+                                        {{ item.product.name }}
+                                    </p>
+                                </div>
                             </li>
                         </ul>
                     </div>

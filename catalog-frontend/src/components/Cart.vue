@@ -55,7 +55,7 @@ onMounted(async () => loadCart(cart));
 </script>
 
 <template>
-    <div id="view">
+    <div id="view-cart">
         <ul id="items-cart" v-if="cart.length">
             <li class="item-cart" v-for="item in cart" :key="item._id">
                 <CartItemView
@@ -71,7 +71,7 @@ onMounted(async () => loadCart(cart));
             </li>
         </ul>
         <p v-else>Seu carrinho está vazio.</p>
-        <div v-if="cart.length">
+        <div id="resume-cart" v-if="cart.length">
             <ResumeCard
                 :length="cart.length"
                 :total-amount="totalAmount"
@@ -81,15 +81,15 @@ onMounted(async () => loadCart(cart));
 </template>
 
 <style scoped>
-#view {
+#view-cart {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: stretch;
-    gap: 2rem;
+    column-gap: 2rem;
 
     height: 100%;
-    width: 80vw;
+    width: 90%;
 }
 button {
     max-width: 15rem;
@@ -119,11 +119,15 @@ li {
 }
 #items-cart {
     width: 70%;
+    min-width: 10%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    padding: 0 1rem;
+    padding: 1rem;
+}
+#resume-cart {
+    width: 30%;
+    min-width: 20%;
 }
 </style>

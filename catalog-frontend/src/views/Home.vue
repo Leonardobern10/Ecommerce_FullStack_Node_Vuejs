@@ -339,15 +339,19 @@ onUnmounted(() => {
         height: 70%;
     }
     h1 {
-        font-size: 3rem;
-        width: 85%;
+        font-size: clamp(1.5rem, 2rem, 3rem);
+        width: 80%;
     }
     #shop-description {
-        width: 60%;
-        font-size: 1.5rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 70%;
+        font-size: clamp(1rem, 1.5rem, 2rem);
     }
     #shop-description p:first-child {
-        font-size: 1.7rem;
+        font-size: 1.5rem;
     }
     span {
         font-size: 2rem;
@@ -370,15 +374,17 @@ onUnmounted(() => {
     #container-info-newest {
         align-items: flex-start;
         width: 20%;
-        height: 50%;
+        height: 60%;
     }
     #text-newest {
+        height: 100%;
+        padding: 1rem 0;
         width: 70%;
         font-size: 1.2rem;
     }
     button {
-        padding: 0.5rem 2rem;
-        font-size: 1.2rem;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
         transition: background-color 0.3s ease-in;
     }
     button:hover {
@@ -512,11 +518,11 @@ h1 {
     flex-direction: column;
     justify-content: space-evenly;
 
-    letter-spacing: 0.1px;
+    letter-spacing: 0.3px;
 }
 #title-newest {
     text-align: start;
-    line-height: 0.2rem;
+    line-height: 1rem;
     font-size: 2rem;
     margin: 0;
 }
@@ -545,7 +551,7 @@ button {
     justify-content: space-between;
     align-items: center;
 
-    line-height: 2.3rem;
+    line-height: 2rem;
 }
 #container-icons {
     display: flex;

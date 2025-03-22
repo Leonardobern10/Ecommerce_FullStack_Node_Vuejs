@@ -1,12 +1,16 @@
 <script setup>
 import { getProduct } from '@/services/productService';
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useProductStore } from '@/store/userProductStore';
+import { addOnCart } from '@/services/cartService';
+import { useAuthStore } from '@/store/useAuthStore.js';
 
 const productStore = useProductStore();
 const route = useRoute();
+const router = useRouter();
 const product = ref({});
+const useAuth = useAuthStore();
 
 const searchProduct = async () => {
     product.value = await getProduct(route.params.id);
@@ -20,6 +24,9 @@ onMounted(async () => {
         console.error(error);
     }
 });
+
+const addToCart = async (product) =>
+    await addOnCart(product, router, useAuth, alert);
 </script>
 
 <template>
@@ -38,9 +45,10 @@ onMounted(async () => {
                     </p>
                     <p>Quantidade: {{ product.stock }}</p>
                 </div>
-                <button>Adicionar ao carrinho</button>
+                <button @click="addToCart(product)">
+                    Adicionar ao carrinho
+                </button>
             </div>
-            <div>{{ console.log(product.value) }}</div>
         </div>
     </div>
 </template>

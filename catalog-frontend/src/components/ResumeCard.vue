@@ -1,6 +1,10 @@
 <script setup>
 import { defineProps, defineEmits } from 'vue';
-import { viewFinancedValue } from '@/services/productService';
+import {
+    financedValue,
+    pixValue,
+    viewFinancedValue,
+} from '@/services/productService';
 
 const props = defineProps({ length: Number, totalAmount: Number });
 const emit = defineEmits(['eventCheckout']);
@@ -26,8 +30,8 @@ const callCheckout = () => {
                 <strong>Total:</strong>
             </p>
             <div id="price-values">
-                <p>R$ {{ Number(totalAmount).toFixed(2) }}</p>
-                <p>{{ viewFinancedValue(totalAmount) }}</p>
+                <p>R$ {{ pixValue(totalAmount) }}</p>
+                <p>ou 10x de {{ financedValue(totalAmount) }}</p>
             </div>
         </div>
         <div id="container-buttons">
@@ -45,10 +49,10 @@ const callCheckout = () => {
     align-items: center;
     row-gap: 1rem;
     margin-top: 1rem;
-    width: 30rem;
+    width: 100%;
     height: fit-content;
 
-    padding: 1rem 2rem;
+    padding: 1rem 1rem;
 
     background-color: #8181813b;
     border-radius: 15px;
@@ -59,6 +63,7 @@ const callCheckout = () => {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    min-width: 50%;
 }
 #total-value {
     font-size: 1.3rem;

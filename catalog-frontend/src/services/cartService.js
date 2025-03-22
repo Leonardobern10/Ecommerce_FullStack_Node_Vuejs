@@ -22,7 +22,7 @@ export const addToCart = (product) => {
 };
 
 export const addOnCart = (product, router, state, cb) => {
-    if (!state.value) {
+    if (!state) {
         cb(MESSAGE.ALERT.CART.NEED_AUTHENTICATE);
         return router.push(PATH.LOGIN);
     }
@@ -64,6 +64,7 @@ export const updateItemQuantityOnCart = (productId, newQuantity, array) => {
         updateCart(array.value);
     }
 };
+
 // Remove os itens do carrinho
 export const clearCart = () => {
     localStorage.removeItem(KEY.CART);

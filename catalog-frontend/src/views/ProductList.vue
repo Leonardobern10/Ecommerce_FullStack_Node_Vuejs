@@ -12,6 +12,7 @@ import { authState } from '@/store/useAuth.js';
 import { useProductStore } from '@/store/userProductStore.js';
 import { filterProducts } from '../services/productService.js';
 import { useRouter } from 'vue-router';
+import ProductOffer from '@/components/ProductOffer.vue';
 
 const router = useRouter();
 const isLogged = ref(false);
@@ -102,42 +103,23 @@ onMounted(async () => {
                 </div>
             </nav>
             <ul id="container-products">
-                <li
-                    @click="accessProduct(product._id)"
-                    id="product"
-                    v-for="product in filteredProducts"
-                    :key="product._id">
-                    <div id="container-img-product">
-                        <img
-                            :src="product.imageUrl"
-                            :alt="`imagem do ${product.name}`" />
-                    </div>
-                    <div id="description-product-offer">
-                        <p id="product-name">{{ product.name }}</p>
-                        <div id="info-numbers">
-                            <p class="p-price">
-                                <strong>
-                                    R$
-                                    {{ pixValue(product.price) }}</strong
-                                >
-                                no pix
-                            </p>
-                            <p class="p-price">
-                                {{ viewFinancedValue(product.price) }}
-                            </p>
-                        </div>
-                    </div>
-                    <button
-                        id="button-add-product"
-                        @click.stop="addProductToCart(product)">
-                        Adicionar ao Carrinho
-                    </button>
-                </li>
+                <ProductOffer
+                    v-for="product in products"
+                    :key="product.name"
+                    :product="product"
+                    @acessProduct="accessProduct(product._id)"
+                    @addToCart="addProductToCart(product)" />
             </ul>
             <div class="pagination">
-                <button @click="goToPage('previous')">Anterior</button>
+                <button
+                    @click="goToPage('previous')"
+                    id="previous"
+                    class="button-pagination"></button>
                 <span> Página {{ currentPage }} de {{ totalPages }}</span>
-                <button @click="goToPage('next')">Próxima</button>
+                <button
+                    @click="goToPage('next')"
+                    id="next"
+                    class="button-pagination"></button>
             </div>
         </div>
     </div>
@@ -156,7 +138,7 @@ li {
     row-gap: 0.2rem;
 
     padding: 1rem;
-    width: 15rem;
+    width: 12rem;
     height: 100%;
     border-radius: 10px;
 
@@ -170,17 +152,26 @@ li:hover {
     scale: 1;
     cursor: pointer;
 }
-button {
-    background-color: var(--green-spring);
+.button-pagination {
     color: #fff;
     border: none;
-    padding: 0.5rem 1rem;
     border-radius: 10px;
-    transition: background-color 0.3s ease-in;
+
+    background-repeat: no-repeat;
+    background-position: center;
 }
-button:hover {
+.button-pagination:hover {
     cursor: pointer;
-    background-color: var(--xanadu);
+}
+#previous {
+    background-image: url('../assets/icons/left_arrow_next_page.svg');
+    width: 30px;
+    height: 30px;
+}
+#next {
+    background-image: url('../assets/icons/right_arrow_next_page.svg');
+    width: 30px;
+    height: 30px;
 }
 #view {
     display: flex;
@@ -195,6 +186,7 @@ button:hover {
 #container {
     display: flex;
     flex-direction: column;
+    align-items: center;
     row-gap: 4rem;
     width: 100%;
 
@@ -211,12 +203,13 @@ button:hover {
     background-color: var(--green-spring);
     opacity: 0.8;
     height: 3rem;
+    width: 100%;
 }
 #container-options-view p:first-child {
     padding-left: 2rem;
 }
 .options-view {
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 .options-view:hover {
     cursor: pointer;
@@ -234,13 +227,14 @@ button:hover {
     color: #ffffffc0;
     border: none;
     border-radius: 15px;
-    padding: 0 2rem;
+    padding: 0 1rem;
 }
 #container-search-brand p {
-    font-size: 1.2rem;
+    font-size: 1rem;
+    padding-right: 5px;
 }
 #input-brand {
-    width: 25%;
+    width: 20%;
     height: 1.5rem;
     border-radius: 10px;
     padding: 0.4rem;
@@ -262,47 +256,14 @@ img {
     width: 100%;
     height: 100%;
 }
-#container-img-product {
-    width: 15rem;
-    height: 15rem;
-
-    margin-bottom: 1rem;
-}
-#info-numbers {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-
-    padding-left: 2rem;
-    row-gap: 0.5px;
-    width: 30rem;
-    text-align: start;
-}
-#info-numbers p {
-    padding: 0 1rem;
-}
-.p-price {
-    font-size: 0.9rem;
-    font-weight: 200;
-    width: 100%;
-
-    letter-spacing: 0.1px;
-}
-.p-price > strong {
-    font-size: 1.2rem;
-}
 #container-products {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 
     width: 100%;
-    grid-auto-flow: row;
-    justify-content: space-between;
     justify-items: center;
     align-items: center;
-    align-content: center;
-    gap: 5rem 1rem;
+    gap: 4rem 1rem;
 }
 #title-section {
     color: #ffffffa1;
@@ -312,30 +273,14 @@ img {
 .btn-add {
     display: none;
 }
-#product {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-
-    height: 100%;
-    width: 30rem;
-}
-#product-name {
-    font-weight: 800;
-    font-size: 1.5rem;
-}
 .pagination {
-    margin: 2rem 0;
-}
-#description-product-offer {
+    width: 20%;
+
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    text-align: center;
-    row-gap: 2rem;
-}
-#button-add-product {
-    margin-top: 2rem;
+    column-gap: 20px;
+    margin: 2rem 0;
 }
 </style>

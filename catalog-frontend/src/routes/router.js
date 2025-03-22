@@ -11,6 +11,7 @@ import Product from '@/views/Product.vue';
 import AdminPanel from '@/views/AdminPanel.vue';
 import { checkRole } from '@/services/roleService';
 import EditInstructions from '@/views/EditInstructions.vue';
+import AboutUs from '@/views/AboutUs.vue';
 
 // Define para cada rota um componente correspondente
 // que será renderizado no momento que a rota for acessada
@@ -26,6 +27,7 @@ const routes = [
     { path: PATH.CART, component: Cart },
     { path: PATH.ORDERS, component: Orders },
     { path: PATH.ADMIN, component: AdminPanel },
+    { path: PATH.ABOUT_US, component: AboutUs },
 ];
 
 export const router = createRouter({ history: createWebHistory(), routes });
@@ -39,7 +41,8 @@ router.beforeEach(async (to, from, next) => {
     if (
         (to.path === '/admin' ||
             to.path === '/products/add' ||
-            to.path === '/products/edit') &&
+            to.path === '/products/edit' ||
+            to.path === '/products/change') &&
         !permitted
     ) {
         next('/');
