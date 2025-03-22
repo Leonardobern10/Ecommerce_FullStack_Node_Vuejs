@@ -18,6 +18,8 @@ export const getProducts = async (page, limit) => {
 
 export const getProduct = async (id) => {
     const response = await axios.get(`${URL.PRODUCTS}/${id}`);
+    console.log('URL: ', `${URL.PRODUCTS}/${id}`);
+    console.log('RESPOSTA: ', response.data);
     return response.data;
 };
 
@@ -34,13 +36,13 @@ export const updateProduct = async (id, product) => {
 };
 
 export const changeProduct = async (id, changes) => {
+    console.log('Iniciou changeProduct');
     try {
         const response = await axios.patch(
             `${URL.PRODUCTS_CHANGE}/${id}`,
             changes,
             { withCredentials: true },
         );
-        console.log('Aguardando a resposta: ', response.data);
         return response.data;
     } catch (erro) {
         console.log(erro);

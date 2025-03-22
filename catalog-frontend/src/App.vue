@@ -137,26 +137,60 @@ onUnmounted(() => {
                     <div id="navigation-footer">
                         <div>
                             <p class="title-navigation">Informações</p>
-                            <p class="option-navigation">Sobre nós</p>
-                            <p class="option-navigation">Entrega</p>
+                            <p class="option-navigation">
+                                <router-link
+                                    :to="PATH.ABOUT_US"
+                                    class="navbar-link">
+                                    Sobre nós
+                                </router-link>
+                            </p>
+                            <p class="option-navigation">
+                                <router-link
+                                    class="navbar-link"
+                                    :to="PATH.DELIVERY">
+                                    Entrega
+                                </router-link>
+                            </p>
                             <p class="option-navigation">Blog</p>
                         </div>
                         <div>
                             <p class="title-navigation">Empresa</p>
                             <p class="option-navigation">Comunidade</p>
-                            <p class="option-navigation">Carreira</p>
-                            <p class="option-navigation">Nossa história</p>
+                            <p class="option-navigation">
+                                <router-link
+                                    class="navbar-link"
+                                    :to="PATH.CARRER">
+                                    Carreira
+                                </router-link>
+                            </p>
+                            <p class="option-navigation">
+                                <router-link
+                                    class="navbar-link"
+                                    :to="PATH.OUR_HISTORY">
+                                    Nossa história
+                                </router-link>
+                            </p>
                         </div>
                         <div>
                             <p class="title-navigation">Navegação</p>
-                            <p class="option-navigation">Home</p>
-                            <p class="option-navigation">Produtos</p>
+                            <p class="option-navigation">
+                                <router-link class="navbar-link" :to="PATH.HOME"
+                                    >Home</router-link
+                                >
+                            </p>
+                            <p class="option-navigation">
+                                <router-link
+                                    class="navbar-link"
+                                    :to="PATH.PRODUCTS.ROOT"
+                                    >Produtos</router-link
+                                >
+                            </p>
                             <p class="option-navigation">Contato</p>
                         </div>
                     </div>
                 </div>
                 <p id="right-terms">
-                    © 2025 ShopWatch - Todos os direitos reservados
+                    &copy; 2025 ShopWatch - Todos os direitos reservados
                 </p>
                 <p id="author">
                     Made with 🧠 by

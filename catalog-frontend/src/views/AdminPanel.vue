@@ -1,3 +1,7 @@
+<script setup>
+import PATH from '@/constants/PATH';
+</script>
+
 <template>
     <main id="view-admin-panel">
         <router-link class="object-panel" to="/products/add">
@@ -6,7 +10,9 @@
         <router-link class="object-panel" to="/products/edit"
             >Editar produto</router-link
         >
-        <router-link class="object-panel" to="/">Remover produto</router-link>
+        <router-link class="object-panel" :to="PATH.PRODUCTS.REMOVE"
+            >Remover produto</router-link
+        >
         <router-link class="object-panel" to="/">Vendas</router-link>
         <router-link class="object-panel" to="/">Estoque</router-link>
         <router-link class="object-panel" to="/">Relatórios</router-link>

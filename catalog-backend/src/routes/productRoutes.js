@@ -78,16 +78,16 @@ productRouter.put(
 productRouter.patch('/change/:id', authMiddleware, async (req, res) => {
     try {
         const { id } = req.params;
-        const { stock } = req.body;
+        const updateData = req.body;
 
-        if (stock === undefined || Number.isNaN(stock)) {
+        if (updateData === undefined) {
             console.log('Estoque invalido');
             return res.status(400).json({ mensagem: 'Estoque inválido' });
         }
 
         const updateProduct = await Product.findByIdAndUpdate(
             id,
-            { $set: { stock } }, // Atualiza apenas o campo "stock"
+            { $set: updateData }, // Atualiza apenas o campo "stock"
             { new: true, runValidators: true },
         );
         console.log(updateProduct);
