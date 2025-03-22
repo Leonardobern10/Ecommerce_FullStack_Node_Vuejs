@@ -10,12 +10,12 @@ import PATH from '@/constants/PATH';
 import Product from '@/views/Product.vue';
 import AdminPanel from '@/views/AdminPanel.vue';
 import { checkRole } from '@/services/roleService';
-import EditInstructions from '@/views/EditInstructions.vue';
 import AboutUs from '@/views/AboutUs.vue';
 import RemoveProduct from '@/views/RemoveProduct.vue';
 import Delivery from '@/views/Delivery.vue';
 import Carrer from '@/views/Carrer.vue';
 import History from '@/views/History.vue';
+import EditProductView from '@/views/EditProductView.vue';
 
 // Define para cada rota um componente correspondente
 // que será renderizado no momento que a rota for acessada
@@ -25,7 +25,7 @@ const routes = [
     { path: PATH.REGISTER, component: Register },
     { path: PATH.PRODUCTS.ROOT, component: ProductList },
     { path: PATH.PRODUCTS.ADD, component: ProductForm },
-    { path: PATH.PRODUCTS.UPDATE_INSTRUCTIONS, component: EditInstructions },
+    { path: PATH.PRODUCTS.UPDATE_INSTRUCTIONS, component: EditProductView },
     { path: PATH.PRODUCTS.UPDATE, component: ProductForm, props: true },
     { path: PATH.PRODUCTS.REMOVE, component: RemoveProduct },
     { path: PATH.PRODUCTS.GET_BY_ID, component: Product, props: true },

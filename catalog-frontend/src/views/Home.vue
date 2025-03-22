@@ -26,20 +26,17 @@ const icons = [
     {
         icon: iconClock,
         title: 'qualidade e quantidade',
-        content:
-            'os melhores modelos, lançamentos e as principais marcas para garatir seu estilo.',
+        content: 'melhores modelos, lançamentos e as principais marcas.',
     },
     {
         icon: iconTruck,
         title: 'entrega rápida e grátis',
-        content:
-            'frete grátis para todo o Brasil, com entrega aproximada de, no máximo, 5 dias.',
+        content: 'frete grátis para todo o Brasil.',
     },
     {
         icon: iconHeadset,
         title: 'suporte 24 horas',
-        content:
-            'tire suas dúdivas à qualquer momento, em qualquer dia, com respostas em tempo real.',
+        content: 'tire suas dúdivas à qualquer momento.',
     },
 ];
 const categories = [
@@ -300,7 +297,7 @@ onUnmounted(() => {
                 no-repeat;
     }
     #container-about-company {
-        row-gap: 4rem;
+        row-gap: 1rem;
     }
     #container-icons {
         width: 100%;
@@ -394,15 +391,9 @@ onUnmounted(() => {
     #about-company {
         width: 100%;
         height: 100vh;
-        background:
-            linear-gradient(to top, rgb(0, 0, 0.1), rgba(0, 0, 0, 0.2)),
-            url('../assets/images/man_style_photo_2.svg') left center no-repeat,
-            url('../assets/images/man_style_photo_1.svg') right center no-repeat;
+        background: linear-gradient(to top, rgb(0, 0, 0.1), rgba(0, 0, 0, 0.2));
     }
-    #container-about-company {
-        row-gap: 1rem;
-        padding: 1rem 0;
-    }
+
     #container-icons {
         width: 70rem;
         flex-direction: row;

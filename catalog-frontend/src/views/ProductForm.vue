@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { getProducts, saveProduct } from '../services/productService.js';
 import { useRoute, useRouter } from 'vue-router';
+import Input from '@/components/Input.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -35,33 +36,33 @@ onMounted(async () => {
     <div id="view-product-form">
         <h2>{{ isEdit ? 'Editar Produto' : 'Adicionar Produto' }}</h2>
         <form @submit.prevent="save">
-            <input
+            <Input
                 v-model="product.name"
                 type="text"
                 placeholder="Nome do produto"
                 required />
-            <input
+            <Input
                 v-model="product.brand"
                 type="text"
                 placeholder="Marca do produto"
                 required />
-            <input
+            <Input
                 v-model="product.description"
                 type="text"
                 placeholder="Descricao do produto"
                 required />
-            <input
+            <Input
                 v-model="product.price"
                 type="number"
                 step="0.01"
                 placeholder="Preço"
                 required />
-            <input
+            <Input
                 v-model="product.stock"
                 type="number"
                 placeholder="Quantidade"
                 required />
-            <input
+            <Input
                 v-model="product.imageUrl"
                 type="text"
                 placeholder="Url da imagem"
@@ -75,22 +76,34 @@ onMounted(async () => {
 
 <style scoped>
 form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     max-width: 400px;
     margin: auto;
-}
-input {
-    display: block;
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 8px;
+
+    padding: 1rem 0;
 }
 button {
-    background-color: blue;
-    color: white;
-    padding: 10px;
-    border: none;
+    width: fit-content;
+    border: 2px solid #d9d9d9;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    background-color: var(--green-spring);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 200;
+    letter-spacing: 0.5px;
+    margin-top: 4rem;
+    transition:
+        background-color 0.3s ease-in,
+        border 0.3s ease-in;
 }
-#view-product-form {
-    padding: 0 2rem;
+
+button:hover {
+    cursor: pointer;
+    background-color: var(--xanadu);
+    border: 1px solid #fff;
 }
 </style>

@@ -1,6 +1,6 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
-import User from '../model/User.js';
+import User from '../models/User.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import cookie from 'cookie';
 import { generateAccessToken, generateRefreshToken } from '../utils/tokens.js';

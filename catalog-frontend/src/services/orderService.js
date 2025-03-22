@@ -57,6 +57,8 @@ export const checkoutOrder = async (
             items: array.value.map((item) => ({
                 product: item._id,
                 quantity: item.quantity,
+                imageUrl: item.imageUrl,
+                price: item.price,
             })),
             totalAmount: totalAmount.value,
         };

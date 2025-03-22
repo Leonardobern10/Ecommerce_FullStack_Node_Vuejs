@@ -21,12 +21,11 @@ onMounted(async () => await loadOrders(isLogged, router, auth, orders));
                 <!-- Verifique se order e order._id estão definidos -->
                 <div id="order" v-if="order && order._id">
                     <div id="description-order">
-                        <p><strong>Pedido ID:</strong> {{ order._id }}</p>
-                        <p><strong>Status:</strong> {{ order.status }}</p>
-                        <p>
+                        <p id="date-order">
                             <strong>Data:</strong>
                             {{ new Date(order.createdAt).toLocaleString() }}
                         </p>
+                        <p><strong>Status:</strong> {{ order.status }}</p>
                         <p id="price-total">
                             <strong>Total:</strong> R$
                             {{
@@ -35,20 +34,20 @@ onMounted(async () => await loadOrders(isLogged, router, auth, orders));
                         </p>
                     </div>
                     <div id="all-order-items">
-                        <p><strong>Itens do pedido:</strong></p>
                         <ul id="order-item">
                             <li
                                 id="name-item"
                                 v-for="item in order.items"
                                 :key="item._id">
-                                <div>
-                                    <div>
+                                <div id="container-item-order">
+                                    <div id="container-image-item-order">
                                         <img :src="item.imageUrl" alt="foto" />
                                     </div>
                                     <p>
                                         {{ item.quantity }}x
                                         {{ item.product.name }}
                                     </p>
+                                    <p>R${{ item.price }}</p>
                                 </div>
                             </li>
                         </ul>
@@ -68,10 +67,11 @@ onMounted(async () => await loadOrders(isLogged, router, auth, orders));
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    width: 100%;
 }
 h1 {
-    color: var(--green-spring);
-    text-shadow: 5px 5px 5px black;
+    color: #000000b4;
 }
 li {
     list-style: none;
@@ -79,27 +79,39 @@ li {
 #container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
 }
 #order {
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
 
-    width: 100%;
+    width: 70%;
+    height: fit-content;
 
     background-color: #d9d9d9;
-    box-shadow:
-        5px 5px 5px var(--blue-smoke),
-        -5px 5px 5px var(--blue-smoke),
-        5px -5px 5px var(--blue-smoke);
-    border-radius: 15px;
+    border: 2px solid rgba(0, 0, 0, 0.658);
 
     margin: 1rem 0;
     padding: 1rem;
+}
+#description-order {
+    width: 30%;
+}
+#date-order {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--xanadu);
+    color: #fff;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    width: 16rem;
+    padding: 0 1rem;
 }
 #name-item {
     padding: 0.5rem;
@@ -107,8 +119,7 @@ li {
 
     width: 100%;
 
-    background-color: var(--green-spring);
-    border-radius: 15px;
+    background-color: #fff;
 }
 #order-item {
     display: flex;
@@ -119,7 +130,7 @@ li {
     padding: 0;
     margin: 0;
 
-    width: 90%;
+    width: 100%;
 
     text-align: left;
 }
@@ -128,18 +139,29 @@ li {
     flex-direction: column;
     align-items: flex-start;
 
-    border-radius: 15px;
-    padding: 0.5rem 1rem;
+    padding: 0 1rem;
 
-    height: 12rem;
-    width: 45%;
+    background-color: #fff;
+
+    height: 100%;
+    width: 60%;
 }
 #all-order-items > p {
     color: #000;
     font-size: 1.2rem;
 }
 #price-total {
-    font-size: 1.5rem;
+    font-size: clamp(0.7rem, 1rem, 2rem);
+}
+#container-image-item-order {
+    width: 20%;
+    height: 20%;
+}
+#container-item-order {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 @media (max-width: 500px) {
     #order-items {
