@@ -6,22 +6,25 @@ Este é um sistema de **e-commerce** desenvolvido com **Vue.js** no frontend e *
 
 ## 🚀 Tecnologias Utilizadas
 
-- **Frontend:** Vue.js (Composition API, Vue Router, Pinia)
+- **Frontend:** Vue.js (Composition API, Vue Router)
 - **Backend:** Node.js com Express
 - **Banco de Dados:** MongoDB (com Mongoose)
 - **Autenticação:** JWT (JSON Web Token)
 - **Gerenciamento de Estado:** Pinia
 - **Estilização:** CSS puro
+- **Animação:** GSAP
 
 ## 🎯 Funcionalidades
 
 - Cadastro e login de usuários
+- Niveis de permissão baseado em roles
 - Geração de tokens
-- Listagem de produtos
-- Adição e remoção de produtos no carrinho
+- Adição, listagem, atualização e remoção de produtos via formulario
+- Adição, alteração de quantidade e remoção de produtos no carrinho
 - Finalização de compras
 - Exibição do histórico de pedidos
-- Sistema de avaliações
+- Rotas protegidas
+- Painel administrativo com acesso restrito
 
 ## 📸 Imagens do Projeto
 
@@ -38,6 +41,7 @@ Este é um sistema de **e-commerce** desenvolvido com **Vue.js** no frontend e *
 Carrinho_de_compras_Node_Vuejs/
 ├── backend/       # Código-fonte do servidor Node.js
 ├── frontend/      # Código-fonte da aplicação Vue.js
+|-- images/        # Imagens capturadas do projeto
 ├── README.md      # Documentação do projeto
 ```
 
@@ -47,8 +51,8 @@ Estrutura do backend:
 
 ```
 backend/
-├── controllers/   # Lógica dos endpoints
-|-- middlewares/   # Definição de middlewares para autentição
+├── utils/         # Ferramentas para geração de tokens
+|-- middlewares/   # Definição de middlewares para autentição e roles
 ├── models/        # Modelos do MongoDB
 ├── routes/        # Definição das rotas da API
 ├── config/        # Configurações do banco de dados
@@ -62,11 +66,13 @@ Estrutura do frontend:
 ```
 frontend/
 ├── src/
+|   |-- assets/       # Arquivos auxiliares como imagens, icones, etc.
 │   ├── components/   # Componentes reutilizáveis
+|   |-- constants/    # Informações como URIs, URLs, etc.
 │   ├── views/        # Páginas da aplicação
 │   ├── store/        # Gerenciamento de estado (Pinia)
 │   ├── routes/       # Definição das rotas
-|   |-- services/    # Definição dos serviços
+|   |-- services/     # Definição dos serviços
 │   ├── App.vue       # Componente raiz
 │   ├── main.js       # Arquivo de inicialização
 ```
@@ -99,6 +105,7 @@ npm run dev
 ## 🔑 Autenticação
 
 O sistema utiliza **JWT** para autenticação. Ao logar, um refreshtoken é armazenado no **banco de dados** e vinculado ao usuário. Esse refreshToken é utilizado para gerar um token (**accessToken**) de menor duração, garantindo que o usuário fique logado por mais tempo.
+Cada cliente tem um nivel de permissão, sendo o padrão User. Esse nivel de permissão é necessário para o acesso à algumas seções e funcionalidades do sistema (ex: Funcionalidades administrativas).
 
 ## 📌 Endpoints da API
 
@@ -108,14 +115,17 @@ O sistema utiliza **JWT** para autenticação. Ao logar, um refreshtoken é arma
 - `POST /api/auth/login` - Login de usuário
 - `POST /api/auth/refresh` - Renovação do AccessToken
 - `POST /api/auth/logout` - Desconexão do usuário
-- `GET /api/auth/userStatus` - Obtém dados do usuário autenticado
+- `GET /api/auth/userStatus` - Verifica se o usuário está autenticado
+- `GET /api/auth/me` - Obtém dados do usuario como roles
 
 ### 🔹 Produtos
 
 - `GET /api/products` - Lista todos os produtos
+- `GET /api/products/:id` - Obtém um produto específico
 - `POST /api/products` - Adiciona um produto ao sistema
 - `PUT /api/products/:id` - Atualiza os dados de um produto
-- `GET /api/products/:id` - Obtém um produto específico
+- `PATCH /api/change/:id` - Atualiza parcialmente um produto
+- `DELETE /api/delete/:id` - Remove um produto específico
 
 ### 🔹 Pedidos
 
