@@ -1,5 +1,4 @@
 <script setup>
-import Input from '@/components/Input.vue';
 import { deleteProduct, getProduct } from '@/services/productService';
 import { ref } from 'vue';
 

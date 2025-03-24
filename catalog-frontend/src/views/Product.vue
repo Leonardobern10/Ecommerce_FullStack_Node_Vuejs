@@ -15,7 +15,7 @@ const useAuth = useAuthStore();
 onBeforeMount(async () => searchProduct(product, route, productStore));
 
 const addToCart = async (product) =>
-    await addOnCart(product, router, useAuth, alert);
+    await addOnCart(product, router, useAuth.authenticated, alert);
 </script>
 
 <template>

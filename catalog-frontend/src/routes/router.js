@@ -46,14 +46,7 @@ router.beforeEach(async (to, from, next) => {
 
     if (role === 'admin') permitted = true;
 
-    if (
-        (to.path === '/admin' ||
-            to.path === '/products/add' ||
-            to.path === '/products/edit' ||
-            to.path === '/products/change' ||
-            to.path === '/products/remove') &&
-        !permitted
-    ) {
+    if (PATH.RESTRICTED.includes(to.path) && !permitted) {
         next('/');
     } else {
         next();

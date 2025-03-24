@@ -15,131 +15,42 @@ onUnmounted(() => removeEventListener('resize', updateScreenSize));
 </script>
 
 <template>
-    <div id="view">
+    <div
+        class="flex flex-row justify-between items-center sm:flex-col sm:gap-4">
         <button
-            v-if="screenWidth < 600"
-            class="button-product"
-            id="button-previous-product"
+            v-if="screenWidth <= 425"
+            class="relative top-[40%] w-[10%] h-8 bg-transparent border-none"
             @click="emitPreviousItem">
-            <div></div>
+            <img src="../assets/icons/left_arrow.svg" alt="Previous" />
         </button>
-        <div id="container">
-            <div id="container-img">
-                <img :src="img" :alt="` foto to ${name}`" />
+        <div
+            class="flex flex-col justify-between items-center h-full bkmid:gap-0 gap-8 sm:w-[70%]">
+            <div class="h-40">
+                <img
+                    :src="img"
+                    :alt="`Foto do ${name}`"
+                    class="w-32 sm:w-full" />
             </div>
-            <div id="container-description">
-                <p id="product-name">{{ name }}</p>
-                <h3 id="product-price">
-                    R$ {{ pixValue(price) }} <span>no pix</span>
+            <div
+                class="flex flex-col items-center text-center leading-4 gap-4 bkmid:gap-0 sm:gap-8 bkmid:h-full">
+                <p
+                    class="w-full text-lg bkmid:text-sm lg:text-lg font-semibold">
+                    {{ name }}
+                </p>
+                <h3 class="text-xl bkmid:text-2sm lg:text-lg font-bold">
+                    R$ {{ pixValue(price) }}
+                    <span class="text-sm font-normal">no pix</span>
                 </h3>
-                <p id="product-price-financed">
+                <p class="w-full text-sm lg:text-lg">
                     ou {{ viewFinancedValue(price) }}
                 </p>
             </div>
         </div>
         <button
-            v-if="screenWidth < 600"
-            class="button-product"
-            id="button-next-product"
+            v-if="screenWidth <= 425"
+            class="relative top-[40%] w-[10%] h-8 bg-transparent border-none"
             @click="emitNextItem">
-            <div></div>
+            <img src="../assets/icons/right_arrow.svg" alt="Next" />
         </button>
     </div>
 </template>
-
-<style scoped>
-@media (max-width: 600px) {
-    #container {
-        width: 70%;
-    }
-    #container-img {
-        width: 100%;
-    }
-    #product-name {
-        width: 100%;
-    }
-    #view {
-        flex-direction: column;
-        column-gap: 1rem;
-    }
-    #container-description {
-        row-gap: 2rem;
-    }
-    .button-product {
-        position: relative;
-        top: 40%;
-
-        width: 10%;
-        height: 2rem;
-    }
-    #button-previous-product > div {
-        content: url('../assets/icons/left_arrow.svg');
-    }
-    #button-previous-product {
-        border: none;
-        background-color: transparent;
-    }
-    #button-next-product > div {
-        content: url('../assets/icons/right_arrow.svg');
-    }
-    #button-next-product {
-        border: none;
-        background-color: transparent;
-    }
-    #product-price-financed {
-        width: 100%;
-    }
-}
-@media (min-width: 600px) {
-    #container {
-        width: 100%;
-        height: 50%;
-    }
-    #container-img {
-        width: 8rem;
-        height: 8rem;
-    }
-    #product-name {
-        width: 100%;
-    }
-    #view {
-        flex-direction: row;
-    }
-    #product-price-financed {
-        width: 100%;
-    }
-    #container-description {
-        row-gap: 1rem;
-    }
-}
-#view {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-#container-description {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    text-align: center;
-    line-height: 1.5rem;
-}
-
-#container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-}
-
-#container-img {
-    height: 15rem;
-}
-#product-price-financed {
-    line-height: 1rem;
-}
-</style>

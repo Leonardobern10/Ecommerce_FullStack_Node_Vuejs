@@ -13,9 +13,15 @@ import PATH from '@/constants/PATH';
         <router-link class="object-panel" :to="PATH.PRODUCTS.REMOVE"
             >Remover produto</router-link
         >
-        <router-link class="object-panel" to="/">Vendas</router-link>
-        <router-link class="object-panel" to="/">Estoque</router-link>
-        <router-link class="object-panel" to="/">Relatórios</router-link>
+        <router-link v-if="1 < 0" class="object-panel" to="/"
+            >Vendas</router-link
+        >
+        <router-link v-if="1 < 0" class="object-panel" to="/"
+            >Estoque</router-link
+        >
+        <router-link v-if="1 < 0" class="object-panel" to="/"
+            >Relatórios</router-link
+        >
     </main>
 </template>
 
