@@ -3,9 +3,9 @@ import { onMounted, onUnmounted, ref } from 'vue';
 import PATH from '@/constants/PATH';
 import NewestProduct from '@/components/NewestProduct.vue';
 import IconContainer from '@/components/IconContainer.vue';
-import iconClock from '../assets/icons/icon_clock.svg';
-import iconHeadset from '../assets/icons/icon_headset.svg';
-import iconTruck from '../assets/icons/icon_truck.svg';
+import iconClock from '../assets/icons/icon_watch_square.svg';
+import iconHeadset from '../assets/icons/icon_suport_quarter.svg';
+import iconTruck from '../assets/icons/icon_truck_square.svg';
 import clockMetal from '../assets/images/clock_metal.png';
 import clockWeather from '../assets/images/clock_weather.png';
 import clockSmart from '../assets/images/clock_smartwatch.png';
@@ -25,12 +25,12 @@ gsap.registerPlugin(PixiPlugin);
 const icons = [
     {
         icon: iconClock,
-        title: 'qualidade e quantidade',
-        content: 'melhores modelos, lançamentos e as principais marcas.',
+        title: 'qualidade',
+        content: 'principais marcas e lançamentos.',
     },
     {
         icon: iconTruck,
-        title: 'entrega rápida e grátis',
+        title: 'entrega grátis',
         content: 'frete grátis para todo o Brasil.',
     },
     {
@@ -150,7 +150,7 @@ onUnmounted(() => {
             <section class="w-4/5">
                 <div
                     class="flex flex-col items-center gap-6 text-center text-lg mb-24 md:mb-4">
-                    <p class="text-2xl font-bold">Lançamentos</p>
+                    <p class="text-title-section font-bold">Lançamentos</p>
                     <p class="text-sm">
                         Confira os novos produtos da nossa loja
                     </p>
@@ -184,15 +184,10 @@ onUnmounted(() => {
                 </div>
             </section>
 
-            <section class="w-4/5 py-12 bg-black text-white text-center">
-                <div class="flex flex-col gap-4">
-                    <p class="text-lg">Sobre nós</p>
-                    <p class="text-2xl font-semibold">
-                        Peça agora e garanta seu estilo
-                    </p>
-                </div>
+            <section
+                class="w-full py-8 bg-black text-white text-center lg:items-center">
                 <div
-                    class="flex flex-col md:flex-row justify-around gap-6 mt-6">
+                    class="flex flex-col md:flex-row items-center justify-around my-4 gap-y-4 w-full">
                     <IconContainer
                         v-for="item in icons"
                         :key="item.title"
@@ -203,21 +198,26 @@ onUnmounted(() => {
             </section>
 
             <section class="w-4/5 flex flex-col items-center gap-6">
-                <div class="text-center">
-                    <p class="text-lg">Categorias</p>
-                    <p class="text-2xl font-semibold">
+                <div class="text-center mb-8">
+                    <p class="text-lg text-title-section font-semibold">
+                        Categorias
+                    </p>
+                    <p class="text-lg font-light">
                         Encontre o que está procurando
                     </p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-3 md:grid-cols-3 gap-6 mb-6">
                     <div
                         v-for="item in categories"
                         :key="item.image"
-                        class="flex flex-col items-center gap-2">
-                        <img
-                            class="w-32 h-32 object-cover rounded-full"
-                            :src="item.image"
-                            :alt="item.text" />
+                        class="flex flex-col items-center gap-2 lg:gap-16">
+                        <div
+                            class="w-30 h-80 lg:w-60 xl:w-60 lg:h-120 xl:h-120">
+                            <img
+                                class="rounded-full object-cover"
+                                :src="item.image"
+                                :alt="item.text" />
+                        </div>
                         <p class="text-lg">{{ item.text }}</p>
                     </div>
                 </div>

@@ -52,36 +52,25 @@ onUnmounted(() => {
     <div
         class="grid grid-rows-[4rem_auto_30rem] gap-y-8 grid-cols-1 justify-items-center items-center h-full">
         <header
-            class="w-[90vw] sm:w-[80vw] flex justify-between items-center py-4 px-4 h-10">
-            <router-link :to="PATH.HOME" class="container-logo">
+            class="w-[90vw] sm:w-[80vw] flex justify-between items-center py-4 px-4 h-10 gap-x-8">
+            <router-link :to="PATH.HOME" class="w-[10%] h-[2rem]">
                 <img :src="logo" alt="" />
             </router-link>
 
             <nav
                 v-if="screenWidth > 600"
-                class="navbar flex space-x-4 gap-x-20">
-                <router-link :to="PATH.HOME" class="navbar-link"
-                    >Home</router-link
-                >
-                <router-link :to="PATH.PRODUCTS.ROOT" class="navbar-link"
-                    >Produtos</router-link
-                >
-                <router-link
-                    v-if="useAuth.authenticated"
-                    :to="PATH.CART"
-                    class="navbar-link"
+                class="flex space-x-2 whitespace-nowrap gap-x-15 mx-8 w-[70%]">
+                <router-link :to="PATH.HOME">Home</router-link>
+                <router-link :to="PATH.PRODUCTS.ROOT">Produtos</router-link>
+                <router-link v-if="useAuth.authenticated" :to="PATH.CART"
                     >Carrinho</router-link
                 >
-                <router-link
-                    v-if="useAuth.authenticated"
-                    :to="PATH.ORDERS"
-                    class="navbar-link"
+                <router-link v-if="useAuth.authenticated" :to="PATH.ORDERS"
                     >Meus pedidos</router-link
                 >
                 <router-link
                     v-if="permitted && useAuth.authenticated"
                     :to="PATH.ADMIN"
-                    class="navbar-link"
                     >Administração</router-link
                 >
             </nav>
@@ -89,7 +78,7 @@ onUnmounted(() => {
             <div
                 v-if="screenWidth > 600"
                 id="container-login"
-                class="flex justify-between space-x-2 gap-x-2.5 w-1/4 min-w-fit">
+                class="flex justify-between space-x-2 gap-x-2.5 w-[20%] min-w-fit">
                 <router-link
                     v-if="!useAuth.authenticated"
                     :to="PATH.LOGIN"
@@ -137,19 +126,22 @@ onUnmounted(() => {
         </main>
 
         <footer
-            class="mt-8 w-full h-full bg-gray-300 py-40 flex flex-col items-center justify-between">
+            class="mt-8 w-full h-full bg-gray-300 py-20 flex flex-col items-center justify-between">
             <div
                 class="w-11/12 h-full flex flex-col sm:flex-row justify-between items-center">
-                <div class="flex flex-col items-start gap-y-2">
-                    <div>
-                        <img :src="logo" alt="" />
+                <div class="flex flex-col items-left gap-y-1 w-full px-3.5">
+                    <div class="w-[15%] h-full flex flex-row">
+                        <img class="w-full h-full" :src="logo" alt="" />
                     </div>
-                    <p class="mt-4">Seu estilo começa pelo seu pulso.</p>
-                    <div class="flex justify-between w-5/6 mt-4 h-full">
+                    <p class="mt-4 w-[40%]">
+                        Seu estilo começa pelo seu pulso.
+                    </p>
+                    <div
+                        class="flex justify-between w-[40%] mt-4 gap-x-1 h-full">
                         <div
                             v-for="item in socialNetworksLogos"
                             :key="item.nome"
-                            class="w-8 mx-1.5">
+                            class="max-md:w-8 mx-1">
                             <img
                                 :src="item.nome"
                                 :alt="`logo do ${item.nome}`" />
@@ -158,45 +150,56 @@ onUnmounted(() => {
                 </div>
                 <div
                     id="navigation-footer"
-                    class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-gray-700">
-                    <div class="flex flex-col gap-y-2">
-                        <p class="font-semibold text-black">Informações</p>
-                        <router-link :to="PATH.ABOUT_US" class="navbar-link"
-                            >Sobre nós</router-link
-                        >
-                        <router-link :to="PATH.DELIVERY" class="navbar-link"
-                            >Entrega</router-link
-                        >
-                        <p class="navbar-link">Blog</p>
+                    class="grid grid-cols-3 gap-3 text-gray-700 w-[80%] mt-6">
+                    <div class="flex flex-col gap-y-1">
+                        <p class="text-sm md:text-lg font-semibold text-black">
+                            Info
+                        </p>
+                        <div
+                            class="md:text-sm text-xs whitespace-nowrap flex flex-col">
+                            <router-link :to="PATH.ABOUT_US"
+                                >Sobre nós</router-link
+                            >
+                            <router-link :to="PATH.DELIVERY"
+                                >Entrega</router-link
+                            >
+                            <p>Blog</p>
+                        </div>
                     </div>
-                    <div class="flex flex-col gap-y-2">
-                        <p class="font-semibold text-black">Empresa</p>
-                        <p class="navbar-link">Comunidade</p>
-                        <router-link :to="PATH.CARRER" class="navbar-link"
-                            >Carreira</router-link
-                        >
-                        <router-link :to="PATH.OUR_HISTORY" class="navbar-link"
-                            >Nossa história</router-link
-                        >
+                    <div class="flex flex-col gap-y-1">
+                        <p class="text-sm md:text-lg font-semibold text-black">
+                            Empresa
+                        </p>
+                        <div
+                            class="md:text-sm text-xs whitespace-nowrap flex flex-col">
+                            <p>Comunidade</p>
+                            <router-link :to="PATH.CARRER"
+                                >Carreira</router-link
+                            >
+                            <router-link :to="PATH.OUR_HISTORY"
+                                >Nossa história</router-link
+                            >
+                        </div>
                     </div>
-                    <div class="flex flex-col gap-y-2">
-                        <p class="font-semibold text-black">Navegação</p>
-                        <router-link :to="PATH.HOME" class="navbar-link"
-                            >Home</router-link
-                        >
-                        <router-link
-                            :to="PATH.PRODUCTS.ROOT"
-                            class="navbar-link"
-                            >Produtos</router-link
-                        >
-                        <p class="navbar-link">Contato</p>
+                    <div class="flex flex-col gap-y-1">
+                        <p class="text-sm md:text-lg font-semibold text-black">
+                            Navegação
+                        </p>
+                        <div
+                            class="md:text-sm text-xs whitespace-nowrap flex flex-col">
+                            <router-link :to="PATH.HOME">Home</router-link>
+                            <router-link :to="PATH.PRODUCTS.ROOT"
+                                >Produtos</router-link
+                            >
+                            <p>Contato</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <p class="text-sm text-gray-600">
+            <p class="text-xs text-gray-600 text-center w-full mt-20">
                 &copy; 2025 ShopWatch - Todos os direitos reservados
             </p>
-            <p class="text-sm text-gray-600">
+            <p class="text-xs text-gray-600">
                 Made with 🧠 by
                 <a
                     href="https://www.linkedin.com/in/leonardo-bern/"
