@@ -1,9 +1,14 @@
 <script setup>
-import { pixValue, viewFinancedValue } from '@/services/productService';
-import { defineProps, defineEmits } from 'vue';
+import {
+    calculatePixDiscount,
+    viewFinancedValue,
+} from '@/services/productService';
+import { defineProps, defineEmits, computed } from 'vue';
 
 const props = defineProps({ product: Object });
 const emit = defineEmits(['acessProduct', 'addToCart']);
+const pixPrice = computed(() => calculatePixDiscount(props.product.price));
+const financedPrice = computed(() => viewFinancedValue(props.product.price));
 
 const acess = () => emit('acessProduct');
 const add = () => emit('addToCart');
@@ -21,13 +26,13 @@ const add = () => emit('addToCart');
                     <strong>
                         R$
                         <span id="main-product-price">{{
-                            pixValue(product.price)
+                            pixPrice
                         }}</span></strong
                     >
                     no pix
                 </p>
                 <p class="p-price">
-                    {{ viewFinancedValue(product.price) }}
+                    {{ financedPrice }}
                 </p>
             </div>
         </div>

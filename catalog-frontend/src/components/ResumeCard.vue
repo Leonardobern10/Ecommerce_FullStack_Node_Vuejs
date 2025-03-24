@@ -2,7 +2,7 @@
 import { defineProps, defineEmits } from 'vue';
 import {
     financedValue,
-    pixValue,
+    calculatePixDiscount,
     viewFinancedValue,
 } from '@/services/productService';
 
@@ -30,7 +30,7 @@ const callCheckout = () => {
                 <strong>Total:</strong>
             </p>
             <div id="price-values">
-                <p>R$ {{ pixValue(totalAmount) }}</p>
+                <p>R$ {{ calculatePixDiscount(totalAmount) }}</p>
                 <p>ou 10x de {{ financedValue(totalAmount) }}</p>
             </div>
         </div>

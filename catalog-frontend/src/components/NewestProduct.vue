@@ -1,24 +1,37 @@
 <script setup>
-import { pixValue, viewFinancedValue } from '@/services/productService';
-import { defineProps, defineEmits, onMounted, onUnmounted, ref } from 'vue';
+import {
+    calculatePixDiscount,
+    viewFinancedValue,
+} from '@/services/productService';
+import {
+    defineProps,
+    defineEmits,
+    onMounted,
+    onUnmounted,
+    ref,
+    computed,
+} from 'vue';
 
 const emits = defineEmits(['nextItem', 'previousItem']);
 const props = defineProps({ img: String, name: String, price: String });
-const screenWidth = ref(window.innerWidth);
+const windowWidth = ref(window.innerWidth);
 
-const updateScreenSize = () => (screenWidth.value = window.innerWidth);
+const updateScreenSize = () => (windowWidth.value = window.innerWidth);
 const emitNextItem = () => emits('nextItem');
 const emitPreviousItem = () => emits('previousItem');
 
-onMounted(() => addEventListener('resize', updateScreenSize));
-onUnmounted(() => removeEventListener('resize', updateScreenSize));
+const pixPrice = computed(() => calculatePixDiscount(props.price));
+const financedPrice = computed(() => viewFinancedValue(props.price));
+
+onMounted(() => window.addEventListener('resize', updateScreenSize));
+onUnmounted(() => window.removeEventListener('resize', updateScreenSize));
 </script>
 
 <template>
     <div
         class="flex flex-row justify-between items-center sm:flex-col sm:gap-4">
         <button
-            v-if="screenWidth <= 425"
+            v-if="windowWidth <= 425"
             class="relative top-[40%] w-[10%] h-8 bg-transparent border-none"
             @click="emitPreviousItem">
             <img src="../assets/icons/left_arrow.svg" alt="Previous" />
@@ -38,16 +51,14 @@ onUnmounted(() => removeEventListener('resize', updateScreenSize));
                     {{ name }}
                 </p>
                 <h3 class="text-xl bkmid:text-2sm lg:text-lg font-bold">
-                    R$ {{ pixValue(price) }}
+                    R$ {{ pixPrice }}
                     <span class="text-sm font-normal">no pix</span>
                 </h3>
-                <p class="w-full text-sm lg:text-lg">
-                    ou {{ viewFinancedValue(price) }}
-                </p>
+                <p class="w-full text-sm lg:text-lg">ou {{ financedPrice }}</p>
             </div>
         </div>
         <button
-            v-if="screenWidth <= 425"
+            v-if="windowWidth <= 425"
             class="relative top-[40%] w-[10%] h-8 bg-transparent border-none"
             @click="emitNextItem">
             <img src="../assets/icons/right_arrow.svg" alt="Next" />

@@ -65,10 +65,10 @@ const allNewestProducts = [
 const updateScreenSize = () => {
     screenWidth.value = window.innerWidth;
 };
-const nextItem = () =>
+const goToNextProduct = () =>
     nextNewestItem(currentIndexItem, allNewestProducts, currentItem);
 
-const previousItem = () => {
+const goToPreviousProduct = () => {
     previousNewestItem(currentIndexItem, allNewestProducts, currentItem);
 };
 
@@ -179,8 +179,8 @@ onUnmounted(() => {
                         :name="currentItem.name"
                         :price="currentItem.price"
                         :screen-width="screenWidth"
-                        @next-item="nextItem"
-                        @previous-item="previousItem" />
+                        @next-item="goToNextProduct"
+                        @previous-item="goToPreviousProduct" />
                 </div>
             </section>
 

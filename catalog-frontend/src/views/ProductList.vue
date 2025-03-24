@@ -71,30 +71,48 @@ onMounted(async () => {
     );
 });
 </script>
-
 <template>
-    <div id="view">
-        <div id="container">
-            <nav id="container-options-view">
-                <p class="options-view" @click="sortProductsLowToHigh">
+    <div
+        id="view"
+        class="flex flex-col justify-center items-center w-[80vw] h-full font-inter font-light">
+        <div
+            id="container"
+            class="flex flex-col items-center gap-16 w-full rounded-lg">
+            <nav
+                id="container-options-view"
+                class="flex flex-row justify-between items-center bg-xanadu h-12 w-full rounded-lg">
+                <p
+                    class="options-view pl-8 text-base hover:cursor-pointer"
+                    @click="sortProductsLowToHigh">
                     Menor preço
                 </p>
-                <p class="options-view" @click="sortProductsHighToLow">
+                <p
+                    class="options-view text-base hover:cursor-pointer"
+                    @click="sortProductsHighToLow">
                     Maior preço
                 </p>
-                <p class="options-view" @click="sortProductsMostRecently">
+                <p
+                    class="options-view text-base hover:cursor-pointer"
+                    @click="sortProductsMostRecently">
                     Mais recentes
                 </p>
-                <div id="container-search-brand">
-                    <p>Procure pela marca de sua preferência:</p>
+                <div
+                    id="container-search-brand"
+                    class="flex flex-row justify-evenly items-center w-1/2 h-full bg-black text-white/75 border-none rounded-lg px-4">
+                    <p class="text-base pr-2">
+                        Procure pela marca de sua preferência:
+                    </p>
                     <input
                         id="input-brand"
                         v-model="searchBrandQuery"
                         type="text"
-                        placeholder="Nome da marca..." />
+                        placeholder="Buscar..."
+                        class="w-1/5 h-6 rounded-lg p-2 border-none outline-none bg-gray-50/20 text-black/60 focus:bg-black focus:text-green-500 placeholder:text-white/60" />
                 </div>
             </nav>
-            <ul id="container-products">
+            <ul
+                id="container-products"
+                class="grid grid-cols-auto-fit-250 w-full justify-items-center items-center gap-8">
                 <ProductOffer
                     v-for="product in filteredProducts"
                     :key="product.name"
@@ -102,177 +120,35 @@ onMounted(async () => {
                     @acessProduct="accessProduct(product._id)"
                     @addToCart="addProductToCart(product)" />
             </ul>
-            <div class="pagination">
+            <div
+                class="pagination w-1/5 flex flex-row justify-between items-center gap-5 my-8">
                 <button
                     @click="getPage('previous')"
                     id="previous"
-                    class="button-pagination"></button>
+                    class="button-pagination w-8 h-8 bg-no-repeat bg-center bg-[url('../assets/icons/left_arrow_next_page.svg')] hover:cursor-pointer rounded-lg">
+                    <img
+                        src="../assets/icons/left_arrow_next_page.svg"
+                        alt="" />
+                </button>
                 <span> Página {{ currentPage }} de {{ totalPages }}</span>
                 <button
                     @click="getPage('next')"
                     id="next"
-                    class="button-pagination"></button>
+                    class="button-pagination w-8 h-8 bg-no-repeat bg-center bg-[url('../assets/icons/right_arrow_next_page.svg')] hover:cursor-pointer rounded-lg">
+                    <img
+                        src="../assets/icons/right_arrow_next_page.svg"
+                        alt="" />
+                </button>
             </div>
         </div>
     </div>
 </template>
 
 <style scoped>
-@media (max-width: 600px) {
-}
-@media (min-width: 600px) {
-}
-li {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    row-gap: 0.2rem;
-
-    padding: 1rem;
-    width: 12rem;
-    height: 100%;
-    border-radius: 10px;
-
-    color: #000;
-
-    background-color: transparent;
-    transition: box-shadow 0.3s ease;
-}
-li:hover {
-    animation: piscar 5s ease-in;
-    scale: 1;
-    cursor: pointer;
-}
-.button-pagination {
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-
-    background-repeat: no-repeat;
-    background-position: center;
-}
-.button-pagination:hover {
-    cursor: pointer;
-}
-#previous {
-    background-image: url('../assets/icons/left_arrow_next_page.svg');
-    width: 30px;
-    height: 30px;
-}
-#next {
-    background-image: url('../assets/icons/right_arrow_next_page.svg');
-    width: 30px;
-    height: 30px;
-}
-#view {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Inter', serif;
-    font-weight: 300;
-    width: 80vw;
-    height: 100%;
-}
-#container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: 4rem;
-    width: 100%;
-
-    border-radius: 15px;
-}
-#container-options-view {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-
-    border-radius: 15px;
-
-    background-color: var(--green-spring);
-    opacity: 0.8;
-    height: 3rem;
-    width: 100%;
-}
-#container-options-view p:first-child {
-    padding-left: 2rem;
-}
-.options-view {
-    font-size: 1rem;
-}
-.options-view:hover {
-    cursor: pointer;
-}
-#container-search-brand {
-    display: flex;
-    flex-direction: row;
-
-    justify-content: space-evenly;
-    align-items: center;
-
-    width: 50%;
-    height: 100%;
-    background-color: #000;
-    color: #ffffffc0;
-    border: none;
-    border-radius: 15px;
-    padding: 0 1rem;
-}
-#container-search-brand p {
-    font-size: 1rem;
-    padding-right: 5px;
-}
-#input-brand {
-    width: 20%;
-    height: 1.5rem;
-    border-radius: 10px;
-    padding: 0.4rem;
-    border: none;
-    outline: none;
-
-    background-color: var(--xanadu);
-    color: #000000a2;
-}
-#input-brand:focus {
-    background-color: #000;
-    color: var(--green-spring);
-    color: #ffffff88;
-}
-#input-brand::placeholder {
-    color: #ffffff98;
-}
-img {
-    width: 100%;
-    height: 100%;
-}
-#container-products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-
-    width: 100%;
-    justify-items: center;
-    align-items: center;
-    gap: 4rem 1rem;
-}
-#title-section {
-    color: #ffffffa1;
-    font-weight: 400;
-    font-size: 2rem;
-}
-.btn-add {
-    display: none;
-}
-.pagination {
-    width: 20%;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    column-gap: 20px;
-    margin: 2rem 0;
+/* Definição customizada para grid-auto-fit */
+@layer utilities {
+    .grid-cols-auto-fit-250 {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
 }
 </style>

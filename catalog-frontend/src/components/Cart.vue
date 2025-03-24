@@ -32,8 +32,11 @@ const updateItemQuantity = (productId, newQuantity) =>
     updateItemQuantityOnCart(productId, newQuantity, cart);
 
 const removeItem = (productId) => {
-    cart.value = cart.value.filter((item) => item._id !== productId);
-    removeFromCart(productId);
+    const index = cart.value.findIndex((item) => item._id === productId);
+    if (index !== -1) {
+        cart.value.splice(index, 1); // Remove o item diretamente do array
+        removeFromCart(productId);
+    }
 };
 
 // Finaliza a compra

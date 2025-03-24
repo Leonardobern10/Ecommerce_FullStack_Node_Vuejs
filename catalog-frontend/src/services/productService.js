@@ -53,7 +53,8 @@ export const deleteProduct = async (id) => {
     await axios.delete(`${URL.PRODUCTS}/${id}`);
 };
 
-export const pixValue = (price) => Number(price - price * 0.05).toFixed(2);
+export const calculatePixDiscount = (price) =>
+    Number(price - price * 0.05).toFixed(2);
 
 export const financedValue = (price) => Number(price / 10).toFixed(2);
 

@@ -1,3 +1,8 @@
+<script setup>
+import { ref } from 'vue';
+
+const isOpen = ref(false);
+</script>
 <template>
     <nav class="navbar">
         <div class="logo">Meu Site</div>
@@ -10,12 +15,6 @@
         </ul>
     </nav>
 </template>
-
-<script setup>
-import { ref } from 'vue';
-
-const isOpen = ref(false);
-</script>
 
 <style scoped>
 /* Estilos básicos */

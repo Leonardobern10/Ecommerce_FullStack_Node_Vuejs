@@ -1,6 +1,6 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue';
-import { pixValue } from '@/services/productService';
+import { defineProps, defineEmits, computed } from 'vue';
+import { calculatePixDiscount } from '@/services/productService';
 
 const props = defineProps(['name', 'price', 'quantity', 'imageUrl']);
 const emit = defineEmits(['update-quantity', 'remove-item']);
@@ -11,6 +11,8 @@ const updateQuantity = (event) => {
         emit('update-quantity', newQuantity);
     }
 };
+
+const totalPrice = computed(() => (props.price * props.quantity).toFixed(2));
 </script>
 
 <template>
@@ -31,9 +33,11 @@ const updateQuantity = (event) => {
         </div>
         <div id="price">
             <p id="title-price">
-                <strong>R$ {{ (price * quantity).toFixed(2) }}</strong>
+                <strong>R$ {{ totalPrice }}</strong>
             </p>
-            <p id="financed-price">ou R$ {{ pixValue(price) }} no pix</p>
+            <p id="financed-price">
+                ou R$ {{ calculatePixDiscount(price) }} no pix
+            </p>
         </div>
     </div>
 </template>
