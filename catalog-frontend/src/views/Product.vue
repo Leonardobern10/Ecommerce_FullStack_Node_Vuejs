@@ -5,6 +5,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useProductStore } from '@/store/userProductStore';
 import { addOnCart } from '@/services/cartService';
 import { useAuthStore } from '@/store/useAuthStore.js';
+import Button from '@/components/Button.vue';
 
 const productStore = useProductStore();
 const route = useRoute();
@@ -34,9 +35,10 @@ const addToCart = async (product) =>
                     </p>
                     <p>Quantidade: {{ product.stock }}</p>
                 </div>
-                <button @click="addToCart(product)">
-                    Adicionar ao carrinho
-                </button>
+                <Button
+                    @click="addToCart(product)"
+                    button-name="Adicionar ao carrinho">
+                </Button>
             </div>
         </div>
     </div>

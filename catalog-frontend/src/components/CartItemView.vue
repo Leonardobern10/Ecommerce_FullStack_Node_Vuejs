@@ -1,6 +1,7 @@
 <script setup>
 import { defineProps, defineEmits, computed } from 'vue';
 import { calculatePixDiscount } from '@/services/productService';
+import Button from './Button.vue';
 
 const props = defineProps(['name', 'price', 'quantity', 'imageUrl']);
 const emit = defineEmits(['update-quantity', 'remove-item']);
@@ -23,7 +24,7 @@ const totalPrice = computed(() => (props.price * props.quantity).toFixed(2));
         <div id="info-cart-product">
             <p id="name-product">{{ name }}</p>
             <div>
-                <button @click="$emit('remove-item')">Excluir</button>
+                <Button @click="$emit('remove-item')" button-name="Excluir" />
                 <input
                     type="number"
                     :value="quantity"
@@ -109,27 +110,5 @@ input {
 #financed-price {
     font-size: 0.8rem;
     opacity: 0.7;
-}
-button {
-    max-width: 15rem;
-    min-width: fit-content;
-    border: none;
-    border-radius: 5px;
-    padding: 0.3rem 0.5rem;
-    background-color: var(--green-spring);
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 200;
-    letter-spacing: 0.5px;
-
-    transition:
-        background-color 0.3s ease-in,
-        border 0.3s ease-in;
-}
-
-button:hover {
-    cursor: pointer;
-    background-color: var(--xanadu);
-    border: 1px solid #fff;
 }
 </style>

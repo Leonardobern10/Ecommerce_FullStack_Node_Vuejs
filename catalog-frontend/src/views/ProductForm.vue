@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import { getProducts, saveProduct } from '../services/productService.js';
 import { useRoute, useRouter } from 'vue-router';
 import Input from '@/components/Input.vue';
+import Button from '@/components/Button.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -67,9 +68,10 @@ onMounted(async () => {
                 type="text"
                 placeholder="Url da imagem"
                 required />
-            <button type="submit">
-                {{ isEdit ? 'Salvar Alterações' : 'Adicionar' }}
-            </button>
+            <Button
+                type="submit"
+                :button-name="isEdit ? 'Salvar Alterações' : 'Adicionar'">
+            </Button>
         </form>
     </div>
 </template>

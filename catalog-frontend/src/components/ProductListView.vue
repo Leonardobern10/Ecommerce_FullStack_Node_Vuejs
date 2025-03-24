@@ -1,5 +1,7 @@
 <script setup>
 import { defineProps } from 'vue';
+import Button from './Button.vue';
+
 const props = defineProps({ name: String, price: Number, imageUrl: String });
 </script>
 
@@ -24,8 +26,8 @@ const props = defineProps({ name: String, price: Number, imageUrl: String });
                 </p>
             </div>
         </div>
-        <button @click.stop="addProductToCart(product)">
-            Adicionar ao Carrinho
-        </button>
+        <Button
+            @click.stop="addProductToCart(product)"
+            button-name="Adicionar ao carrinho" />
     </div>
 </template>

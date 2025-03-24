@@ -1,6 +1,7 @@
 <script setup>
 import { defineProps } from 'vue';
 import Input from './Input.vue';
+import Button from './Button.vue';
 
 const props = defineProps({
     fields: Array, // Lista de campos do formulario
@@ -18,7 +19,7 @@ const props = defineProps({
                 :model-value="field.value"
                 :type="field.type"
                 :placeholder="field.placeholder" />
-            <button type="submit">{{ buttonText }}</button>
+            <Button type="submit" :button-name="buttonText" />
         </form>
     </div>
 </template>

@@ -4,6 +4,7 @@ import {
     viewFinancedValue,
 } from '@/services/productService';
 import { defineProps, defineEmits, computed } from 'vue';
+import Button from './Button.vue';
 
 const props = defineProps({ product: Object });
 const emit = defineEmits(['acessProduct', 'addToCart']);
@@ -36,9 +37,10 @@ const add = () => emit('addToCart');
                 </p>
             </div>
         </div>
-        <button id="button-add-product" @click.stop="add">
-            Adicionar ao Carrinho
-        </button>
+        <Button
+            id="button-add-product"
+            @click.stop="add"
+            button-name="Adicionar ao carrinho" />
     </div>
 </template>
 
@@ -74,17 +76,5 @@ img {
     font-size: 1.4em;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.418);
     color: var(--xanadu);
-}
-button {
-    background-color: var(--green-spring);
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
-    transition: background-color 0.3s ease-in;
-}
-button:hover {
-    cursor: pointer;
-    background-color: var(--xanadu);
 }
 </style>

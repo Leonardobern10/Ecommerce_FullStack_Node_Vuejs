@@ -12,6 +12,7 @@ import { useRouter } from 'vue-router';
 import { hasPermission } from './services/roleService';
 import gsap from 'gsap';
 import logo from '@/assets/images/logo_ShopWatch.svg';
+import Button from './components/Button.vue';
 
 let menuMobileVisibility = ref(false);
 let permitted = ref(false);
@@ -52,6 +53,7 @@ onUnmounted(() => {
     <div
         class="grid grid-rows-[4rem_auto_30rem] gap-y-8 grid-cols-1 justify-items-center items-center h-full">
         <header
+            id="header"
             class="w-[90vw] sm:w-[80vw] flex justify-between items-center py-4 px-4 h-10 gap-x-8">
             <router-link :to="PATH.HOME" class="w-[10%] h-[2rem]">
                 <img :src="logo" alt="" />
@@ -91,13 +93,12 @@ onUnmounted(() => {
                     class="navbar-link"
                     >Registrar</router-link
                 >
-                <button
+                <Button
                     v-if="useAuth.authenticated"
                     id="btn-logout"
-                    class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
-                    @click="logout">
-                    Logout
-                </button>
+                    @click="logout"
+                    button-name="Sair">
+                </Button>
             </div>
 
             <div

@@ -1,4 +1,6 @@
 <script setup>
+import Button from '@/components/Button.vue';
+
 import { deleteProduct, getProduct } from '@/services/productService';
 import { ref } from 'vue';
 
@@ -13,66 +15,64 @@ const removeProduct = async () => {
     currentProduct.value = {};
 };
 </script>
-
 <template>
-    <div id="view-remove-item">
-        <div>
-            <form id="form-search-product" @submit.prevent="searchProduct">
+    <div class="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+        <h1 class="text-2xl font-semibold mb-4 text-gray-800">
+            Remover Produto
+        </h1>
+
+        <!-- Seção de busca -->
+        <div class="mb-6">
+            <p class="font-medium text-gray-600">Pesquise pelo ID do produto</p>
+            <form @submit.prevent="searchProduct" class="mt-4 flex gap-2">
                 <input
                     type="text"
                     v-model="searched"
-                    placeholder="Digite o ID" />
-                <button type="submit">Pesquisar</button>
+                    placeholder="Digite o ID"
+                    class="w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-500" />
+                <Button type="submit" button-name="Pesquisar" />
             </form>
         </div>
-        <div id="container-searched-item-remove" v-if="searched">
-            <h3>Name: {{ currentProduct.name }}</h3>
-            <p><strong>Brand:</strong> {{ currentProduct.brand }}</p>
-            <p style="text-align: justify">
-                <strong>Description:</strong> {{ currentProduct.description }}
+
+        <!-- Exibição do produto encontrado -->
+        <div v-if="searched" class="border-t pt-6">
+            <h3 class="text-lg font-semibold text-gray-800">
+                {{ currentProduct.name }}
+            </h3>
+            <p class="text-gray-600">
+                <strong>Marca:</strong> {{ currentProduct.brand }}
             </p>
-            <p><strong>Price:</strong> {{ currentProduct.price }}</p>
-            <p><strong>Stock:</strong> {{ currentProduct.stock }}</p>
-            <div>
-                <p><strong>Imagem:</strong></p>
-                <div style="width: 120px; height: 120px">
-                    <img :src="currentProduct.imageUrl" alt="" />
+            <p class="text-gray-600">
+                <strong>Descrição:</strong> {{ currentProduct.description }}
+            </p>
+            <p class="text-gray-600">
+                <strong>Preço:</strong> R$ {{ currentProduct.price }}
+            </p>
+            <p class="text-gray-600">
+                <strong>Estoque:</strong> {{ currentProduct.stock }}
+            </p>
+
+            <div class="mt-4">
+                <p class="text-gray-600"><strong>Imagem:</strong></p>
+                <div class="w-32 h-32 border rounded-md overflow-hidden">
+                    <img
+                        :src="currentProduct.imageUrl"
+                        class="w-full h-full object-cover"
+                        alt="Imagem do Produto" />
                 </div>
             </div>
-            <p>CreatedAt: {{ currentProduct.createdAt }}</p>
+
+            <p class="text-gray-600 mt-2">
+                <strong>Criado em:</strong> {{ currentProduct.createdAt }}
+            </p>
+
+            <!-- Botão de remoção -->
+            <form @submit.prevent="removeProduct" class="mt-6">
+                <Button type="submit" button-name="Remover produto" />
+            </form>
         </div>
-        <p v-else>ID inválido</p>
-        <form @submit.prevent="removeProduct">
-            <button type="submit">Remover</button>
-        </form>
+
+        <!-- Mensagem de erro -->
+        <p v-else class="text-red-500 font-medium">ID inválido</p>
     </div>
 </template>
-
-<style scoped>
-#view-remove-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-button {
-    padding: 0.2rem 0.5rem;
-    margin: 2rem 1rem;
-    border-radius: 15px;
-    height: 2rem;
-}
-input {
-    height: 2rem;
-    border-radius: 15px;
-    padding: 1rem;
-}
-#container-searched-item-remove {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: start;
-
-    font-size: clamp(0.7rem, 1rem, 1.5rem);
-
-    width: 60%;
-}
-</style>

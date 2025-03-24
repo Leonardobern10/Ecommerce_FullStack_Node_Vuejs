@@ -5,6 +5,7 @@ import {
     calculatePixDiscount,
     viewFinancedValue,
 } from '@/services/productService';
+import Button from './Button.vue';
 
 const props = defineProps({ length: Number, totalAmount: Number });
 const emit = defineEmits(['eventCheckout']);
@@ -35,9 +36,11 @@ const callCheckout = () => {
             </div>
         </div>
         <div id="container-buttons">
-            <button @click="callCheckout" v-if="length">
-                Finalizar compra
-            </button>
+            <Button
+                @click="callCheckout"
+                v-if="length"
+                button-name="Finalizar compra">
+            </Button>
         </div>
     </div>
 </template>
@@ -83,28 +86,5 @@ const callCheckout = () => {
 }
 hr {
     width: 100%;
-}
-button {
-    max-width: 15rem;
-    min-width: fit-content;
-    border: none;
-    border-radius: 5px;
-    padding: 0.5rem 0.7rem;
-    background-color: var(--green-spring);
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 200;
-    letter-spacing: 0.5px;
-
-    transition:
-        background-color 0.3s ease-in,
-        border 0.3s ease-in;
-
-    margin: 1rem 0;
-}
-button:hover {
-    cursor: pointer;
-    background-color: var(--xanadu);
-    border: 1px solid #fff;
 }
 </style>

@@ -13,6 +13,7 @@ import { nextNewestItem, previousNewestItem } from '@/services/itemService';
 import gsap from 'gsap';
 import { PixiPlugin, ScrollTrigger, TextPlugin } from 'gsap/all';
 import { checkRole } from '@/services/roleService';
+import Button from '@/components/Button.vue';
 
 let screenWidth = ref(window.innerWidth);
 let currentIndexItem = ref(0);
@@ -154,12 +155,10 @@ onUnmounted(() => {
                     <p class="text-sm">
                         Confira os novos produtos da nossa loja
                     </p>
-                    <button
-                        class="bg-xanadu text-white p-2 rounded-lg hover:bg-blue-600">
-                        <router-link :to="PATH.PRODUCTS.ROOT"
-                            >Conferir</router-link
-                        >
-                    </button>
+
+                    <router-link :to="PATH.PRODUCTS.ROOT">
+                        <Button button-name="Conferir"
+                    /></router-link>
                 </div>
                 <div
                     v-if="screenWidth > 425"

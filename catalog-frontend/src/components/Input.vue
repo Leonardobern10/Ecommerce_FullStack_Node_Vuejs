@@ -11,24 +11,6 @@ const emit = defineEmits(['update:modelValue']);
         :placeholder="placeholder"
         :value="modelValue"
         @input="emit('update:modelValue', $event.target.value)"
+        class="block w-full mb-2 p-3 text-base border-2 border-gray-500 rounded-xl focus:bg-gray-300 focus:outline-none focus:border-x-4"
         required />
 </template>
-
-<style scoped>
-input {
-    display: block;
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 0.7rem;
-    font-size: 16px;
-    border: 2px solid var(--xanadu);
-    border-radius: 15px;
-}
-
-input:focus {
-    background-color: #d9d9d9;
-    border: none;
-    border-left-style: ridge;
-    border-right-style: ridge;
-}
-</style>

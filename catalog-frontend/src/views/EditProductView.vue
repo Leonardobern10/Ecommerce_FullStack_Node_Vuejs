@@ -1,4 +1,5 @@
 <script setup>
+import Button from '@/components/Button.vue';
 import { getProduct, saveUpdate } from '@/services/productService';
 import { ref } from 'vue';
 
@@ -11,100 +12,97 @@ const searchProduct = async () => {
 
 const saveChanges = async () => await saveUpdate(currentProduct, alert);
 </script>
-
 <template>
-    <div id="view-edit-instructions">
-        <div>
-            <h1>Editar Produto</h1>
-            <p><strong>Pesquise pelo seu produto</strong></p>
-            <p>
-                Digite abaixo o id do produto. Ele será buscado e se encontrado,
-                aparecerá ao lado direito.
+    <div class="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+        <h1 class="text-2xl font-semibold mb-4 text-gray-800">
+            Editar Produto
+        </h1>
+
+        <!-- Seção de busca -->
+        <div class="mb-6">
+            <p class="font-medium text-gray-600">Pesquise pelo seu produto</p>
+            <p class="text-sm text-gray-500">
+                Digite o ID do produto. Se encontrado, ele será exibido abaixo.
             </p>
-            <form id="form-search-product" @submit.prevent="searchProduct">
+            <form @submit.prevent="searchProduct" class="mt-4 flex gap-2">
                 <input
                     type="text"
                     v-model="idSearched"
-                    placeholder="Digite o ID" />
-                <button type="submit">Pesquisar</button>
+                    placeholder="Digite o ID"
+                    class="w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-500" />
+                <Button type="submit" button-name="Pesquisar" />
             </form>
         </div>
-        <div id="container-edit-element">
-            <p v-if="!idSearched">ID não fornecido.</p>
-            <div v-else>
-                <form id="form-edit-element" @submit.prevent="saveChanges">
-                    <label>Nome:</label>
-                    <input type="text" v-model="currentProduct.name" />
 
-                    <label>Marca:</label>
-                    <input type="text" v-model="currentProduct.brand" />
+        <!-- Formulário de edição -->
+        <div v-if="idSearched" class="border-t pt-6">
+            <form
+                @submit.prevent="saveChanges"
+                class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-gray-700 font-medium">Nome:</label>
+                    <input
+                        type="text"
+                        v-model="currentProduct.name"
+                        class="w-full border rounded-md p-2 focus:ring-2 focus:ring-green-500" />
+                </div>
 
-                    <label>Descrição:</label>
-                    <textarea v-model="currentProduct.description"></textarea>
+                <div>
+                    <label class="block text-gray-700 font-medium"
+                        >Marca:</label
+                    >
+                    <input
+                        type="text"
+                        v-model="currentProduct.brand"
+                        class="w-full border rounded-md p-2 focus:ring-2 focus:ring-green-500" />
+                </div>
 
-                    <label>Preço:</label>
+                <div class="md:col-span-2">
+                    <label class="block text-gray-700 font-medium"
+                        >Descrição:</label
+                    >
+                    <textarea
+                        v-model="currentProduct.description"
+                        class="w-full border rounded-md p-2 focus:ring-2 focus:ring-green-500"
+                        rows="3">
+                    </textarea>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-medium"
+                        >Preço:</label
+                    >
                     <input
                         type="number"
                         v-model="currentProduct.price"
-                        step="0.01" />
+                        step="0.01"
+                        class="w-full border rounded-md p-2 focus:ring-2 focus:ring-green-500" />
+                </div>
 
-                    <label>Estoque:</label>
-                    <input type="number" v-model="currentProduct.stock" />
+                <div>
+                    <label class="block text-gray-700 font-medium"
+                        >Estoque:</label
+                    >
+                    <input
+                        type="number"
+                        v-model="currentProduct.stock"
+                        class="w-full border rounded-md p-2 focus:ring-2 focus:ring-green-500" />
+                </div>
 
-                    <label>Imagem URL:</label>
-                    <input type="text" v-model="currentProduct.imageUrl" />
+                <div class="md:col-span-2">
+                    <label class="block text-gray-700 font-medium"
+                        >Imagem URL:</label
+                    >
+                    <input
+                        type="text"
+                        v-model="currentProduct.imageUrl"
+                        class="w-full border rounded-md p-2 focus:ring-2 focus:ring-green-500" />
+                </div>
 
-                    <button id="button-confirm-updates" type="submit">
-                        Salvar Alterações
-                    </button>
-                </form>
-            </div>
+                <div class="md:col-span-2 flex justify-center mt-4">
+                    <Button type="submit" button-name="Salvar alterações" />
+                </div>
+            </form>
         </div>
     </div>
 </template>
-
-<style scoped>
-#view-edit-instructions {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-
-    width: 80%;
-
-    border: 2px solid black;
-}
-#container-edit-element {
-    padding: 2rem 0;
-}
-#form-edit-element {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-}
-button {
-    padding: 0.2rem;
-    margin: 2rem 0;
-    border-radius: 15px;
-}
-input {
-    height: 2rem;
-    width: 15rem;
-    margin-bottom: 10px;
-    padding: 0.7rem;
-    font-size: 16px;
-    border: 2px solid var(--xanadu);
-    border-radius: 15px;
-}
-
-input:focus {
-    background-color: #d9d9d9;
-    border: none;
-    border-left-style: ridge;
-    border-right-style: ridge;
-}
-form {
-    padding: 0 1rem;
-}
-</style>

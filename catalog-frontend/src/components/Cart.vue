@@ -12,6 +12,7 @@ import { useRouter } from 'vue-router';
 import CartItemView from './CartItemView.vue';
 import { useAuthStore } from '@/store/useAuthStore.js';
 import ResumeCard from './ResumeCard.vue';
+import Button from './Button.vue';
 
 const router = useRouter(); // Direcionador de endereços
 const isLogged = ref(false); // Armazena o estado do usuario
@@ -56,81 +57,47 @@ const checkout = async () => {
 // Verifica se o usuário está logado e carrega o carrinho
 onMounted(async () => loadCart(cart));
 </script>
-
 <template>
-    <div id="view-cart">
-        <ul id="items-cart" v-if="cart.length">
-            <li class="item-cart" v-for="item in cart" :key="item._id">
-                <CartItemView
-                    :name="item.name"
-                    :price="item.price"
-                    :quantity="item.quantity"
-                    :image-url="item.imageUrl"
-                    @update-quantity="
-                        (newQuantity) =>
-                            updateItemQuantity(item._id, newQuantity)
-                    "
-                    @remove-item="removeItem(item._id)" />
-            </li>
-        </ul>
-        <p v-else>Seu carrinho está vazio.</p>
-        <div id="resume-cart" v-if="cart.length">
-            <ResumeCard
-                :length="cart.length"
-                :total-amount="totalAmount"
-                @event-checkout="checkout" />
+    <div class="container mx-auto p-6">
+        <div class="flex flex-col md:flex-row gap-6">
+            <!-- Lista de Itens no Carrinho -->
+            <div class="w-full md:w-2/3 bg-white shadow-md rounded-lg p-4">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+                    Carrinho de Compras
+                </h2>
+                <ul v-if="cart.length" class="space-y-4">
+                    <li v-for="item in cart" :key="item._id">
+                        <CartItemView
+                            :name="item.name"
+                            :price="item.price"
+                            :quantity="item.quantity"
+                            :image-url="item.imageUrl"
+                            @update-quantity="
+                                (newQuantity) =>
+                                    updateItemQuantity(item._id, newQuantity)
+                            "
+                            @remove-item="removeItem(item._id)" />
+                    </li>
+                </ul>
+                <p v-else class="text-center text-gray-500">
+                    Seu carrinho está vazio.
+                </p>
+            </div>
+
+            <!-- Resumo da Compra -->
+            <div
+                v-if="cart.length"
+                class="w-full md:w-1/3 bg-white shadow-md rounded-lg p-6 sticky top-6">
+                <ResumeCard
+                    :length="cart.length"
+                    :total-amount="totalAmount"
+                    @event-checkout="checkout" />
+
+                <Button
+                    class="mt-12 text-sm"
+                    @click="clear"
+                    button-name="Limpar" />
+            </div>
         </div>
     </div>
 </template>
-
-<style scoped>
-#view-cart {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: stretch;
-    column-gap: 2rem;
-
-    height: 100%;
-    width: 90%;
-}
-button {
-    max-width: 15rem;
-    min-width: fit-content;
-    border: none;
-    border-radius: 5px;
-    padding: 0.5rem 0.7rem;
-    background-color: var(--green-spring);
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 200;
-    letter-spacing: 0.5px;
-
-    transition:
-        background-color 0.3s ease-in,
-        border 0.3s ease-in;
-
-    margin: 1rem 0;
-}
-button:hover {
-    cursor: pointer;
-    background-color: var(--xanadu);
-    border: 1px solid #fff;
-}
-li {
-    list-style: none;
-}
-#items-cart {
-    width: 70%;
-    min-width: 10%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-}
-#resume-cart {
-    width: 30%;
-    min-width: 20%;
-}
-</style>
