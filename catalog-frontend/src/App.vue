@@ -13,6 +13,7 @@ import { hasPermission } from './services/roleService';
 import gsap from 'gsap';
 import logo from '@/assets/images/logo_ShopWatch.svg';
 import Button from './components/Button.vue';
+import Link from './components/Link.vue';
 
 let menuMobileVisibility = ref(false);
 let permitted = ref(false);
@@ -61,38 +62,35 @@ onUnmounted(() => {
 
             <nav
                 v-if="screenWidth > 600"
-                class="flex space-x-2 whitespace-nowrap gap-x-15 mx-8 w-[70%]">
-                <router-link :to="PATH.HOME">Home</router-link>
-                <router-link :to="PATH.PRODUCTS.ROOT">Produtos</router-link>
-                <router-link v-if="useAuth.authenticated" :to="PATH.CART"
-                    >Carrinho</router-link
-                >
-                <router-link v-if="useAuth.authenticated" :to="PATH.ORDERS"
-                    >Meus pedidos</router-link
-                >
-                <router-link
+                class="flex space-x-2 gap-x-15 mx-8 w-[70%]">
+                <Link :to="PATH.HOME" name="Home" />
+                <Link :to="PATH.PRODUCTS.ROOT" name="Produtos" />
+                <Link
+                    v-if="useAuth.authenticated"
+                    :to="PATH.CART"
+                    name="Carrinho" />
+                <Link
+                    v-if="useAuth.authenticated"
+                    :to="PATH.ORDERS"
+                    name="Meus pedidos" />
+                <Link
                     v-if="permitted && useAuth.authenticated"
                     :to="PATH.ADMIN"
-                    >Administração</router-link
-                >
+                    name="Administração" />
             </nav>
 
             <div
                 v-if="screenWidth > 600"
                 id="container-login"
                 class="flex justify-between space-x-2 gap-x-2.5 w-[20%] min-w-fit">
-                <router-link
+                <Link
                     v-if="!useAuth.authenticated"
                     :to="PATH.LOGIN"
-                    class="navbar-link"
-                    >Login</router-link
-                >
-                <router-link
+                    name="Login" />
+                <Link
                     v-if="!useAuth.authenticated"
                     :to="PATH.REGISTER"
-                    class="navbar-link"
-                    >Registrar</router-link
-                >
+                    name="Registrar" />
                 <Button
                     v-if="useAuth.authenticated"
                     id="btn-logout"
@@ -158,12 +156,8 @@ onUnmounted(() => {
                         </p>
                         <div
                             class="md:text-sm text-xs whitespace-nowrap flex flex-col">
-                            <router-link :to="PATH.ABOUT_US"
-                                >Sobre nós</router-link
-                            >
-                            <router-link :to="PATH.DELIVERY"
-                                >Entrega</router-link
-                            >
+                            <Link :to="PATH.ABOUT_US" name="Sobre nós" />
+                            <Link :to="PATH.DELIVERY" name="Entrega" />
                             <p>Blog</p>
                         </div>
                     </div>
@@ -174,12 +168,10 @@ onUnmounted(() => {
                         <div
                             class="md:text-sm text-xs whitespace-nowrap flex flex-col">
                             <p>Comunidade</p>
-                            <router-link :to="PATH.CARRER"
-                                >Carreira</router-link
-                            >
-                            <router-link :to="PATH.OUR_HISTORY"
-                                >Nossa história</router-link
-                            >
+                            <Link :to="PATH.CARRER" name="Carreira" />
+                            <Link
+                                :to="PATH.OUR_HISTORY"
+                                name="Nossa história" />
                         </div>
                     </div>
                     <div class="flex flex-col gap-y-1">
@@ -188,10 +180,8 @@ onUnmounted(() => {
                         </p>
                         <div
                             class="md:text-sm text-xs whitespace-nowrap flex flex-col">
-                            <router-link :to="PATH.HOME">Home</router-link>
-                            <router-link :to="PATH.PRODUCTS.ROOT"
-                                >Produtos</router-link
-                            >
+                            <Link :to="PATH.HOME" name="Home" />
+                            <Link :to="PATH.PRODUCTS.ROOT" name="Produtos" />
                             <p>Contato</p>
                         </div>
                     </div>
