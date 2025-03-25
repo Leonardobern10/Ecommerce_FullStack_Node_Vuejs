@@ -3,17 +3,14 @@ import { onMounted, onUnmounted, ref } from 'vue';
 import PATH from '@/constants/PATH';
 import NewestProduct from '@/components/NewestProduct.vue';
 import IconContainer from '@/components/IconContainer.vue';
-import iconClock from '../assets/icons/icon_watch_square.svg';
-import iconHeadset from '../assets/icons/icon_suport_quarter.svg';
-import iconTruck from '../assets/icons/icon_truck_square.svg';
-import clockMetal from '../assets/images/clock_metal.png';
-import clockWeather from '../assets/images/clock_weather.png';
-import clockSmart from '../assets/images/clock_smartwatch.png';
 import { nextNewestItem, previousNewestItem } from '@/services/itemService';
 import gsap from 'gsap';
 import { PixiPlugin, ScrollTrigger, TextPlugin } from 'gsap/all';
 import { checkRole } from '@/services/roleService';
 import Button from '@/components/Button.vue';
+import ICONS from '@/constants/ICONS.js';
+import CATEGORIES from '@/constants/CATEGORIES';
+import NEWESTPRODUCTS from '@/constants/NEWESTPRODUCTS';
 
 let screenWidth = ref(window.innerWidth);
 let currentIndexItem = ref(0);
@@ -22,46 +19,6 @@ let currentItem = ref({});
 gsap.registerPlugin(TextPlugin);
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(PixiPlugin);
-
-const icons = [
-    {
-        icon: iconClock,
-        title: 'qualidade',
-        content: 'principais marcas e lançamentos.',
-    },
-    {
-        icon: iconTruck,
-        title: 'entrega grátis',
-        content: 'frete grátis para todo o Brasil.',
-    },
-    {
-        icon: iconHeadset,
-        title: 'suporte 24 horas',
-        content: 'tire suas dúvidas a qualquer momento.',
-    },
-];
-const categories = [
-    { image: clockWeather, text: 'couro' },
-    { image: clockSmart, text: 'smart' },
-    { image: clockMetal, text: 'metal' },
-];
-const allNewestProducts = [
-    {
-        name: 'Relógio Inteligente Tranya ES10',
-        image: 'https://m.media-amazon.com/images/I/61Ktqu1XprL._AC_SL1500_.jpg',
-        price: '152.95',
-    },
-    {
-        name: 'Xiaomi Smart Band 9 Active',
-        image: 'https://m.media-amazon.com/images/I/51WOvToYRFL._AC_SL1500_.jpg',
-        price: '170.05',
-    },
-    {
-        name: 'Relógio Analógico Technos Steel',
-        image: 'https://m.media-amazon.com/images/I/61E7fAt9EHL._AC_SX679_.jpg',
-        price: '288.80',
-    },
-];
 
 const updateScreenSize = () => {
     screenWidth.value = window.innerWidth;
@@ -76,7 +33,7 @@ const goToPreviousProduct = () => {
 onMounted(() => {
     checkRole();
     window.addEventListener('resize', updateScreenSize);
-    currentItem.value = allNewestProducts[currentIndexItem.value];
+    currentItem.value = NEWESTPRODUCTS[currentIndexItem.value];
     gsap.from('#banner-init', {
         x: -100,
         delay: 0.2,
@@ -148,7 +105,7 @@ onUnmounted(() => {
                 </div>
             </section>
 
-            <section class="w-4/5">
+            <section id="newest-products" class="w-4/5">
                 <div
                     class="flex flex-col items-center gap-6 text-center text-lg mb-24 md:mb-4">
                     <p class="text-title-section font-bold">Lançamentos</p>
@@ -164,7 +121,7 @@ onUnmounted(() => {
                     v-if="screenWidth > 425"
                     class="flex flex-row justify-between h-[40%] md:h-[70%] md:items-center">
                     <NewestProduct
-                        v-for="product in allNewestProducts"
+                        v-for="product in NEWESTPRODUCTS"
                         :key="product.name"
                         :img="product.image"
                         :name="product.name"
@@ -188,7 +145,8 @@ onUnmounted(() => {
                 <div
                     class="flex flex-col md:flex-row items-center justify-around my-4 gap-y-4 w-full">
                     <IconContainer
-                        v-for="item in icons"
+                        id="about-company"
+                        v-for="item in ICONS"
                         :key="item.title"
                         :icon="item.icon"
                         :title="item.title"
@@ -207,7 +165,7 @@ onUnmounted(() => {
                 </div>
                 <div class="grid grid-cols-3 md:grid-cols-3 gap-6 mb-6">
                     <div
-                        v-for="item in categories"
+                        v-for="item in CATEGORIES"
                         :key="item.image"
                         class="flex flex-col items-center gap-2 lg:gap-16">
                         <div
