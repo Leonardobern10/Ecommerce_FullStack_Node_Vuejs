@@ -1,7 +1,9 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import {
     accessProductById,
+    getProductsByBrand,
+    getProductsByName,
     loadProducts,
     sortProductsByProp,
 } from '../services/productService.js';
@@ -16,6 +18,15 @@ import { goToPage } from '@/services/pageService.js';
 const router = useRouter();
 const isLogged = ref(false);
 const products = ref([]);
+
+// Valor do parametro que será pesquisado no banco de dados
+let searchValue = ref();
+// Parametro que será pesquisado no banco de dados
+let searchType = ref('');
+// Tempo de intervalo entre as requisição
+let timeout = null;
+// Estado para armazenar o aviso
+const alertMessage = ref('');
 
 const currentPage = ref(1);
 const totalPages = ref();
@@ -60,6 +71,34 @@ const getPage = async (operation) =>
         limit,
     );
 
+// Função para exibir o alerta por 5 segundos
+const showAlert = (message) => {
+    alertMessage.value = message;
+    setTimeout(() => {
+        alertMessage.value = '';
+    }, 5000);
+};
+
+// Observa mudanças no input e chama a função automaticamente
+watch([searchValue, searchType], async ([newQuery, newType]) => {
+    clearTimeout(timeout);
+
+    if (!newQuery || newQuery.trim().length < 3) return; // Evita pesquisas curtas
+
+    if (!newType) {
+        showAlert('Por favor, selecione um tipo de busca antes de pesquisar.');
+        return;
+    }
+
+    timeout = setTimeout(async () => {
+        if (newType === 'Nome') {
+            products.value = await getProductsByName(newQuery);
+        } else if (newType === 'Marca') {
+            products.value = await getProductsByBrand(newQuery);
+        }
+    }, 500); // Aplica um debounce de 500ms
+});
+
 onMounted(async () => {
     await loadProducts(
         authState,
@@ -75,6 +114,9 @@ onMounted(async () => {
     <div
         id="view"
         class="flex flex-col justify-center items-center w-[80vw] h-full font-inter font-light">
+        <div class="alert-container" v-if="alertMessage">
+            <p class="alert-message">{{ alertMessage }}</p>
+        </div>
         <div
             id="container"
             class="flex flex-col items-center gap-16 w-full rounded-lg">
@@ -96,18 +138,28 @@ onMounted(async () => {
                     @click="sortProductsMostRecently">
                     Mais recentes
                 </p>
+
                 <div
                     id="container-search-brand"
                     class="flex flex-row justify-evenly items-center w-1/2 h-full bg-black text-white/75 border-none rounded-lg px-4">
-                    <p class="text-base pr-2">
-                        Procure pela marca de sua preferência:
-                    </p>
-                    <input
-                        id="input-brand"
-                        v-model="searchBrandQuery"
-                        type="text"
-                        placeholder="Buscar..."
-                        class="w-1/5 h-6 rounded-lg p-2 border-none outline-none bg-gray-50/20 text-black/60 focus:bg-black focus:text-green-500 placeholder:text-white/60" />
+                    <div class="flex flex-row justify-between w-full">
+                        <label for="searchMethod">Pesquisar por:</label>
+                        <select
+                            class="bg-xanadu rounded-lg p-0.5"
+                            id="searchMethod"
+                            v-model="searchType">
+                            <option value="" disabled>
+                                Selecione uma opção
+                            </option>
+                            <option value="Nome">Nome</option>
+                            <option value="Marca">Marca</option>
+                        </select>
+                        <input
+                            class="text-gray-300 focus:bg-xanadu"
+                            type="text"
+                            v-model="searchValue"
+                            placeholder="Digite sua busca..." />
+                    </div>
                 </div>
             </nav>
             <ul

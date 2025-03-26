@@ -2,6 +2,7 @@ import express from 'express';
 import Product from '../models/Product.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 import { hasRole } from '../middlewares/roleMiddleware.js';
+import searchRouter from './searchRoutes.js';
 
 const productRouter = express.Router();
 
@@ -25,9 +26,11 @@ productRouter.post(
 // Listar todos os produtos
 productRouter.get('/', async (req, res) => {
     try {
-        const page = Math.max(parseInt(req.query.page) || 1, 1);
-        const limit = Math.max(parseInt(req.query.limit) || 10, 1);
-        const skip = (page - 1) * limit;
+        const { order = 'asc', page = 1, limit = 10 } = req.query;
+
+        const pageNumber = Math.max(parseInt(page) || 1, 1);
+        const limitNumber = Math.max(parseInt(limit) || 10, 1);
+        const skip = (pageNumber - 1) * limitNumber;
 
         const products = await Product.find().skip(skip).limit(limit);
         const total = await Product.countDocuments();
@@ -43,6 +46,10 @@ productRouter.get('/', async (req, res) => {
         console.error(error);
     }
 });
+
+// Quando a rota .../search é acessada, ele chama o roteador de search
+// que é o responsável por coordenar as rotas
+productRouter.get('/search', searchRouter);
 
 // Listar um produto
 productRouter.get('/:id', async (req, res) => {

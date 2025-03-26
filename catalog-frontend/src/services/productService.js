@@ -130,3 +130,29 @@ export const searchProduct = async (product, route, store) => {
         console.error(error);
     }
 };
+
+// Retornam os produtos com o nome correspondente
+export const getProductsByName = async (name) => {
+    try {
+        const response = await axios.get(
+            `http://localhost:5000/api/products/search?name=${name}`,
+        );
+        console.log(response.data.data);
+        return response.data.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+// Retornam os produtos com a marca correspondente
+export const getProductsByBrand = async (brand) => {
+    try {
+        const response = await axios.get(
+            `http://localhost:5000/api/products/search?brand=${brand}`,
+        );
+        console.log(response.data.data);
+        return response.data.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
