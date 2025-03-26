@@ -14,6 +14,7 @@ import { filterProducts } from '../services/productService.js';
 import { useRouter } from 'vue-router';
 import ProductOffer from '@/components/ProductOffer.vue';
 import { goToPage } from '@/services/pageService.js';
+import { useToast } from 'vue-toastification';
 
 const router = useRouter();
 const isLogged = ref(false);
@@ -31,6 +32,8 @@ const alertMessage = ref('');
 const currentPage = ref(1);
 const totalPages = ref();
 const limit = ref(12);
+
+const toast = useToast();
 
 const productStore = useProductStore();
 const searchBrandQuery = ref('');
@@ -79,6 +82,23 @@ const showAlert = (message) => {
     }, 5000);
 };
 
+const showWarning = () => {
+    toast.info('Por favor, selecione o campo a ser pesquisado.', {
+        position: 'bottom-right',
+        timeout: 5000,
+        closeOnClick: true,
+        pauseOnFocusLoss: true,
+        pauseOnHover: true,
+        draggable: true,
+        draggablePercent: 0.6,
+        showCloseButtonOnHover: false,
+        hideProgressBar: true,
+        closeButton: 'button',
+        icon: true,
+        rtl: false,
+    });
+};
+
 // Observa mudanças no input e chama a função automaticamente
 watch([searchValue, searchType], async ([newQuery, newType]) => {
     clearTimeout(timeout);
@@ -86,7 +106,7 @@ watch([searchValue, searchType], async ([newQuery, newType]) => {
     if (!newQuery || newQuery.trim().length < 3) return; // Evita pesquisas curtas
 
     if (!newType) {
-        showAlert('Por favor, selecione um tipo de busca antes de pesquisar.');
+        showWarning();
         return;
     }
 
