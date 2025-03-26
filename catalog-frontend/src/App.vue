@@ -55,13 +55,13 @@ onUnmounted(() => {
         class="grid grid-rows-[4rem_auto_30rem] gap-y-8 grid-cols-1 justify-items-center items-center h-full">
         <header
             id="header"
-            class="w-[90vw] sm:w-[80vw] flex justify-between items-center py-4 px-4 h-10 gap-x-8">
+            class="max-md:relative w-[90vw] flex justify-between items-center py-4 h-10 gap-x-22 font-lato">
             <router-link :to="PATH.HOME" class="w-[10%] h-[2rem]">
                 <img :src="logo" alt="" />
             </router-link>
 
             <nav
-                v-if="screenWidth > 600"
+                v-if="screenWidth > 768"
                 class="flex space-x-2 gap-x-15 mx-8 w-[70%]">
                 <Link :to="PATH.HOME" name="Home" />
                 <Link :to="PATH.PRODUCTS.ROOT" name="Produtos" />
@@ -80,9 +80,9 @@ onUnmounted(() => {
             </nav>
 
             <div
-                v-if="screenWidth > 600"
+                v-if="screenWidth > 768"
                 id="container-login"
-                class="flex justify-between space-x-2 gap-x-2.5 w-[20%] min-w-fit">
+                class="flex justify-end space-x-2 gap-x-3 w-[20%] min-w-fit">
                 <Link
                     v-if="!useAuth.authenticated"
                     :to="PATH.LOGIN"
@@ -125,7 +125,7 @@ onUnmounted(() => {
         </main>
 
         <footer
-            class="mt-8 w-full h-full bg-gray-300 py-20 flex flex-col items-center justify-between">
+            class="font-lato mt-8 w-full h-full bg-gray-300 py-20 flex flex-col items-center justify-between">
             <div
                 class="w-11/12 h-full flex flex-col sm:flex-row justify-between items-center">
                 <div class="flex flex-col items-left gap-y-1 w-full px-3.5">

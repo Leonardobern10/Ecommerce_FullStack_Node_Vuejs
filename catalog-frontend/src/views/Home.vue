@@ -11,6 +11,7 @@ import Button from '@/components/Button.vue';
 import ICONS from '@/constants/ICONS.js';
 import CATEGORIES from '@/constants/CATEGORIES';
 import NEWESTPRODUCTS from '@/constants/NEWESTPRODUCTS';
+import clockBanner from '@/assets/images/clock_image1.png';
 
 let screenWidth = ref(window.innerWidth);
 let currentIndexItem = ref(0);
@@ -24,10 +25,10 @@ const updateScreenSize = () => {
     screenWidth.value = window.innerWidth;
 };
 const goToNextProduct = () =>
-    nextNewestItem(currentIndexItem, allNewestProducts, currentItem);
+    nextNewestItem(currentIndexItem, NEWESTPRODUCTS, currentItem);
 
 const goToPreviousProduct = () => {
-    previousNewestItem(currentIndexItem, allNewestProducts, currentItem);
+    previousNewestItem(currentIndexItem, NEWESTPRODUCTS, currentItem);
 };
 
 onMounted(() => {
@@ -38,13 +39,10 @@ onMounted(() => {
         x: -100,
         delay: 0.2,
         duration: 1.2,
-        autoAlpha: 0,
+        autoAlpha: 0.2,
         ease: 'expo.out',
     });
-    gsap.to('h1', {
-        duration: 5,
-        text: 'Seu estilo começa pelo pulso. Seja destaque.',
-    });
+    gsap.to('h1', { duration: 5, text: 'Seu estilo começa pelo pulso.' });
     gsap.from('#newest-products', {
         scrollTrigger: {
             trigger: '#newest-products',
@@ -81,34 +79,24 @@ onUnmounted(() => {
         <div class="w-full flex flex-col items-center gap-y-15">
             <section
                 id="banner-init"
-                class="flex flex-col-reverse md:flex-row gap-4 w-[80%] min-w-[80%] justify-between items-center bg-xanadu rounded-xl">
+                class="h-screen min-w-[90%] max-md:w-[90%] font-lato border-2 border-gray-600/70 bg-no-repeat bg-cover mx-md:bg-contain bg-center bg-origin-border text-gray-200 blur-px">
                 <div
-                    class="flex flex-col gap-y-8 w-[80%] md:w-[50%] md:min-w-[50%] items-center md:h-[80%] justify-around">
+                    class="flex flex-col md:gap-y-6 w-[80%] md:w-[50%] md:min-w-[50%] items-center md:h-[100%] max-md:px-6 justify-center">
                     <h1
-                        class="text-2xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-4xl text-center w-full md:w-[90%]"></h1>
-                    <div
-                        class="flex flex-row items-center justify-between md:w-[70%] md:text-xl h-[7rem] md:h-[5rem]">
-                        <p class="w-[50%] md:text-lg">
-                            os principais modelos do mercado
-                        </p>
-                        <div class="w-px h-[3rem] md:h-[4.5rem] bg-black"></div>
-                        <p class="text-center md:font-bold w-[35%]">
-                            +100 clientes
-                        </p>
-                    </div>
-                </div>
-                <div class="min-w-[50%] h-full md:h-50%">
-                    <img
-                        class="w-full rounded-lg"
-                        src="../assets/images/foto_banner_principal.png"
-                        alt="" />
+                        class="tracking-tight font-extralight text-4xl md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-4xl text-left w-full md:w-[70%]"></h1>
+                    <p class="text-lg md:w-[70%]">
+                        Mais do que medir o tempo, marcar sua história.
+                    </p>
                 </div>
             </section>
 
-            <section id="newest-products" class="w-4/5">
+            <section class="w-4/5">
                 <div
                     class="flex flex-col items-center gap-6 text-center text-lg mb-24 md:mb-4">
-                    <p class="text-title-section font-bold">Lançamentos</p>
+                    <p
+                        class="text-title-section font-bold tracking-tight leading-0">
+                        Lançamentos
+                    </p>
                     <p class="text-sm">
                         Confira os novos produtos da nossa loja
                     </p>
@@ -119,8 +107,9 @@ onUnmounted(() => {
                 </div>
                 <div
                     v-if="screenWidth > 425"
-                    class="flex flex-row justify-between h-[40%] md:h-[70%] md:items-center">
+                    class="flex flex-row justify-between h-[40%] md:h-[70%] md:items-center mt-16">
                     <NewestProduct
+                        id="newest-products"
                         v-for="product in NEWESTPRODUCTS"
                         :key="product.name"
                         :img="product.image"
@@ -182,3 +171,18 @@ onUnmounted(() => {
         </div>
     </div>
 </template>
+
+<style scoped>
+@layer components {
+    @media (max-width: 768px) {
+        #banner-init {
+            background-image: url('../assets/images/clock_banner_mobile.png');
+        }
+    }
+    @media (min-width: 768px) {
+        #banner-init {
+            background-image: url('../assets/images/clock_image1.png');
+        }
+    }
+}
+</style>

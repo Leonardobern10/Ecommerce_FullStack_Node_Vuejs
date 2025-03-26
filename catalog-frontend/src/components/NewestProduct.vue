@@ -45,16 +45,18 @@ onUnmounted(() => window.removeEventListener('resize', updateScreenSize));
                     class="w-32 sm:w-full" />
             </div>
             <div
-                class="flex flex-col items-center text-center leading-4 gap-4 bkmid:gap-0 sm:gap-8 bkmid:h-full">
+                class="flex flex-col items-center text-center leading-4 bkmid:gap-0 bkmid:h-full">
                 <p
-                    class="w-full text-lg bkmid:text-sm lg:text-lg font-semibold">
+                    class="w-full text-lg bkmid:text-sm lg:text-lg font-semibold mt-6">
                     {{ name }}
                 </p>
                 <h3 class="text-xl bkmid:text-2sm lg:text-lg font-bold">
                     R$ {{ pixPrice }}
                     <span class="text-sm font-normal">no pix</span>
                 </h3>
-                <p class="w-full text-sm lg:text-lg">ou {{ financedPrice }}</p>
+                <p class="w-full text-xs font-light lg:text-sm text-center">
+                    ou {{ financedPrice }}
+                </p>
             </div>
         </div>
         <button

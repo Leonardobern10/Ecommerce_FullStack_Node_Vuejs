@@ -8,10 +8,12 @@
 
     --breakpoint-bkmid: 426px;
     --text-title-section: 2rem;
+    --font-banner: 'BioRhyme', serif;
+    --font-andika: 'Andika', sans-serif;
+    --font-lato: 'Lato', sans-serif;
 
-    @keyframes piscar {
+    @keyframes blur-animate {
         0% {
-            box-shadow: none;
         }
         25% {
             box-shadow:
@@ -53,10 +55,6 @@
         font-size: 2rem;
         font-weight: 800;
     }
-}
-
-* {
-    font-family: 'Andika', sans-serif;
 }
 body {
     background-color: #fff;
