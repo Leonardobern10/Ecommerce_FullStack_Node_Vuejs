@@ -11,7 +11,7 @@ import Button from '@/components/Button.vue';
 import ICONS from '@/constants/ICONS.js';
 import CATEGORIES from '@/constants/CATEGORIES';
 import NEWESTPRODUCTS from '@/constants/NEWESTPRODUCTS';
-import clockBanner from '@/assets/images/clock_image1.png';
+import { BannerImages } from '@/constants/BANNERIMAGES';
 
 let screenWidth = ref(window.innerWidth);
 let currentIndexItem = ref(0);
@@ -79,13 +79,14 @@ onUnmounted(() => {
         <div class="w-full flex flex-col items-center gap-y-15">
             <section
                 id="banner-init"
-                class="h-screen min-w-[90%] max-md:w-[90%] font-lato border-2 border-gray-600/70 bg-no-repeat bg-cover mx-md:bg-contain bg-center bg-origin-border text-gray-200 blur-px">
+                :style="{ backgroundImage: `url(${BannerImages[0].url})` }"
+                class="h-screen min-w-[90%] max-md:w-[90%] font-lato bg-no-repeat bg-cover mx-md:bg-contain bg-center bg-origin-border text-gray-200 blur-px">
                 <div
                     class="flex flex-col md:gap-y-6 w-[80%] md:w-[50%] md:min-w-[50%] items-center md:h-[100%] max-md:px-6 justify-center">
                     <h1
                         class="tracking-tight font-extralight text-4xl md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-4xl text-left w-full md:w-[70%]"></h1>
                     <p class="text-lg md:w-[70%]">
-                        Mais do que medir o tempo, marcar sua história.
+                        {{ BannerImages[0].secondaryText }}
                     </p>
                 </div>
             </section>

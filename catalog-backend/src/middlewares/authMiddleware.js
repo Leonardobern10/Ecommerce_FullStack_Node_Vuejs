@@ -4,7 +4,9 @@ import User from '../models/User.js';
 
 export const authMiddleware = async (req, res, next) => {
     try {
-        const cookies = cookie.parse(req.headers.cookie || '');
+        const cookies = req.headers.cookie
+            ? cookie.parse(req.headers.cookie)
+            : {};
         const accessToken = cookies.accessToken;
 
         if (!accessToken) {
@@ -34,7 +36,7 @@ export const authMiddleware = async (req, res, next) => {
 };
 
 export const logoutMiddleware = (req, res, next) => {
-    const cookies = cookie.parse(req.headers.cookie || '');
+    const cookies = req.headers.cookie ? cookie.parse(req.headers.cookie) : {};
     const refreshToken = cookies.refreshToken;
 
     if (!refreshToken) {

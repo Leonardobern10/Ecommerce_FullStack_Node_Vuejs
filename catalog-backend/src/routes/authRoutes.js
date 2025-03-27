@@ -199,14 +199,7 @@ authRouter.get('/me', authMiddleware, (req, res) => {
         return res.status(401).json({ error: 'Usuário não autenticado' });
     }
 
-    return res
-        .status(200)
-        .json({
-            id: req.user.id,
-            name: req.user.name,
-            email: req.user.email,
-            role: req.user.role,
-        });
+    return res.status(200).json({ id: req.user.id, role: req.user.role });
 });
 
 export default authRouter;
