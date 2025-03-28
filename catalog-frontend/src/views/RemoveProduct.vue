@@ -1,8 +1,7 @@
 <script setup>
-import Button from '@/components/Button.vue';
-
-import { deleteProduct, getProduct } from '@/services/productService';
 import { ref } from 'vue';
+import Button from '@/components/Button.vue';
+import { deleteProduct, getProduct } from '@/services/productService';
 
 const currentProduct = ref({});
 const searched = ref('');

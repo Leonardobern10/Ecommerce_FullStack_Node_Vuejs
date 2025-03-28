@@ -1,6 +1,6 @@
 <script setup>
-import CartItemView from './CartItemView.vue';
 import { defineProps } from 'vue';
+import CartItemView from './CartItemView.vue';
 
 const props = defineProps([
     'orderId',

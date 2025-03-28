@@ -1,8 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/store/useAuthStore';
 import { loadOrders } from '@/services/orderService';
-import { useRouter } from 'vue-router';
 
 const orders = ref([]);
 const isLogged = ref(false);

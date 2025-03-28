@@ -1,12 +1,12 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue';
 import gsap from 'gsap';
-import { nextNewestItem, previousNewestItem } from '@/services/itemService';
 import { PixiPlugin, ScrollTrigger, TextPlugin } from 'gsap/all';
-import { checkRole } from '@/services/roleService';
+import Button from '@/components/Button.vue';
 import NewestProduct from '@/components/NewestProduct.vue';
 import IconContainer from '@/components/IconContainer.vue';
-import Button from '@/components/Button.vue';
+import { checkRole } from '@/services/roleService';
+import { nextNewestItem, previousNewestItem } from '@/services/itemService';
 import PATH from '@/constants/PATH';
 import ICONS from '@/constants/ICONS.js';
 import CATEGORIES from '@/constants/CATEGORIES';

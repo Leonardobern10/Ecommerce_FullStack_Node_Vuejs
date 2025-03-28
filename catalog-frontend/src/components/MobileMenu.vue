@@ -1,9 +1,9 @@
 <script setup>
 import { ref } from 'vue';
-import mobileMenuIcon from '@/assets/icons/menu_icon.svg';
-import PATH from '@/constants/PATH';
 import Link from './Link.vue';
 import Button from './Button.vue';
+import PATH from '@/constants/PATH';
+import mobileMenuIcon from '@/assets/icons/menu_icon.svg';
 
 const props = defineProps({ auth: Boolean, permitted: Boolean });
 const emit = defineEmits(['logout']);

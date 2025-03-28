@@ -1,12 +1,12 @@
 <script setup>
-import { searchProduct } from '@/services/productService';
 import { onBeforeMount, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
 import { useProductStore } from '@/store/userProductStore';
-import { addOnCart } from '@/services/cartService';
 import { useAuthStore } from '@/store/useAuthStore.js';
 import Button from '@/components/Button.vue';
-import { useToast } from 'vue-toastification';
+import { searchProduct } from '@/services/productService';
+import { addOnCart } from '@/services/cartService';
 
 const productStore = useProductStore();
 const route = useRoute();

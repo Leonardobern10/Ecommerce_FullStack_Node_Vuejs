@@ -1,11 +1,11 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useAuthStore } from '@/store/useAuthStore.js';
-import Input from './Input.vue';
-import signIn from '@/services/loginService';
-import Button from './Button.vue';
 import { useToast } from 'vue-toastification';
+import { useAuthStore } from '@/store/useAuthStore.js';
+import signIn from '@/services/loginService';
+import Input from './Input.vue';
+import Button from './Button.vue';
 
 const email = ref('');
 const password = ref('');

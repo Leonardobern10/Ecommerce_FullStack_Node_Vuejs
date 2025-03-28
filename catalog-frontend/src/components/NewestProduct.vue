@@ -1,9 +1,5 @@
 <script setup>
 import {
-    calculatePixDiscount,
-    viewFinancedValue,
-} from '@/services/productService';
-import {
     defineProps,
     defineEmits,
     onMounted,
@@ -11,17 +7,21 @@ import {
     ref,
     computed,
 } from 'vue';
+import {
+    calculatePixDiscount,
+    viewFinancedValue,
+} from '@/services/productService';
 
 const emits = defineEmits(['nextItem', 'previousItem']);
 const props = defineProps({ img: String, name: String, price: String });
+
 const windowWidth = ref(window.innerWidth);
+const pixPrice = computed(() => calculatePixDiscount(props.price));
+const financedPrice = computed(() => viewFinancedValue(props.price));
 
 const updateScreenSize = () => (windowWidth.value = window.innerWidth);
 const emitNextItem = () => emits('nextItem');
 const emitPreviousItem = () => emits('previousItem');
-
-const pixPrice = computed(() => calculatePixDiscount(props.price));
-const financedPrice = computed(() => viewFinancedValue(props.price));
 
 onMounted(() => window.addEventListener('resize', updateScreenSize));
 onUnmounted(() => window.removeEventListener('resize', updateScreenSize));

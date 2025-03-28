@@ -1,5 +1,10 @@
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue';
+import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
+import { useProductStore } from '@/store/userProductStore.js';
+import { authState } from '@/store/useAuth.js';
+import ProductOffer from '@/components/ProductOffer.vue';
 import {
     accessProductById,
     getProductsByBrand,
@@ -8,13 +13,8 @@ import {
     sortProductsByProp,
 } from '../services/productService.js';
 import { addOnCart } from '../services/cartService.js';
-import { authState } from '@/store/useAuth.js';
-import { useProductStore } from '@/store/userProductStore.js';
 import { filterProducts } from '../services/productService.js';
-import { useRouter } from 'vue-router';
-import ProductOffer from '@/components/ProductOffer.vue';
 import { goToPage } from '@/services/pageService.js';
-import { useToast } from 'vue-toastification';
 import { notifyInfo } from '@/notifications/notify.js';
 
 const router = useRouter();

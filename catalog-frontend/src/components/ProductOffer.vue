@@ -1,10 +1,10 @@
 <script setup>
+import { defineProps, defineEmits, computed } from 'vue';
+import Button from './Button.vue';
 import {
     calculatePixDiscount,
     viewFinancedValue,
 } from '@/services/productService';
-import { defineProps, defineEmits, computed } from 'vue';
-import Button from './Button.vue';
 
 const props = defineProps({ product: Object });
 const emit = defineEmits(['acessProduct', 'addToCart']);

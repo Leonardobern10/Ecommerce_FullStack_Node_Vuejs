@@ -1,8 +1,8 @@
 <script setup>
-import PATH from '@/constants/PATH';
+import { defineProps, defineEmits } from 'vue';
 import Link from './Link.vue';
 import Button from './Button.vue';
-import { defineProps, defineEmits } from 'vue';
+import PATH from '@/constants/PATH';
 
 const props = defineProps({ auth: Boolean, permitted: Boolean });
 const emit = defineEmits(['logout']);

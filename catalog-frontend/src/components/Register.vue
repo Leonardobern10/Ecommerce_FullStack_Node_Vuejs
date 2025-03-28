@@ -1,10 +1,10 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import Input from './Input.vue';
-import signUp from '@/services/registerService';
-import Button from './Button.vue';
 import { useToast } from 'vue-toastification';
+import Input from './Input.vue';
+import Button from './Button.vue';
+import signUp from '@/services/registerService';
 
 const toast = useToast();
 const name = ref('');

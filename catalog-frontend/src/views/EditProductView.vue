@@ -1,7 +1,7 @@
 <script setup>
-import Button from '@/components/Button.vue';
-import { getProduct, saveUpdate } from '@/services/productService';
 import { ref } from 'vue';
+import { getProduct, saveUpdate } from '@/services/productService';
+import Button from '@/components/Button.vue';
 
 const currentProduct = ref({});
 const idSearched = ref('');
