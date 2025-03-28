@@ -1,6 +1,6 @@
 <script setup>
 import { useAuthStore } from './store/useAuthStore';
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref, computed } from 'vue';
 import { watchEffect } from 'vue';
 import PATH from './constants/PATH';
 import logoInstagram from './assets/icons/instagram1.svg';
@@ -12,12 +12,13 @@ import { useRouter } from 'vue-router';
 import { hasPermission } from './services/roleService';
 import gsap from 'gsap';
 import logo from '@/assets/images/logo_ShopWatch.svg';
-import Button from './components/Button.vue';
 import Link from './components/Link.vue';
+import MobileMenu from './components/MobileMenu.vue';
+import NavBarDesktop from './components/NavBarDesktop.vue';
+import { useToast } from 'vue-toastification';
 
-let menuMobileVisibility = ref(false);
 let permitted = ref(false);
-let userIsLogged = ref(false);
+const userIsLogged = computed(() => useAuth.authenticated);
 const useAuth = useAuthStore();
 const router = useRouter();
 const screenWidth = ref(window.innerWidth);
@@ -26,16 +27,12 @@ const socialNetworksLogos = [
     { nome: logoInstagram },
     { nome: logoTwitter },
 ];
+const toast = useToast();
 
 const updateScreenSize = () => (screenWidth.value = window.innerWidth);
 
 // Função executada quando o botao [Logout] é pressionado.
-const logout = async () => signOut(userIsLogged, useAuth, router, alert);
-
-const changeMobileMenuVisibility = () => {
-    menuMobileVisibility.value = !menuMobileVisibility.value;
-    console.log(menuMobileVisibility.value);
-};
+const logout = async () => signOut(userIsLogged, useAuth, router, toast);
 
 onMounted(async () => {
     gsap.from('#header', { y: -100, autoAlpha: 0, duration: 1.2, delay: 0.5 });
@@ -55,69 +52,18 @@ onUnmounted(() => {
         class="grid grid-rows-[4rem_auto_30rem] gap-y-8 grid-cols-1 justify-items-center items-center h-full">
         <header
             id="header"
-            class="max-md:relative w-[90vw] flex justify-between items-center py-4 h-10 gap-x-22 font-lato">
-            <router-link :to="PATH.HOME" class="w-[10%] h-[2rem]">
-                <img :src="logo" alt="" />
-            </router-link>
-
-            <nav
-                v-if="screenWidth > 768"
-                class="flex space-x-2 gap-x-15 mx-8 w-[70%]">
-                <Link :to="PATH.HOME" name="Home" />
-                <Link :to="PATH.PRODUCTS.ROOT" name="Produtos" />
-                <Link
-                    v-if="useAuth.authenticated"
-                    :to="PATH.CART"
-                    name="Carrinho" />
-                <Link
-                    v-if="useAuth.authenticated"
-                    :to="PATH.ORDERS"
-                    name="Meus pedidos" />
-                <Link
-                    v-if="permitted && useAuth.authenticated"
-                    :to="PATH.ADMIN"
-                    name="Administração" />
-            </nav>
-
-            <div
-                v-if="screenWidth > 768"
-                id="container-login"
-                class="flex justify-end space-x-2 gap-x-3 w-[20%] min-w-fit">
-                <Link
-                    v-if="!useAuth.authenticated"
-                    :to="PATH.LOGIN"
-                    name="Login" />
-                <Link
-                    v-if="!useAuth.authenticated"
-                    :to="PATH.REGISTER"
-                    name="Registrar" />
-                <Button
-                    v-if="useAuth.authenticated"
-                    id="btn-logout"
-                    @click="logout"
-                    button-name="Sair">
-                </Button>
+            class="max-md:relative w-[90vw] flex justify-between items-center py-4 h-10 gap-x-22 font-lato z-100">
+            <div class="max-md:w-[20%] h-[3rem]">
+                <router-link :to="PATH.HOME">
+                    <img :src="logo" alt="" class="w-full h-full" />
+                </router-link>
             </div>
-
-            <div
-                v-else
-                @click="changeMobileMenuVisibility"
-                id="menu-mobile"
-                class="cursor-pointer">
-                <div
-                    id="container-options-mobile"
-                    v-if="menuMobileVisibility"
-                    class="absolute w-32 h-full bg-gray-300">
-                    <nav>
-                        <ul>
-                            <li>Teste</li>
-                            <li>Teste</li>
-                            <li>Teste</li>
-                            <li>Teste</li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
+            <NavBarDesktop
+                v-if="screenWidth > 768"
+                :auth="userIsLogged"
+                :permitted="permitted"
+                @logout="logout" />
+            <MobileMenu v-else />
         </header>
 
         <main class="flex flex-col justify-between items-center h-full w-full">

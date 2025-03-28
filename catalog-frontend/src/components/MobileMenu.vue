@@ -1,85 +1,69 @@
 <script setup>
 import { ref } from 'vue';
+import mobileMenuIcon from '@/assets/icons/menu_icon.svg';
+import PATH from '@/constants/PATH';
+import Link from './Link.vue';
+import Button from './Button.vue';
 
+const props = defineProps({ auth: Boolean, permitted: Boolean });
+const emit = defineEmits(['logout']);
+
+// Menu fechado ou aberto
 const isOpen = ref(false);
+
+// Fechar o menu quando clicar fora
+const dropdownRef = ref(null);
+document.addEventListener('click', (event) => {
+    if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
+        isOpen.value = false;
+    }
+});
+// Evento de logout
+const emitLogout = () => emit('logout');
+// Controla a exibição
+const toggleDropdown = () => {
+    isOpen.value = !isOpen.value;
+};
 </script>
+
 <template>
-    <nav class="navbar">
-        <div class="logo">Meu Site</div>
-        <button class="menu-toggle" @click="isOpen = !isOpen">☰</button>
-        <ul :class="{ 'nav-links': true, open: isOpen }">
-            <li><a href="#">Início</a></li>
-            <li><a href="#">Sobre</a></li>
-            <li><a href="#">Serviços</a></li>
-            <li><a href="#">Contato</a></li>
-        </ul>
-    </nav>
+    <div class="relative inline-block" ref="dropdownRef">
+        <!-- Botão do dropdown -->
+        <button @click="toggleDropdown" class="w-[30px] h-[30px]">
+            <img :src="mobileMenuIcon" alt="" class="h-2 w-5" />
+        </button>
+
+        <!-- Itens do dropdown -->
+        <transition
+            enter-active-class="transition transform duration-200 ease-out scale-95 opacity-0"
+            enter-to-class="scale-100 opacity-100"
+            leave-active-class="transition transform duration-300 ease scale-100 opacity-100"
+            leave-to-class="scale-70 opacity-0">
+            <div
+                v-if="isOpen"
+                class="absolute flex flex-col gap-y-6 w-[50vw] h-screen bg-xanadu top-[-10%] right-[-70%] shadow-lg rounded-lg text-2xl p-8">
+                <div class="flex flex-col gap-y-6 mt-8">
+                    <Link :to="PATH.HOME" name="Home" />
+                    <Link :to="PATH.PRODUCTS.ROOT" name="Produtos" />
+                    <Link v-if="auth" :to="PATH.CART" name="Carrinho" />
+                    <Link v-if="auth" :to="PATH.ORDERS" name="Meus pedidos" />
+                    <Link
+                        v-if="permitted && auth"
+                        :to="PATH.ADMIN"
+                        name="Administração" />
+                </div>
+
+                <div id="container-login" class="flex flex-col gap-y-6">
+                    <Link v-if="!auth" :to="PATH.LOGIN" name="Login" />
+                    <Link v-if="!auth" :to="PATH.REGISTER" name="Registrar" />
+                    <Button
+                        v-if="auth"
+                        id="btn-logout"
+                        @click="emitLogout"
+                        button-name="Sair">
+                    </Button>
+                </div>
+            </div>
+        </transition>
+    </div>
 </template>
-
-<style scoped>
-/* Estilos básicos */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #333;
-    padding: 15px 20px;
-    color: white;
-}
-
-.logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-/* Links de navegação */
-.nav-links {
-    display: flex;
-    gap: 15px;
-    list-style: none;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: white;
-    font-size: 1rem;
-    transition: 0.3s;
-}
-
-.nav-links a:hover {
-    color: #f0a500;
-}
-
-/* Botão do menu */
-.menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 1.8rem;
-    color: white;
-    cursor: pointer;
-}
-
-/* Responsivo */
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: block;
-    }
-
-    .nav-links {
-        position: absolute;
-        top: 60px;
-        right: 0;
-        background: #333;
-        width: 100%;
-        flex-direction: column;
-        text-align: center;
-        padding: 10px 0;
-        display: none;
-    }
-
-    .nav-links.open {
-        display: flex;
-    }
-}
-</style>
