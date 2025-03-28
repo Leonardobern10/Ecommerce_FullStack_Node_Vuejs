@@ -109,7 +109,7 @@ onMounted(async () => {
             class="flex flex-col items-center gap-16 w-full rounded-lg">
             <nav
                 id="container-options-view"
-                class="flex flex-col md:flex-row justify-between items-center bg-xanadu h-auto md:h-12 w-full rounded-lg p-2 md:p-4 gap-2 md:gap-0 text-white">
+                class="flex flex-col md:flex-row justify-between items-center bg-gray-500/50 h-auto md:h-12 w-full rounded-lg p-2 md:p-4 gap-2 md:gap-0 text-white">
                 <!-- Opções de Ordenação -->
                 <div
                     class="flex flex-col md:flex-row gap-2 md:gap-4 text-center w-full md:w-auto">
@@ -138,7 +138,7 @@ onMounted(async () => {
                         >Pesquisar por:</label
                     >
                     <select
-                        class="bg-xanadu md:bg-black md:border-xanadu md:border-2 rounded-lg p-1 w-full md:w-auto"
+                        class="bg-gray-500/50 md:bg-black md:border-gray-500/50 md:border-2 rounded-lg p-1 w-full md:w-auto"
                         id="searchMethod"
                         v-model="searchType">
                         <option value="" disabled>Selecione uma opção</option>

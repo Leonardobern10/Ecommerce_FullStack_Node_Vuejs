@@ -18,12 +18,15 @@ const add = () => emit('addToCart');
 <template>
     <div id="view-product-offer" @click="acess">
         <div id="container-img-product">
-            <img :src="product.imageUrl" :alt="`imagem do ${product.name}`" />
+            <img
+                class="bg-white product-shadow rounded-2xl"
+                :src="product.imageUrl"
+                :alt="`imagem do ${product.name}`" />
         </div>
-        <div id="description-product-offer">
-            <p id="product-name">{{ product.name }}</p>
+        <div id="description-product-offer" class="text-white/90">
+            <p id="product-name ">{{ product.name }}</p>
             <div id="info-numbers">
-                <p class="p-price">
+                <p class="p-price text-white">
                     <strong>
                         R$
                         <span id="main-product-price">{{
@@ -76,5 +79,12 @@ img {
     font-size: 1.4em;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.418);
     color: var(--xanadu);
+}
+.product-shadow {
+    box-shadow:
+        2px 2px 2px white,
+        2px -2px 2px white,
+        -2px -2px 2px white,
+        -2px 2px 2px white;
 }
 </style>

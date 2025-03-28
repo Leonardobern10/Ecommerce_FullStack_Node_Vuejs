@@ -6,7 +6,7 @@ const props = defineProps({ to: String, name: String });
 
 <template>
     <router-link
-        class="text-4sm whitespace-nowrap text-black font-light hover:text-xanadu"
+        class="text-4sm whitespace-nowrap text-gray-200/50 font-light hover:text-shadow-xl hover:shadow-gray-200/50"
         :to="to"
         >{{ name }}
     </router-link>

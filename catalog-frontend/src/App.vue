@@ -49,11 +49,12 @@ onUnmounted(() => {
 
 <template>
     <div
-        class="grid grid-rows-[4rem_auto_30rem] gap-y-8 grid-cols-1 justify-items-center items-center h-full">
+        id="app"
+        class="grid grid-rows-[4rem_auto_30rem] gap-y-1 grid-cols-1 justify-items-center items-center h-full">
         <header
             id="header"
-            class="max-md:relative w-[90vw] flex justify-between items-center py-4 h-10 gap-x-22 font-lato z-100">
-            <div class="max-md:w-[20%] h-[3rem]">
+            class="max-md:relative w-[90vw] flex justify-between items-center py-4 h-5 gap-x-22 font-lato z-100">
+            <div class="max-md:w-[20%] h-[2rem]">
                 <router-link :to="PATH.HOME">
                     <img :src="logo" alt="" class="w-full h-full" />
                 </router-link>
@@ -147,3 +148,23 @@ onUnmounted(() => {
         </footer>
     </div>
 </template>
+
+<style scoped>
+#app {
+    background: linear-gradient(-45deg, #12140faf, #161314, #5e5c5c, #141f19);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+</style>

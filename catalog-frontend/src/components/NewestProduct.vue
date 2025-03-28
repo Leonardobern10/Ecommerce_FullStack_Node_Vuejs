@@ -29,7 +29,7 @@ onUnmounted(() => window.removeEventListener('resize', updateScreenSize));
 
 <template>
     <div
-        class="flex flex-row justify-between items-center sm:flex-col sm:gap-4">
+        class="flex flex-row justify-between items-center sm:h-fit sm:flex-col p-4 sm:gap-4 shadow-2xl shadow-black border-none rounded-4xl bg-white hover:shadow-gray-100/50 my-15">
         <button
             v-if="windowWidth <= 425"
             class="relative top-[40%] w-[10%] h-8 bg-transparent border-none"
@@ -37,7 +37,7 @@ onUnmounted(() => window.removeEventListener('resize', updateScreenSize));
             <img src="../assets/icons/left_arrow.svg" alt="Previous" />
         </button>
         <div
-            class="flex flex-col justify-between items-center h-full bkmid:gap-0 gap-8 sm:w-[70%]">
+            class="flex flex-col justify-between items-center h-full bkmid:gap-0 gap-8 sm:w-[80%]">
             <div class="h-40">
                 <img
                     :src="img"
@@ -67,3 +67,5 @@ onUnmounted(() => window.removeEventListener('resize', updateScreenSize));
         </button>
     </div>
 </template>
+
+<style scoped></style>
