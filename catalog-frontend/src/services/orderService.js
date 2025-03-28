@@ -3,6 +3,11 @@ import { URL } from '@/constants/URL';
 import MESSAGE from '@/constants/MESSAGE';
 import PATH from '@/constants/PATH';
 import { changeProduct } from './productService';
+import {
+    notifyError,
+    notifySuccess,
+    notifyWarning,
+} from '@/notifications/notify';
 
 // Cria um pedido e o armazena no banco
 export const createOrder = async (orderData) => {
@@ -22,9 +27,7 @@ export const fetchOrders = async (state, router, array) => {
         }
         const response = await getOrders();
         array.value = response.data;
-    } catch (error) {
-        console.error(MESSAGE.ERROR.ORDER.GET_PRODUCTS);
-    }
+    } catch (error) {}
 };
 
 export const loadOrders = async (state, router, auth, array) => {
@@ -36,18 +39,18 @@ export const loadOrders = async (state, router, auth, array) => {
 export const checkoutOrder = async (
     auth,
     state,
-    cb_ALERT,
     router,
     array,
     cb_CREATE,
     cb_CLEAR,
     totalAmount,
+    toast,
 ) => {
     await auth.checkAuthStatus();
     state.value = auth.authenticated;
 
     if (!state.value) {
-        cb_ALERT(MESSAGE.ALERT.ORDER.NEED_AUTHENTICATE);
+        notifyWarning(toast, MESSAGE.ALERT.ORDER.NEED_AUTHENTICATE);
         router.push(PATH.LOGIN);
         return;
     }
@@ -70,11 +73,10 @@ export const checkoutOrder = async (
                 changeProduct(item._id, { stock: item.stock - item.quantity }),
             ),
         );
-        cb_ALERT(MESSAGE.SUCESS.ORDER);
+        notifySuccess(toast, MESSAGE.SUCCESS.ORDER);
         cb_CLEAR();
         router.push(PATH.HOME);
     } catch (error) {
-        cb_ALERT(MESSAGE.ERROR.ORDER.DEFAULT);
-        console.error(error);
+        notifyError(toast, MESSAGE.ERROR.ORDER.DEFAULT);
     }
 };

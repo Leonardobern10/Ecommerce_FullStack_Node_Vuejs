@@ -3,6 +3,7 @@ import { URL } from '@/constants/URL';
 import { mergeSort } from './sort';
 import MESSAGE from '@/constants/MESSAGE';
 import PATH from '@/constants/PATH';
+import { notifyError, notifySuccess } from '@/notifications/notify';
 
 export const getProducts = async (page, limit) => {
     try {
@@ -49,8 +50,13 @@ export const changeProduct = async (id, changes) => {
     }
 };
 
-export const deleteProduct = async (id) => {
-    await axios.delete(`${URL.PRODUCTS}/${id}`);
+export const deleteProduct = async (id, toast) => {
+    try {
+        await axios.delete(`${URL.PRODUCTS}/${id}`);
+        notifySuccess(toast, MESSAGE.SUCCESS.PRODUCTS.REMOVE);
+    } catch (error) {
+        notifyError(toast, MESSAGE.ERROR.PRODUCTS.REMOVE);
+    }
 };
 
 export const calculatePixDiscount = (price) =>
@@ -74,19 +80,19 @@ export const filterProducts = (search, array, target) => {
     return array.value.filter((el) => el[target] === search.value);
 };
 
-export const saveProduct = async (edit, route, product, router, cb) => {
+export const saveProduct = async (edit, route, product, router, toast) => {
     try {
         if (edit.value) {
             await updateProduct(route.params.id, product.value);
-            cb(MESSAGE.SUCESS.PRODUCTS.UPDATE);
+            notifySuccess(toast, MESSAGE.SUCCESS.PRODUCTS.UPDATE);
         } else {
             await createProduct(product.value);
-            cb(MESSAGE.SUCESS.PRODUCTS.ADD);
+            notifySuccess(toast, MESSAGE.SUCCESS.PRODUCTS.ADD);
         }
         router.push(PATH.PRODUCTS.ROOT);
     } catch (error) {
         console.error(error);
-        cb(MESSAGE.ERROR.PRODUCTS.ADD);
+        notifyError(toast, MESSAGE.ERROR.PRODUCTS.ADD);
     }
 };
 
@@ -137,7 +143,6 @@ export const getProductsByName = async (name) => {
         const response = await axios.get(
             `http://localhost:5000/api/products/search?name=${name}`,
         );
-        console.log(response.data.data);
         return response.data.data;
     } catch (error) {
         console.log(error);
@@ -146,13 +151,8 @@ export const getProductsByName = async (name) => {
 
 // Retornam os produtos com a marca correspondente
 export const getProductsByBrand = async (brand) => {
-    try {
-        const response = await axios.get(
-            `http://localhost:5000/api/products/search?brand=${brand}`,
-        );
-        console.log(response.data.data);
-        return response.data.data;
-    } catch (error) {
-        console.log(error);
-    }
+    const response = await axios.get(
+        `http://localhost:5000/api/products/search?brand=${brand}`,
+    );
+    return response.data.data;
 };

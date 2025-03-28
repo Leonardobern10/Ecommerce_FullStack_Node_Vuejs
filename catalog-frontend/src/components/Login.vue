@@ -5,16 +5,18 @@ import { useAuthStore } from '@/store/useAuthStore.js';
 import Input from './Input.vue';
 import signIn from '@/services/loginService';
 import Button from './Button.vue';
+import { useToast } from 'vue-toastification';
 
 const email = ref('');
 const password = ref('');
 const isLoading = ref(false);
 const router = useRouter();
 const auth = useAuthStore();
+const toast = useToast();
 
 // Método para login utilizando os dados do formulário
 const login = async () =>
-    await signIn(isLoading, email, password, auth, router, alert);
+    await signIn(isLoading, email, password, auth, router, toast);
 </script>
 
 <template>

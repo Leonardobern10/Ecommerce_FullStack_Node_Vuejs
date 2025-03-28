@@ -15,35 +15,27 @@ import { useRouter } from 'vue-router';
 import ProductOffer from '@/components/ProductOffer.vue';
 import { goToPage } from '@/services/pageService.js';
 import { useToast } from 'vue-toastification';
+import { notifyInfo } from '@/notifications/notify.js';
 
 const router = useRouter();
 const isLogged = ref(false);
 const products = ref([]);
-
-// Valor do parametro que será pesquisado no banco de dados
-let searchValue = ref();
-// Parametro que será pesquisado no banco de dados
-let searchType = ref('');
-// Tempo de intervalo entre as requisição
-let timeout = null;
-// Estado para armazenar o aviso
-const alertMessage = ref('');
-
 const currentPage = ref(1);
 const totalPages = ref();
 const limit = ref(12);
-
 const toast = useToast();
-
 const productStore = useProductStore();
 const searchBrandQuery = ref('');
 const filteredProducts = computed(() =>
     filterProducts(searchBrandQuery, products, 'brand'),
 );
+let searchValue = ref();
+let searchType = ref('');
+let timeout = null;
 
 // Adiciona um produto ao carrinho
 const addProductToCart = async (product) => {
-    await addOnCart(product, router, isLogged.value, alert);
+    await addOnCart(product, router, isLogged.value, toast);
 };
 
 // Acessa a view de um produto específico
@@ -74,30 +66,8 @@ const getPage = async (operation) =>
         limit,
     );
 
-// Função para exibir o alerta por 5 segundos
-const showAlert = (message) => {
-    alertMessage.value = message;
-    setTimeout(() => {
-        alertMessage.value = '';
-    }, 5000);
-};
-
-const showWarning = () => {
-    toast.info('Por favor, selecione o campo a ser pesquisado.', {
-        position: 'bottom-right',
-        timeout: 5000,
-        closeOnClick: true,
-        pauseOnFocusLoss: true,
-        pauseOnHover: true,
-        draggable: true,
-        draggablePercent: 0.6,
-        showCloseButtonOnHover: false,
-        hideProgressBar: true,
-        closeButton: 'button',
-        icon: true,
-        rtl: false,
-    });
-};
+const showInfo = () =>
+    notifyInfo(toast, 'Por favor, selecione o campo a ser pesquisado');
 
 // Observa mudanças no input e chama a função automaticamente
 watch([searchValue, searchType], async ([newQuery, newType]) => {
@@ -106,10 +76,9 @@ watch([searchValue, searchType], async ([newQuery, newType]) => {
     if (!newQuery || newQuery.trim().length < 3) return; // Evita pesquisas curtas
 
     if (!newType) {
-        showWarning();
+        showInfo();
         return;
     }
-
     timeout = setTimeout(async () => {
         if (newType === 'Nome') {
             products.value = await getProductsByName(newQuery);
@@ -130,56 +99,57 @@ onMounted(async () => {
     );
 });
 </script>
+
 <template>
     <div
         id="view"
         class="flex flex-col justify-center items-center w-[80vw] h-full font-inter font-light">
-        <div class="alert-container" v-if="alertMessage">
-            <p class="alert-message">{{ alertMessage }}</p>
-        </div>
         <div
             id="container"
             class="flex flex-col items-center gap-16 w-full rounded-lg">
             <nav
                 id="container-options-view"
-                class="flex flex-row justify-between items-center bg-xanadu h-12 w-full rounded-lg">
-                <p
-                    class="options-view pl-8 text-base hover:cursor-pointer"
-                    @click="sortProductsLowToHigh">
-                    Menor preço
-                </p>
-                <p
-                    class="options-view text-base hover:cursor-pointer"
-                    @click="sortProductsHighToLow">
-                    Maior preço
-                </p>
-                <p
-                    class="options-view text-base hover:cursor-pointer"
-                    @click="sortProductsMostRecently">
-                    Mais recentes
-                </p>
+                class="flex flex-col md:flex-row justify-between items-center bg-xanadu h-auto md:h-12 w-full rounded-lg p-2 md:p-4 gap-2 md:gap-0 text-white">
+                <!-- Opções de Ordenação -->
+                <div
+                    class="flex flex-col md:flex-row gap-2 md:gap-4 text-center w-full md:w-auto">
+                    <p
+                        class="options-view text-base hover:cursor-pointer"
+                        @click="sortProductsLowToHigh">
+                        Menor preço
+                    </p>
+                    <p
+                        class="options-view text-base hover:cursor-pointer"
+                        @click="sortProductsHighToLow">
+                        Maior preço
+                    </p>
+                    <p
+                        class="options-view text-base hover:cursor-pointer"
+                        @click="sortProductsMostRecently">
+                        Mais recentes
+                    </p>
+                </div>
 
+                <!-- Pesquisa -->
                 <div
                     id="container-search-brand"
-                    class="flex flex-row justify-evenly items-center w-1/2 h-full bg-black text-white/75 border-none rounded-lg px-4">
-                    <div class="flex flex-row justify-between w-full">
-                        <label for="searchMethod">Pesquisar por:</label>
-                        <select
-                            class="bg-xanadu rounded-lg p-0.5"
-                            id="searchMethod"
-                            v-model="searchType">
-                            <option value="" disabled>
-                                Selecione uma opção
-                            </option>
-                            <option value="Nome">Nome</option>
-                            <option value="Marca">Marca</option>
-                        </select>
-                        <input
-                            class="text-gray-300 focus:bg-xanadu"
-                            type="text"
-                            v-model="searchValue"
-                            placeholder="Digite sua busca..." />
-                    </div>
+                    class="flex flex-col md:flex-row justify-between items-center w-full md:w-fit bg-black text-white/75 border-none rounded-lg md:px-4 px-2 py-2 md:py-0">
+                    <label for="searchMethod" class="text-sm md:mr-1"
+                        >Pesquisar por:</label
+                    >
+                    <select
+                        class="bg-xanadu md:bg-black md:border-xanadu md:border-2 rounded-lg p-1 w-full md:w-auto"
+                        id="searchMethod"
+                        v-model="searchType">
+                        <option value="" disabled>Selecione uma opção</option>
+                        <option value="Nome">Nome</option>
+                        <option value="Marca">Marca</option>
+                    </select>
+                    <input
+                        class="text-gray-300 focus:bg-xanadu w-full md:w-[30%] mt-2 md:mt-0 md:ml-1 p-1 rounded-md"
+                        type="text"
+                        v-model="searchValue"
+                        placeholder="Digite sua busca..." />
                 </div>
             </nav>
             <ul

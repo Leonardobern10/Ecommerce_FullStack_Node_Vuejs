@@ -1,6 +1,7 @@
 import KEY from '@/constants/KEY';
 import MESSAGE from '@/constants/MESSAGE';
 import PATH from '@/constants/PATH';
+import { notifySuccess, notifyWarning } from '@/notifications/notify';
 
 // Obtém os itens do carrinho
 export const getCart = () => {
@@ -21,14 +22,14 @@ export const addToCart = (product) => {
     localStorage.setItem(KEY.CART, JSON.stringify(cart));
 };
 
-export const addOnCart = (product, router, state, cb) => {
+export const addOnCart = (product, router, state, toast) => {
     if (!state) {
-        cb(MESSAGE.ALERT.CART.NEED_AUTHENTICATE);
+        notifyWarning(toast, MESSAGE.ALERT.CART.NEED_AUTHENTICATE);
         return router.push(PATH.LOGIN);
     }
 
     addToCart(product);
-    cb(MESSAGE.SUCESS.CART.ADD);
+    notifySuccess(toast, MESSAGE.SUCCESS.CART.ADD);
 };
 
 // Remove um item do carrinho

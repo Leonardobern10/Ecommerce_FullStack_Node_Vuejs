@@ -1,9 +1,10 @@
 import MESSAGE from '@/constants/MESSAGE';
 import PATH from '@/constants/PATH';
 import { URL } from '@/constants/URL';
+import { notifyError, notifySuccess } from '@/notifications/notify';
 import axios from 'axios';
 
-const signIn = async (loading, email, password, auth, router, cb) => {
+const signIn = async (loading, email, password, auth, router, toast) => {
     loading.value = true;
 
     try {
@@ -15,9 +16,9 @@ const signIn = async (loading, email, password, auth, router, cb) => {
         auth.authenticated = true;
         auth.checkAuthStatus();
         router.push(PATH.PRODUCTS.ROOT);
+        notifySuccess(toast, MESSAGE.SUCCESS.LOGIN);
     } catch (error) {
-        console.error('Erro no login: ', error);
-        cb(MESSAGE.ERROR.LOGIN.CHECK_CREDENTIALS);
+        notifyError(toast, MESSAGE.ERROR.LOGIN.CHECK_CREDENTIALS);
     } finally {
         loading.value = false;
     }

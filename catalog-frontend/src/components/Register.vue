@@ -4,13 +4,15 @@ import { useRouter } from 'vue-router';
 import Input from './Input.vue';
 import signUp from '@/services/registerService';
 import Button from './Button.vue';
+import { useToast } from 'vue-toastification';
 
+const toast = useToast();
 const name = ref('');
 const email = ref('');
 const password = ref('');
 const router = useRouter();
 
-const register = async () => await signUp(name, email, password, router, alert);
+const register = async () => await signUp(name, email, password, router, toast);
 </script>
 
 <template>

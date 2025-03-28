@@ -1,13 +1,13 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue';
-import PATH from '@/constants/PATH';
-import NewestProduct from '@/components/NewestProduct.vue';
-import IconContainer from '@/components/IconContainer.vue';
-import { nextNewestItem, previousNewestItem } from '@/services/itemService';
 import gsap from 'gsap';
+import { nextNewestItem, previousNewestItem } from '@/services/itemService';
 import { PixiPlugin, ScrollTrigger, TextPlugin } from 'gsap/all';
 import { checkRole } from '@/services/roleService';
+import NewestProduct from '@/components/NewestProduct.vue';
+import IconContainer from '@/components/IconContainer.vue';
 import Button from '@/components/Button.vue';
+import PATH from '@/constants/PATH';
 import ICONS from '@/constants/ICONS.js';
 import CATEGORIES from '@/constants/CATEGORIES';
 import NEWESTPRODUCTS from '@/constants/NEWESTPRODUCTS';
@@ -46,26 +46,24 @@ onMounted(() => {
     gsap.from('#newest-products', {
         scrollTrigger: {
             trigger: '#newest-products',
-            start: '-50px center',
-            end: 'center center',
+            start: '-100px center',
+            end: '200px center',
             toggleActions: 'restart pause resume pause',
-            scrub: true,
+            markers: true,
+            onblur: 0,
         },
-        x: -200,
-        duration: 2,
-        opacity: 0,
+        x: -100,
+        duration: 1,
     });
     gsap.from('#about-company', {
         scrollTrigger: {
             trigger: '#about-company',
-            start: '-50px center',
-            end: 'center center',
+            start: '-200px center',
+            end: '200px center',
             toggleActions: 'restart pause resume pause',
-            scrub: true,
         },
-        x: -200,
-        duration: 2,
-        opacity: 0,
+        x: -100,
+        duration: 1,
     });
 });
 
@@ -79,13 +77,12 @@ onUnmounted(() => {
         <div class="w-full flex flex-col items-center gap-y-15">
             <section
                 id="banner-init"
-                :style="{ backgroundImage: `url(${BannerImages[0].url})` }"
-                class="h-screen min-w-[90%] max-md:w-[90%] font-lato bg-no-repeat bg-cover mx-md:bg-contain bg-center bg-origin-border text-gray-200 blur-px">
+                class="h-120 min-w-[90%] max-md:w-[90%] font-lato bg-no-repeat bg-cover mx-md:bg-contain bg-center bg-origin-border text-gray-200 blur-px">
                 <div
-                    class="flex flex-col md:gap-y-6 w-[80%] md:w-[50%] md:min-w-[50%] items-center md:h-[100%] max-md:px-6 justify-center">
+                    class="flex flex-col md:gap-y-6 w-[80%] md:w-[50%] md:min-w-[50%] items-center md:h-full max-md:px-6 justify-center">
                     <h1
-                        class="tracking-tight font-extralight text-4xl md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-4xl text-left w-full md:w-[70%]"></h1>
-                    <p class="text-lg md:w-[70%]">
+                        class="tracking-tight font-light text-4xl md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-4xl text-left w-full md:w-[70%]"></h1>
+                    <p class="text-xl md:w-[70%]">
                         {{ BannerImages[0].secondaryText }}
                     </p>
                 </div>
@@ -161,7 +158,7 @@ onUnmounted(() => {
                         <div
                             class="w-30 h-80 lg:w-60 xl:w-60 lg:h-120 xl:h-120">
                             <img
-                                class="rounded-full object-cover"
+                                class="rounded-full object-cover hover:border-4 hover:border-xanadu hover:scale-120"
                                 :src="item.image"
                                 :alt="item.text" />
                         </div>
@@ -182,7 +179,7 @@ onUnmounted(() => {
     }
     @media (min-width: 768px) {
         #banner-init {
-            background-image: url('../assets/images/clock_image1.png');
+            background-image: url('../assets/images/banner_img2.jpg');
         }
     }
 }

@@ -1,5 +1,11 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
+import { useAuthStore } from '@/store/useAuthStore.js';
+import CartItemView from './CartItemView.vue';
+import ResumeCard from './ResumeCard.vue';
+import Button from './Button.vue';
 import {
     clearCart,
     removeFromCart,
@@ -8,15 +14,11 @@ import {
     updateItemQuantityOnCart,
 } from '../services/cartService.js';
 import { checkoutOrder, createOrder } from '@/services/orderService.js';
-import { useRouter } from 'vue-router';
-import CartItemView from './CartItemView.vue';
-import { useAuthStore } from '@/store/useAuthStore.js';
-import ResumeCard from './ResumeCard.vue';
-import Button from './Button.vue';
 
-const router = useRouter(); // Direcionador de endereços
 const isLogged = ref(false); // Armazena o estado do usuario
 const cart = ref([]); // Responsável por receber os produtos
+const router = useRouter(); // Direcionador de endereços
+const toast = useToast();
 const auth = useAuthStore();
 
 // Limpa o carrinho
@@ -45,12 +47,12 @@ const checkout = async () => {
     await checkoutOrder(
         auth,
         isLogged,
-        alert,
         router,
         cart,
         createOrder,
         clear,
         totalAmount,
+        toast,
     );
 };
 

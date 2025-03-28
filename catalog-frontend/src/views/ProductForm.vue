@@ -4,7 +4,9 @@ import { getProducts, saveProduct } from '../services/productService.js';
 import { useRoute, useRouter } from 'vue-router';
 import Input from '@/components/Input.vue';
 import Button from '@/components/Button.vue';
+import { useToast } from 'vue-toastification';
 
+const toast = useToast();
 const route = useRoute();
 const router = useRouter();
 const isEdit = ref(false);
@@ -18,7 +20,7 @@ const product = ref({
 });
 
 const save = async () =>
-    await saveProduct(isEdit, route, product, router, alert);
+    await saveProduct(isEdit, route, product, router, toast);
 
 onMounted(async () => {
     try {
