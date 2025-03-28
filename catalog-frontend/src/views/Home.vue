@@ -77,7 +77,7 @@ onUnmounted(() => {
         <div class="w-full flex flex-col items-center gap-y-15">
             <section
                 id="banner-init"
-                class="h-120 min-w-[90%] max-md:w-[90%] font-lato bg-no-repeat bg-cover mx-md:bg-contain bg-center bg-origin-border text-gray-200 blur-px">
+                class="h-120 min-w-[90%] max-md:w-[90%] font-lato bg-no-repeat bg-cover mx-md:bg-contain bg-center bg-origin-border text-gray-200 blur-px rounded-3xl">
                 <div
                     class="flex flex-col md:gap-y-6 w-[80%] md:w-[50%] md:min-w-[50%] items-center md:h-full max-md:px-6 justify-center">
                     <h1
@@ -179,7 +179,7 @@ onUnmounted(() => {
     }
     @media (min-width: 768px) {
         #banner-init {
-            background-image: url('../assets/images/banner_img2.jpg');
+            background-image: url('../assets/images/banner_img5.jpg');
         }
     }
 }
