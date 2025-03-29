@@ -10,9 +10,11 @@ const toast = useToast();
 const name = ref('');
 const email = ref('');
 const password = ref('');
+const passwordCheck = ref('');
 const router = useRouter();
 
-const register = async () => await signUp(name, email, password, router, toast);
+const register = async () =>
+    await signUp(name, email, password, passwordCheck, router, toast);
 </script>
 
 <template>
@@ -25,6 +27,11 @@ const register = async () => await signUp(name, email, password, router, toast);
             <Input v-model="email" type="email" placeholder="Email" required />
             <Input
                 v-model="password"
+                type="password"
+                placeholder="Senha"
+                required />
+            <Input
+                v-model="passwordCheck"
                 type="password"
                 placeholder="Senha"
                 required />
