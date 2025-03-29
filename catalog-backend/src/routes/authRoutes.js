@@ -79,25 +79,56 @@ authRouter.post('/refresh', async (req, res) => {
         if (!user)
             return res.status(403).json({ message: 'Refresh Token inválido.' });
 
-        const decoded = jwt.verify(
-            refreshToken,
-            process.env.REFRESH_SECRET_KEY,
-        );
-        if (decoded.id !== user._id.toString()) {
-            return res.status(403).json({ message: 'Refresh Token inválido' });
+        // Verifica a validade do token
+        try {
+            const decoded = jwt.verify(
+                refreshToken,
+                process.env.REFRESH_SECRET_KEY,
+            );
+
+            if (decoded.id !== user._id.toString()) {
+                return res
+                    .status(403)
+                    .json({ message: 'Refresh Token inválido' });
+            }
+
+            // Gera um novo accessToken incluindo o role do usuário
+            const newAccessToken = generateAccessToken(user._id, user.role);
+
+            res.cookie('accessToken', newAccessToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'Strict',
+                maxAge: 15 * 60 * 1000, // 15 minutos
+            });
+
+            res.json({
+                message: 'Token renovado com sucesso!',
+                accessToken: newAccessToken, // Envie o token na resposta também
+            });
+        } catch (error) {
+            if (error instanceof jwt.TokenExpiredError) {
+                // Remove o refreshToken expirado da lista do usuário
+                user.refreshTokens = user.refreshTokens.filter(
+                    (token) => token !== refreshToken,
+                );
+                await user.save();
+
+                // Limpa os cookies
+                res.clearCookie('accessToken');
+                res.clearCookie('refreshToken');
+
+                return res
+                    .status(403)
+                    .json({
+                        message:
+                            'Refresh Token expirado. Faça login novamente.',
+                    });
+            }
+            throw error; // Outros erros serão tratados no catch abaixo
         }
-
-        const newAccessToken = generateAccessToken(user._id);
-
-        res.cookie('accessToken', newAccessToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'Strict',
-            maxAge: 15 * 60 * 1000,
-        });
-
-        res.json({ message: 'Token renovado com sucesso!' });
     } catch (error) {
+        console.error('Erro na renovação do token:', error);
         res.status(403).json({
             message: 'Refresh token inválido ou expirado.',
         });
