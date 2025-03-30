@@ -6,7 +6,7 @@ const props = defineProps({ buttonName: String });
 
 <template>
     <button
-        class="px-4 py-2 bg-xanadu text-white rounded-md hover:bg-black hover:cursor-pointer hover:text-xanadu transition">
+        class="font-lato px-4 py-2 bg-xanadu/50 text-white rounded-md hover:bg-black/50 hover:shadow-4xl hover:shadow-black hover:cursor-pointer hover:text-xanadu transition">
         {{ buttonName }}
     </button>
 </template>

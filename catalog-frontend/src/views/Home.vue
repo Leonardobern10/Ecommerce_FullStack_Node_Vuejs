@@ -77,7 +77,7 @@ onUnmounted(() => {
         <div class="w-full flex flex-col items-center gap-y-15">
             <section
                 id="banner-init"
-                class="h-120 min-w-[90%] max-md:w-[90%] font-lato bg-no-repeat bg-cover mx-md:bg-contain bg-center bg-origin-border text-gray-200 blur-px rounded-3xl shadow-2xl shadow-gray-100/50 mt-10">
+                class="h-120 min-w-[90%] max-md:w-[90%] font-lato bg-no-repeat bg-cover mx-md:bg-contain bg-center bg-origin-border text-gray-200 blur-px rounded-3xl banner-shadow animate-bright mt-10">
                 <div
                     class="flex flex-col md:gap-y-6 w-[80%] md:w-[50%] md:min-w-[50%] items-center md:h-full max-md:px-6 justify-center">
                     <h1
@@ -203,5 +203,31 @@ onUnmounted(() => {
         0 0 5px #878a8a,
         0 0 10px #878a8a,
         0 0 20px #878a8a;
+}
+.banner-shadow {
+    animation: bright 5s linear infinite alternate;
+}
+@keyframes bright {
+    0% {
+        box-shadow:
+            10px 10px 50px #cdcdcdbf,
+            10px -10px 50px #cdcdcdbf,
+            -10px 10px 50px #cdcdcdbf,
+            -10px -10px 50px #cdcdcdbf;
+    }
+    50% {
+        box-shadow:
+            0px 0px 80px #656565,
+            0px 0px 60px #656565,
+            0px 0px 40px #656565,
+            0px 0px 20px #656565;
+    }
+    100% {
+        box-shadow:
+            10px 10px 50px #878a8a,
+            10px -10px 50px #878a8a,
+            -10px 10px 50px #878a8a,
+            -10px -10px 50px #878a8a;
+    }
 }
 </style>
