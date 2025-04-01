@@ -54,14 +54,14 @@ onUnmounted(() => {
     <div
         id="app"
         :class="{
-            'grid grid-rows-[4rem_auto_30rem] gap-y-1 grid-cols-1 justify-items-center items-center h-full':
+            'grid grid-rows-[4rem_auto_auto] grid-cols-1 justify-items-center items-center h-full':
                 showHeader,
             'flex flex-col items-center': !showHeader,
         }">
         <header
             v-if="showHeader"
             id="header"
-            class="max-md:relative w-[90vw] flex justify-between items-center py-4 h-5 gap-x-22 font-lato z-100">
+            class="rounded-container max-md:relative w-[95vw] flex justify-between items-center p-6 h-5 gap-x-22 font-lato z-100">
             <div class="max-md:w-[20%] h-[2rem]">
                 <router-link :to="PATH.HOME">
                     <img :src="logo" alt="" class="w-full h-full" />
@@ -80,7 +80,7 @@ onUnmounted(() => {
         </main>
 
         <footer
-            class="font-lato mt-8 w-full h-full bg-gray-300 py-20 flex flex-col items-center justify-between"
+            class="font-lato mt-8 w-full flex flex-col items-center justify-between"
             v-if="showHeader">
             <div
                 class="w-11/12 h-full flex flex-col sm:flex-row justify-between items-center">
@@ -160,7 +160,7 @@ onUnmounted(() => {
 
 <style scoped>
 #app {
-    background: linear-gradient(-45deg, #12140faf, #161314, #5e5c5c, #141f19);
+    background: linear-gradient(-45deg, #12140faf, #161314, #444444, #949494);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
 }

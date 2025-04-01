@@ -16,6 +16,7 @@
     --font-bondolse: 'Boldonse', system-ui;
     --font-barriecito: 'Barriecito', system-ui;
     --font-bagel: 'Bagel Fat One', system-ui;
+    --radius-container: 15px;
 
     @keyframes blur-animate {
         0% {

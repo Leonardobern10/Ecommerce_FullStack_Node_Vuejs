@@ -29,7 +29,7 @@ onUnmounted(() => window.removeEventListener('resize', updateScreenSize));
 
 <template>
     <div
-        class="flex flex-row justify-between items-center sm:h-fit sm:flex-col p-4 sm:gap-4 shadow-2xl shadow-black border-none rounded-4xl bg-white hover:shadow-gray-100/50 my-15">
+        class="flex flex-row justify-between w-[13rem] h-[17rem] items-center sm:flex-col shadow-gray-500 bg-black/50 p-6 rounded-4xl hover:shadow-2xl hover:shadow-black">
         <button
             v-if="windowWidth <= 425"
             class="relative top-[40%] w-[10%] h-8 bg-transparent border-none"
@@ -37,17 +37,17 @@ onUnmounted(() => window.removeEventListener('resize', updateScreenSize));
             <img src="../assets/icons/left_arrow.svg" alt="Previous" />
         </button>
         <div
-            class="flex flex-col justify-between items-center h-full bkmid:gap-0 gap-8 sm:w-[80%]">
-            <div class="h-40">
+            class="flex flex-col justify-between items-center h-[full] bkmid:gap-0 gap-8 sm:w-[80%]">
+            <div class="h-20">
                 <img
                     :src="img"
                     :alt="`Foto do ${name}`"
-                    class="w-32 sm:w-full" />
+                    class="w-15 h-15 rounded-container" />
             </div>
             <div
-                class="flex flex-col items-center text-center leading-4 bkmid:gap-0 bkmid:h-full">
+                class="flex flex-col items-center text-center text-gray-200/50 leading-4 bkmid:gap-0 bkmid:h-full">
                 <p
-                    class="w-full text-lg bkmid:text-sm lg:text-lg font-semibold mt-6">
+                    class="w-full text-xl bkmid:text-sm font-semibold mt-6 tracking-wide">
                     {{ name }}
                 </p>
                 <h3 class="text-xl bkmid:text-2sm lg:text-lg font-bold">
@@ -68,4 +68,12 @@ onUnmounted(() => window.removeEventListener('resize', updateScreenSize));
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.image-effect {
+    box-shadow:
+        5px 5px 5px white,
+        -5px 5px 5px white,
+        5px -5px 5px white,
+        -5px -5px 5px white;
+}
+</style>
