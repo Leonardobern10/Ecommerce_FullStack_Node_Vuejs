@@ -17,6 +17,9 @@ import Carrer from '@/views/Carrer.vue';
 import History from '@/views/History.vue';
 import EditProductView from '@/views/EditProductView.vue';
 
+import ResetPassword from '@/components/ResetPassword.vue';
+import HelpPassword from '@/components/HelpPassword.vue';
+
 // Define para cada rota um componente correspondente
 // que será renderizado no momento que a rota for acessada
 const routes = [
@@ -36,6 +39,8 @@ const routes = [
     { path: PATH.DELIVERY, component: Delivery },
     { path: PATH.CARRER, component: Carrer },
     { path: PATH.OUR_HISTORY, component: History },
+    { path: PATH.PASSWORD.HELP, component: HelpPassword },
+    { path: PATH.PASSWORD.RESET, component: ResetPassword, props: true },
 ];
 
 export const router = createRouter({ history: createWebHistory(), routes });

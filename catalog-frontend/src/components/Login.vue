@@ -15,6 +15,16 @@ const fading = ref(false);
 const transitionTime = 800; // Tempo da transição de fade (1.5s)
 const intervalTime = 7000; // Tempo de exibição de cada imagem (7s)
 
+const email = ref('');
+const password = ref('');
+const isLoading = ref(false);
+const router = useRouter();
+const auth = useAuthStore();
+const toast = useToast();
+
+const emit = defineEmits(['hideHeader']);
+const emitHideHeader = () => emit('hideHeader');
+
 // Alternar imagens automaticamente
 const changeImage = () => {
     fading.value = true;
@@ -24,18 +34,6 @@ const changeImage = () => {
         fading.value = false; // Remove o efeito após a troca
     }, transitionTime); // Tempo igual ao da animação CSS
 };
-
-const emit = defineEmits(['hideHeader']);
-
-const email = ref('');
-const password = ref('');
-const isLoading = ref(false);
-const router = useRouter();
-const auth = useAuthStore();
-const toast = useToast();
-
-const emitHideHeader = () => emit('hideHeader');
-
 // Método para login utilizando os dados do formulário
 const login = async () =>
     await signIn(isLoading, email, password, auth, router, toast);
@@ -76,12 +74,17 @@ onMounted(() => {
             <form
                 @submit.prevent="login"
                 class="flex flex-col items-center max-w-md mx-auto py-4">
-                <div class="mb-8">
+                <div class="mb-8 flex flex-col items-center">
                     <Input v-model="email" type="email" placeholder="Email" />
                     <Input
                         v-model="password"
                         type="password"
                         placeholder="Senha" />
+                    <router-link
+                        :to="PATH.PASSWORD.HELP"
+                        class="text-xanadu text-center font-light"
+                        >Esqueceu sua senha?</router-link
+                    >
                 </div>
                 <Button
                     type="submit"
