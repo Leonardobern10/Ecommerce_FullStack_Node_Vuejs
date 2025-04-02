@@ -2,12 +2,10 @@
 import { onMounted, onUnmounted, ref } from 'vue';
 import gsap from 'gsap';
 import { PixiPlugin, ScrollTrigger, TextPlugin } from 'gsap/all';
-import Button from '@/components/Button.vue';
 import NewestProduct from '@/components/NewestProduct.vue';
 import IconContainer from '@/components/IconContainer.vue';
 import { checkRole } from '@/services/roleService';
 import { nextNewestItem, previousNewestItem } from '@/services/itemService';
-import PATH from '@/constants/PATH';
 import ICONS from '@/constants/ICONS.js';
 import CATEGORIES from '@/constants/CATEGORIES';
 import NEWESTPRODUCTS from '@/constants/NEWESTPRODUCTS';
@@ -15,6 +13,7 @@ import { BannerImages } from '@/constants/BANNERIMAGES';
 import Rating from '@/components/Rating.vue';
 import { ratings } from '@/constants/RATINGS';
 
+const emit = defineEmits(['viewHeader']);
 let screenWidth = ref(window.innerWidth);
 let currentIndexItem = ref(0);
 let currentItem = ref({});
@@ -33,6 +32,7 @@ const goToPreviousProduct = () => {
     previousNewestItem(currentIndexItem, NEWESTPRODUCTS, currentItem);
 };
 
+const emitViewHeader = () => emit('viewHeader');
 onMounted(() => {
     checkRole();
     window.addEventListener('resize', updateScreenSize);
@@ -66,6 +66,7 @@ onMounted(() => {
         x: -100,
         duration: 1,
     });
+    emitViewHeader();
 });
 
 onUnmounted(() => {
