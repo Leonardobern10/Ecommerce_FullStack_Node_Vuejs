@@ -19,9 +19,9 @@ onUnmounted(() => window.removeEventListener('resize', updateScreenSize));
 
 <template>
     <div
-        class="bg-black/50 text-gray-200/80 w-[90%] rounded-container flex flex-row-reverse max-ml:flex-col p-8 justify-between items-center max-ml:mb-8">
+        class="bg-black/50 text-gray-200/80 w-[90%] rounded-container flex flex-row-reverse max-ml:flex-col p-8 justify-between items-center mb-8">
         <div
-            class="text-sm max-ml:text-xs w-[70%] max-ml:w-[90%] max-ml:pb-2 text-justify">
+            class="text-sm max-ml:text-xs w-[70%] max-ml:w-[90%] max-md:pb-2 text-justify">
             <h4>"{{ content }}"</h4>
             <!-- <p><strong>{{ rate }}</strong></p> -->
         </div>

@@ -81,7 +81,7 @@ onUnmounted(() => {
         </main>
 
         <footer
-            class="font-lato mt-8 w-full flex flex-col items-center justify-between"
+            class="font-lato mt-8 w-full flex flex-col items-center justify-between bg-black/20 p-8"
             v-show="showHeader">
             <div
                 class="w-11/12 h-full flex flex-col sm:flex-row justify-between items-center">
@@ -115,7 +115,7 @@ onUnmounted(() => {
                             class="md:text-sm text-xs whitespace-nowrap flex flex-col">
                             <Link :to="PATH.ABOUT_US" name="Sobre nós" />
                             <Link :to="PATH.DELIVERY" name="Entrega" />
-                            <p>Blog</p>
+                            <Link :to="PATH.HOME" name="Blog" />
                         </div>
                     </div>
                     <div class="flex flex-col gap-y-1">
@@ -124,7 +124,7 @@ onUnmounted(() => {
                         </p>
                         <div
                             class="md:text-sm text-xs whitespace-nowrap flex flex-col">
-                            <p>Comunidade</p>
+                            <Link :to="PATH.HOME" name="Comunidade" />
                             <Link :to="PATH.CARRER" name="Carreira" />
                             <Link
                                 :to="PATH.OUR_HISTORY"
@@ -139,7 +139,7 @@ onUnmounted(() => {
                             class="md:text-sm text-xs whitespace-nowrap flex flex-col">
                             <Link :to="PATH.HOME" name="Home" />
                             <Link :to="PATH.PRODUCTS.ROOT" name="Produtos" />
-                            <p>Contato</p>
+                            <Link :to="PATH.HOME" name="Contato" />
                         </div>
                     </div>
                 </div>

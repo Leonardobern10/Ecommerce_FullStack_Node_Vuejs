@@ -79,13 +79,13 @@ onUnmounted(() => {
         <div class="view-home">
             <section
                 id="banner-init"
-                class="banner-init font-lato max-ml:h-100 bg-no-repeat bg-cover bg-center bg-origin-border text-gray-200 blur-px rounded-3xl">
+                class="banner-init font-lato max-md:h-100 bg-no-repeat bg-cover bg-center bg-origin-border text-gray-200 blur-px rounded-3xl">
                 <div
-                    class="flex flex-col items-center justify-between max-ml:justify-start h-25 max-ml:h-full max-ml:w-full ml:mt-12 max-ml:p-4">
+                    class="flex flex-col items-center justify-between max-md:justify-start h-25 max-md:h-full max-md:w-full ml:mt-12 max-md:p-4">
                     <h1
-                        class="tracking-tight font-bold text-4xl max-ml:text-2xl md:text-3xl xl:text-4xl 2xl:text-4xl text-left bg-gradient-to-r to-black from-gray-300 bg-clip-text text-transparent animate-glow"></h1>
+                        class="tracking-tight font-bold text-4xl max-md:text-2xl md:text-3xl xl:text-4xl 2xl:text-4xl text-left neon-text"></h1>
                     <p
-                        class="text-xl max-ml:h-full max-ml:text-sm neon-text text-white font-semibold">
+                        class="text-xl max-md:h-full max-md:text-sm neon-text text-white font-semibold">
                         {{ BannerImages[0].secondaryText }}
                     </p>
                 </div>
@@ -127,10 +127,11 @@ onUnmounted(() => {
                 </div>
             </section>
 
-            <section class="newest max-ml:items-center rounded-container p-4">
+            <section
+                class="newest max-md:items-center rounded-container p-4 md:p-0">
                 <div
                     v-if="screenWidth > 425"
-                    class="w-full h-full grid grid-cols-2 grid-rows-2 place-items-center gap-2">
+                    class="w-full h-full grid grid-cols-2 md:bg-black/50 md:rounded-container grid-rows-2 place-items-center gap-2">
                     <NewestProduct
                         id="newest-products"
                         v-for="product in NEWESTPRODUCTS"
@@ -155,7 +156,7 @@ onUnmounted(() => {
             <section class="rating rounded-container">
                 <div
                     class="h-full w-full flex flex-col justify-evenly items-center">
-                    <h3 class="text-gray-200 text-2xl max-ml:mb-6">
+                    <h3 class="text-gray-200 text-2xl mb-6">
                         O que nossos clientes dizem?
                     </h3>
                     <Rating

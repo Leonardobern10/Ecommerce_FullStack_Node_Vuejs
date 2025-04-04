@@ -69,6 +69,7 @@ onMounted(async () => await loadOrders(isLogged, router, auth, orders));
     align-items: center;
 
     width: 100%;
+    min-height: 100vh;
 }
 h1 {
     color: #000000b4;
