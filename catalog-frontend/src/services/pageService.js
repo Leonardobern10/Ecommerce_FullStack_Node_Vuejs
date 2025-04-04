@@ -4,6 +4,7 @@ import {
     getProductsByPriceToLow,
     loadProducts,
 } from './productService';
+import { PageCommand } from '@/model/Page';
 
 const nextPage = (current, total) => {
     if (current.value < total.value) current.value++;
@@ -25,19 +26,33 @@ export const goToPage = async (
 ) => {
     // ! - Corrigir esses aninhamentos de if - elses
     try {
-        if (local === 'next') {
+        if (local === PageCommand.NEXT) {
             nextPage(current, total);
-        } else if (local === 'previous') {
+        } else if (local === PageCommand.PREVIOUS) {
             previousPage(current);
         }
 
-        if (order.value === SortType.FALSE) {
-            loadProducts(auth, state, array, current, total, limit);
-        } else if (order.value === SortType.TO_HIGH) {
-            console.log(current.value);
-            array.value = await getProductsByPriceToHigh(current.value);
-        } else if (order.value === SortType.TO_LOW) {
-            array.value = await getProductsByPriceToLow(current.value);
+        switch (order.value) {
+            case SortType.FALSE:
+                array.value = loadProducts(
+                    auth,
+                    state,
+                    array,
+                    current,
+                    total,
+                    limit,
+                );
+                break;
+            case SortType.TO_HIGH:
+                array.value = await getProductsByPriceToHigh(current.value);
+                break;
+            case SortType.TO_LOW:
+                array.value = array.value = await getProductsByPriceToLow(
+                    current.value,
+                );
+                break;
+            default:
+                break;
         }
     } catch (error) {
         console.error(error);

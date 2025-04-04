@@ -18,6 +18,7 @@ import { filterProducts } from '../services/productService.js';
 import { goToPage } from '@/services/pageService.js';
 import { notifyInfo } from '@/notifications/notify.js';
 import { SortType } from '@/model/Sort.js';
+import { PageCommand } from '@/model/Page.js';
 
 const router = useRouter();
 const isLogged = ref(false);
@@ -163,7 +164,7 @@ onMounted(async () => {
             <div
                 class="pagination w-1/5 flex flex-row justify-between items-center gap-5 my-8">
                 <button
-                    @click="getPage('previous')"
+                    @click="getPage(PageCommand.PREVIOUS)"
                     id="previous"
                     class="button-pagination w-8 h-8 bg-no-repeat bg-center bg-[url('../assets/icons/left_arrow_next_page.svg')] hover:cursor-pointer rounded-lg">
                     <img
@@ -172,7 +173,7 @@ onMounted(async () => {
                 </button>
                 <span> Página {{ currentPage }} de {{ totalPages }}</span>
                 <button
-                    @click="getPage('next')"
+                    @click="getPage(PageCommand.NEXT)"
                     id="next"
                     class="button-pagination w-8 h-8 bg-no-repeat bg-center bg-[url('../assets/icons/right_arrow_next_page.svg')] hover:cursor-pointer rounded-lg">
                     <img
