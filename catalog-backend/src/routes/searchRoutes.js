@@ -13,7 +13,7 @@ searchRouter.get('/search', async (req, res) => {
             sortBy,
             order = 'asc',
             page = 1,
-            limit = 10,
+            limit = 12,
         } = req.query;
 
         // Criação de um objeto para realizar a consulta

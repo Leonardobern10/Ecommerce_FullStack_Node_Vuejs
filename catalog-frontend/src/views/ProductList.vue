@@ -9,13 +9,15 @@ import {
     accessProductById,
     getProductsByBrand,
     getProductsByName,
+    getProductsByPriceToHigh,
+    getProductsByPriceToLow,
     loadProducts,
-    sortProductsByProp,
 } from '../services/productService.js';
 import { addOnCart } from '../services/cartService.js';
 import { filterProducts } from '../services/productService.js';
 import { goToPage } from '@/services/pageService.js';
 import { notifyInfo } from '@/notifications/notify.js';
+import { SortType } from '@/model/Sort.js';
 
 const router = useRouter();
 const isLogged = ref(false);
@@ -33,6 +35,8 @@ let searchValue = ref();
 let searchType = ref('');
 let timeout = null;
 
+let order = ref(SortType.FALSE);
+
 // Adiciona um produto ao carrinho
 const addProductToCart = async (product) => {
     await addOnCart(product, router, isLogged.value, toast);
@@ -43,17 +47,15 @@ const accessProduct = async (id) =>
     await accessProductById(id, productStore, router);
 
 // Ordenação
-const sortProductsLowToHigh = async () =>
-    (products.value = await sortProductsByProp(products, 'price'));
+const sortProductsLowToHigh = async () => {
+    products.value = await getProductsByPriceToHigh(currentPage.value);
+    order.value = SortType.TO_HIGH;
+};
 
-const sortProductsHighToLow = async () =>
-    (products.value = await sortProductsByProp(products, 'price').reverse());
-
-const sortProductsMostRecently = async () =>
-    (products.value = await sortProductsByProp(
-        products,
-        'createdAt',
-    ).reverse());
+const sortProductsHighToLow = async () => {
+    products.value = await getProductsByPriceToLow(currentPage.value);
+    order.value = SortType.TO_LOW;
+};
 
 const getPage = async (operation) =>
     goToPage(
@@ -64,6 +66,7 @@ const getPage = async (operation) =>
         currentPage,
         totalPages,
         limit,
+        order,
     );
 
 const showInfo = () =>
@@ -122,11 +125,6 @@ onMounted(async () => {
                         class="options-view text-base hover:cursor-pointer"
                         @click="sortProductsHighToLow">
                         Maior preço
-                    </p>
-                    <p
-                        class="options-view text-base hover:cursor-pointer"
-                        @click="sortProductsMostRecently">
-                        Mais recentes
                     </p>
                 </div>
 

@@ -10,6 +10,7 @@ export const getProducts = async (page, limit) => {
         const response = await axios.get(`${URL.PRODUCTS}`, {
             params: { page, limit },
         });
+        console.log(response.data.data);
         return response.data;
     } catch (error) {
         console.error('Erro ao buscar produtos:', error);
@@ -140,9 +141,9 @@ export const searchProduct = async (product, route, store) => {
 // Retornam os produtos com o nome correspondente
 export const getProductsByName = async (name) => {
     try {
-        const response = await axios.get(
-            `http://localhost:5000/api/products/search?name=${name}`,
-        );
+        const response = await axios.get(URL.SEARCH, {
+            params: { name: `${name}` },
+        });
         return response.data.data;
     } catch (error) {
         console.log(error);
@@ -151,8 +152,22 @@ export const getProductsByName = async (name) => {
 
 // Retornam os produtos com a marca correspondente
 export const getProductsByBrand = async (brand) => {
-    const response = await axios.get(
-        `http://localhost:5000/api/products/search?brand=${brand}`,
-    );
+    const response = await axios.get(URL.SEARCH, {
+        params: { brand: `${brand}` },
+    });
+    return response.data.data;
+};
+
+export const getProductsByPriceToLow = async (page = 1) => {
+    const response = await axios.get(URL.SEARCH, {
+        params: { sortBy: 'price', order: 'desc', page: `${page}` },
+    });
+    return response.data.data;
+};
+
+export const getProductsByPriceToHigh = async (page = 1) => {
+    const response = await axios.get(URL.SEARCH, {
+        params: { sortBy: 'price', page: `${page}` },
+    });
     return response.data.data;
 };
