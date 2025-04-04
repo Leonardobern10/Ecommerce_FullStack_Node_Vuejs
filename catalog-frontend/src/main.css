@@ -2,21 +2,29 @@
 
 @import 'tailwindcss';
 @theme {
+    /* Colors */
     --color-xanadu: #758073;
     --color-blue-smoke: #73807a;
     --color-tower-gray: #acb7bf;
     --color-green-spring: #b0bfac;
 
-    --breakpoint-bkmid: 426px;
+    /* Text custom*/
     --text-title-section: 2rem;
     --text-color-section: #fff;
+
+    /* Font */
     --font-banner: 'BioRhyme', serif;
     --font-andika: 'Andika', sans-serif;
     --font-lato: 'Lato', sans-serif;
     --font-bondolse: 'Boldonse', system-ui;
     --font-barriecito: 'Barriecito', system-ui;
     --font-bagel: 'Bagel Fat One', system-ui;
+
+    /* Radius default */
     --radius-container: 15px;
+
+    /* Mobile L size*/
+    --breakpoint-ml: 600px;
 
     @keyframes blur-animate {
         0% {

@@ -4,13 +4,13 @@ import gsap from 'gsap';
 import { PixiPlugin, ScrollTrigger, TextPlugin } from 'gsap/all';
 import NewestProduct from '@/components/NewestProduct.vue';
 import IconContainer from '@/components/IconContainer.vue';
+import Rating from '@/components/Rating.vue';
 import { checkRole } from '@/services/roleService';
 import { nextNewestItem, previousNewestItem } from '@/services/itemService';
 import ICONS from '@/constants/ICONS.js';
 import CATEGORIES from '@/constants/CATEGORIES';
 import NEWESTPRODUCTS from '@/constants/NEWESTPRODUCTS';
 import { BannerImages } from '@/constants/BANNERIMAGES';
-import Rating from '@/components/Rating.vue';
 import { ratings } from '@/constants/RATINGS';
 
 const emit = defineEmits(['viewHeader']);
@@ -31,8 +31,8 @@ const goToNextProduct = () =>
 const goToPreviousProduct = () => {
     previousNewestItem(currentIndexItem, NEWESTPRODUCTS, currentItem);
 };
-
 const emitViewHeader = () => emit('viewHeader');
+
 onMounted(() => {
     checkRole();
     window.addEventListener('resize', updateScreenSize);
@@ -79,31 +79,33 @@ onUnmounted(() => {
         <div class="view-home">
             <section
                 id="banner-init"
-                class="banner-init font-lato bg-no-repeat bg-cover mx-md:bg-contain bg-center bg-origin-border text-gray-200 blur-px rounded-3xl">
+                class="banner-init font-lato max-ml:h-100 bg-no-repeat bg-cover bg-center bg-origin-border text-gray-200 blur-px rounded-3xl">
                 <div
-                    class="flex flex-col items-center justify-between h-25 mt-12">
+                    class="flex flex-col items-center justify-between max-ml:justify-start h-25 max-ml:h-full max-ml:w-full ml:mt-12 max-ml:p-4">
                     <h1
-                        class="tracking-tight font-bold text-4xl md:text-3xl lg:text-3xl xl:text-4xl 2xl:text-4xl text-left bg-gradient-to-r to-black from-gray-300 bg-clip-text text-transparent animate-glow"></h1>
-                    <p class="text-xl neon-text text-white font-semibold">
+                        class="tracking-tight font-bold text-4xl max-ml:text-2xl md:text-3xl xl:text-4xl 2xl:text-4xl text-left bg-gradient-to-r to-black from-gray-300 bg-clip-text text-transparent animate-glow"></h1>
+                    <p
+                        class="text-xl max-ml:h-full max-ml:text-sm neon-text text-white font-semibold">
                         {{ BannerImages[0].secondaryText }}
                     </p>
                 </div>
             </section>
 
-            <section class="rounded-container categories max-h-full">
-                <div class="flex flex-col w-full h-full gap-8">
+            <section class="rounded-container categories">
+                <div
+                    class="flex flex-col md:justify-between w-full gap-8 md:gap-4">
                     <div
                         v-for="item in CATEGORIES"
                         :key="item.image"
-                        class="flex flex-col items-center rounded-container bg-black/50">
+                        class="flex flex-col items-center rounded-container max-ml:h-30 bg-black/50">
                         <div
-                            class="flex flex-row justify-between items-center gap-8 w-full h-[13rem]">
+                            class="flex flex-row justify-between items-center gap-8 w-full h-[10rem] max-ml:h-30">
                             <img
                                 class="rounded-container object-cover"
                                 :src="item.image"
                                 :alt="item.text" />
                             <p
-                                class="text-4xl text-center rounded-container text-white w-[50%]">
+                                class="text-4xl p-6 text-center rounded-container text-white w-[50%]">
                                 {{ item.text }}
                             </p>
                         </div>
@@ -114,7 +116,7 @@ onUnmounted(() => {
             <section
                 class="flex flex-row justify-evenly items-center services rounded-container bg-black/50 text-white text-center">
                 <div
-                    class="flex flex-col md:flex-row items-center justify-around">
+                    class="flex flex-row items-center justify-around lg:justify-between w-full max-ml:w-full max-ml:pt-4">
                     <IconContainer
                         id="about-company"
                         v-for="item in ICONS"
@@ -125,10 +127,10 @@ onUnmounted(() => {
                 </div>
             </section>
 
-            <section class="newest rounded-container p-4">
+            <section class="newest max-ml:items-center rounded-container p-4">
                 <div
                     v-if="screenWidth > 425"
-                    class="w-full h-full grid grid-cols-2 grid-rows-2 place-items-center gap-6">
+                    class="w-full h-full grid grid-cols-2 grid-rows-2 place-items-center gap-2">
                     <NewestProduct
                         id="newest-products"
                         v-for="product in NEWESTPRODUCTS"
@@ -138,7 +140,7 @@ onUnmounted(() => {
                         :price="product.price"
                         :screen-width="screenWidth" />
                 </div>
-                <div v-else class="">
+                <div v-else class="newest-ml">
                     <NewestProduct
                         :key="currentItem.name"
                         :img="currentItem.image"
@@ -153,7 +155,7 @@ onUnmounted(() => {
             <section class="rating rounded-container">
                 <div
                     class="h-full w-full flex flex-col justify-evenly items-center">
-                    <h3 class="text-gray-200 text-2xl">
+                    <h3 class="text-gray-200 text-2xl max-ml:mb-6">
                         O que nossos clientes dizem?
                     </h3>
                     <Rating
@@ -229,20 +231,6 @@ onUnmounted(() => {
     }
 }
 
-.view-home {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(2, 15rem) 8rem repeat(2, 15rem);
-    gap: 40px;
-    grid-template-areas:
-        'banner-init banner-init banner-init categories categories'
-        'banner-init banner-init banner-init categories categories'
-        'services services services categories categories'
-        'newest newest rating rating rating'
-        'newest newest rating rating rating'
-        'newest newest rating rating rating';
-}
-
 .banner-init {
     grid-area: banner-init;
 }
@@ -257,5 +245,38 @@ onUnmounted(() => {
 }
 .rating {
     grid-area: rating;
+}
+
+@media (max-width: 768px) {
+    .view-home {
+        display: flex;
+        flex-direction: column;
+        row-gap: 2rem;
+    }
+}
+@media (min-width: 768px) {
+    .view-home {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(2, 15rem) 8rem repeat(2, 15rem);
+        gap: 40px;
+        grid-template-areas:
+            'banner-init banner-init banner-init categories categories'
+            'banner-init banner-init banner-init categories categories'
+            'services services services services services'
+            'newest newest rating rating rating'
+            'newest newest rating rating rating'
+            'newest newest rating rating rating';
+    }
+}
+.newest-ml {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    border: 2px soid black;
+
+    width: 100%;
 }
 </style>
