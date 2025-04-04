@@ -23,7 +23,7 @@ const addToCart = async (product) =>
 
 <template>
     <div
-        class="w-full h-full py-12 flex flex-col md:flex-row justify-around items-center gap-5 bg-white/80">
+        class="w-full h-full py-12 flex flex-col md:flex-row justify-around items-center gap-5">
         <div
             class="min-w-[15rem] max-w-[20rem] h-80 flex justify-center items-center">
             <img
@@ -33,24 +33,24 @@ const addToCart = async (product) =>
         </div>
 
         <div
-            class="w-full max-md:w-[90%] md:w-1/3 flex flex-col justify-between items-center text-center md:text-left">
+            class="w-full max-md:w-[90%] md:w-1/3 flex flex-col justify-between items-center text-center md:text-left text-gray-400/80">
             <h1 class="text-2xl font-bold">{{ product.name }}</h1>
-            <p class="text-gray-600 text-base mt-2">
+            <p class="text-base mt-2">
                 {{ product.description }}
             </p>
 
             <div
                 class="w-full max-md:w-[90%] flex flex-row justify-between items-center mt-4">
-                <p class="text-3xl font-semibold text-xanadu">
+                <p class="text-3xl font-semibold text-gray-100/50">
                     R$ <strong>{{ Number(product.price).toFixed(2) }}</strong>
                 </p>
-                <p class="text-gray-700">Quantidade: {{ product.stock }}</p>
+                <p class="text-gray-200">Quantidade: {{ product.stock }}</p>
             </div>
 
             <Button
                 @click="addToCart(product)"
                 button-name="Adicionar ao carrinho"
-                class="mt-6 bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-300" />
+                class="mt-6 py-2 px-6 transition-all duration-300" />
         </div>
     </div>
 </template>

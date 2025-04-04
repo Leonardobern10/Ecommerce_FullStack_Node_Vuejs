@@ -3,7 +3,12 @@ import { defineProps, defineEmits, computed } from 'vue';
 import { calculatePixDiscount } from '@/services/productService';
 import Button from './Button.vue';
 
-const props = defineProps(['name', 'price', 'quantity', 'imageUrl']);
+const props = defineProps({
+    name: String,
+    price: Number,
+    quantity: Number,
+    imageUrl: String,
+});
 const emit = defineEmits(['update-quantity', 'remove-item']);
 
 const updateQuantity = (event) => {
@@ -15,100 +20,38 @@ const updateQuantity = (event) => {
 
 const totalPrice = computed(() => (props.price * props.quantity).toFixed(2));
 </script>
-
 <template>
-    <div id="container">
-        <div id="container-img">
-            <img :src="imageUrl" :alt="'foto de ' + name" />
+    <div
+        class="flex flex-row justify-between items-center gap-4 h-40 w-full min-w-[70%] border-b border-black my-4">
+        <!-- Imagem -->
+        <div class="w-32 h-32">
+            <img
+                :src="imageUrl"
+                :alt="'foto de ' + name"
+                class="w-full h-full" />
         </div>
-        <div id="info-cart-product">
-            <p id="name-product">{{ name }}</p>
-            <div>
+
+        <!-- Informações do produto -->
+        <div
+            class="flex flex-col justify-between items-center gap-8 text-neutral-200/50">
+            <p class="text-[1.2rem] font-bold">{{ name }}</p>
+            <div class="flex flex-row justify-evenly items-center gap-2">
                 <Button @click="$emit('remove-item')" button-name="Excluir" />
                 <input
                     type="number"
                     :value="quantity"
                     min="1"
-                    @input="updateQuantity" />
+                    @input="updateQuantity"
+                    class="h-8 w-[20%] text-center bg-black/50 outline-none border-none rounded text-white" />
             </div>
         </div>
-        <div id="price">
-            <p id="title-price">
-                <strong>R$ {{ totalPrice }}</strong>
-            </p>
-            <p id="financed-price">
+
+        <!-- Preço -->
+        <div class="leading-[1.2rem] text-center text-neutral-200/50">
+            <p class="text-[1.3rem] font-bold">R$ {{ totalPrice }}</p>
+            <p class="text-[0.8rem] opacity-70">
                 ou R$ {{ calculatePixDiscount(price) }} no pix
             </p>
         </div>
     </div>
 </template>
-
-<style scoped>
-#container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    column-gap: 1rem;
-
-    height: 10rem;
-    width: 100%;
-    min-width: 70%;
-
-    border-bottom: 1px solid black;
-
-    margin: 1rem 0;
-}
-#name-product {
-    font-size: 1.2rem;
-    font-weight: 700;
-}
-#info-cart-product {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-
-    row-gap: 2rem;
-}
-
-#info-cart-product > div {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-#container-img {
-    width: 8rem;
-    height: 8rem;
-}
-
-img {
-    width: 100%;
-    height: 100%;
-}
-
-input {
-    height: 2rem;
-    width: 20%;
-    text-align: center;
-    outline: none;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    background-color: var(--xanadu);
-}
-#price {
-    line-height: 1.2rem;
-    text-align: center;
-}
-
-#title-price {
-    font-size: 1.3rem;
-}
-#financed-price {
-    font-size: 0.8rem;
-    opacity: 0.7;
-}
-</style>

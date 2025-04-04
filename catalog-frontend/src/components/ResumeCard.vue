@@ -24,10 +24,10 @@ const callCheckout = () => {
         </div>
         <div>
             <p>Frete:</p>
-            <p style="color: var(--xanadu)">Grátis</p>
+            <p>Grátis</p>
         </div>
         <div>
-            <p id="total-value">
+            <p id="total-value text-neutral-200/50">
                 <strong>Total:</strong>
             </p>
             <div id="price-values">
