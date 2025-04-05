@@ -28,12 +28,34 @@ Este é um sistema de **e-commerce** desenvolvido com **Vue.js** no frontend e *
 
 ## 📸 Imagens do Projeto
 
-![](./images/Captura%20de%20tela%202025-03-09%20224053.png)
-![](./images/Captura%20de%20tela%202025-03-09%20224101.png)
-![](./images/Captura%20de%20tela%202025-03-09%20224113.png)
-![](./images/Captura%20de%20tela%202025-03-09%20224120.png)
-![](./images/Captura%20de%20tela%202025-03-09%20224126.png)
-![](./images/Captura%20de%20tela%202025-03-09%20224134.png)
+### Pagina Inicial
+
+![](./images/Captura%20de%20tela%202025-04-04%20224139.png)
+![](./images/Captura%20de%20tela%202025-04-04%20224207.png)
+![](./images/Captura%20de%20tela%202025-04-04%20224212.png)
+![](./images/Captura%20de%20tela%202025-04-04%20224217.png)
+
+### Lista de Produtos
+
+![](./images/Captura%20de%20tela%202025-04-04%20224227.png)
+![](./images/Captura%20de%20tela%202025-04-04%20224236.png)
+![](./images/Captura%20de%20tela%202025-04-04%20224243.png)
+
+### Página de Login
+
+![](./images/Captura%20de%20tela%202025-04-04%20224253.png)
+
+### Página de Cadastro
+
+![](./images/Captura%20de%20tela%202025-04-04%20224301.png)
+
+### Carrinho de Compras
+
+![](./images/Captura%20de%20tela%202025-04-04%20224334.png)
+
+### Histórico de Pedidos
+
+![](./images/Captura%20de%20tela%202025-04-04%20224341.png)
 
 ## 📂 Estrutura do Projeto
 
