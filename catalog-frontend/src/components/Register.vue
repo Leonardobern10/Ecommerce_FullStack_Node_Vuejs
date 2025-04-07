@@ -44,10 +44,11 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="flex flex-row w-full h-screen font-lato">
+    <div
+        class="flex flex-row max-ml:flex-col-reverse max-md:gap-y-4 w-full h-screen font-lato">
         <div
-            class="flex flex-col justify-center items-center h-full gap-y-8 w-[50vw] text-white">
-            <h2 class="text-2xl font-bold">Crie sua conta</h2>
+            class="flex flex-col justify-center items-center h-full max-md:h-[70%] gap-y-8 max-md:gap-y-2 w-[50vw] max-md:w-screen text-white p-2">
+            <h2 class="text-2xl max-md:text-xl font-bold">Crie sua conta</h2>
             <p class="font-light">
                 Já tem conta?
                 <router-link :to="PATH.LOGIN" class="text-xanadu"
@@ -83,7 +84,7 @@ onMounted(() => {
         </div>
         <div
             :style="{ backgroundImage: `url(${currentImage})` }"
-            class="flex flex-col justify-between items-center w-[50vw] h-50vh p-8 rounded-l-4xl bg-center bg-cover bg-no-repeat text-white transition-opacity duration-[1500ms] ease-in-out"
+            class="flex flex-col justify-between items-center w-[50vw] max-md:w-screen h-50vh max-md:h-full p-8 max-md:p-2 rounded-l-4xl max-md:rounded-l-none max-md:rounded-b-4xl bg-center bg-cover bg-no-repeat text-white transition-opacity duration-[1500ms] ease-in-out"
             :class="{ 'opacity-0': fading, 'opacity-100': !fading }">
             <div class="flex flex-row justify-start w-[90%]">
                 <router-link :to="PATH.HOME">

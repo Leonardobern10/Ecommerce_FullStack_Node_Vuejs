@@ -45,26 +45,23 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="flex flex-row w-full h-screen font-lato">
+    <div
+        class="flex flex-row max-ml:flex-col w-full h-screen max-md:gap-y-4 font-lato border-2">
         <div
             :style="{ backgroundImage: `url(${currentImage})` }"
-            class="flex flex-col justify-between items-center w-[50vw] h-50vh p-8 rounded-r-4xl bg-center bg-cover bg-no-repeat text-white transition-opacity duration-[1500ms] ease-in-out"
+            class="flex flex-col justify-between items-center w-[50vw] max-md:w-screen h-50vh max-md:h-full p-8 max-md:p-2 rounded-r-4xl max-md:rounded-b-4xl max-md:rounded-r-none bg-center max-md:bg-top bg-cover bg-no-repeat text-white transition-opacity duration-[1500ms] ease-in-out"
             :class="{ 'opacity-0': fading, 'opacity-100': !fading }">
             <div class="flex flex-row justify-end w-[90%]">
                 <router-link :to="PATH.HOME">
                     <Button button-name="Voltar à página inicial" />
                 </router-link>
             </div>
-
-            <div class="flex flex-row justify-between items-center w-70">
-                <div class="option bg-gray-400/90"></div>
-                <div class="option bg-black/50"></div>
-                <div class="option bg-gray-400/90"></div>
-            </div>
         </div>
         <div
-            class="flex flex-col justify-center items-center h-full gap-y-8 w-[45vw] text-white">
-            <h2 class="text-4xl font-medium">Entre na sua conta</h2>
+            class="flex flex-col justify-center items-center h-full gap-y-8 max-md:gap-y-2 w-[45vw] max-md:w-screen text-white">
+            <h2 class="text-4xl max-md:text-2xl font-medium">
+                Entre na sua conta
+            </h2>
             <p class="font-light">
                 Ainda não é cadastrado?
                 <router-link :to="PATH.REGISTER" class="text-xanadu"

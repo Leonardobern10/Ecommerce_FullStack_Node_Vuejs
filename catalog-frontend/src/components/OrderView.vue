@@ -14,7 +14,7 @@ const props = defineProps([
 </script>
 
 <template>
-    <div>
+    <div class="flex flex-col">
         <div>
             <p>
                 <strong>Pedido: {{ orderId }}</strong>

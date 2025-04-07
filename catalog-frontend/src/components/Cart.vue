@@ -63,10 +63,12 @@ onMounted(async () => loadCart(cart));
     <div class="container mx-auto p-6 min-h-screen">
         <div class="flex flex-col md:flex-row gap-6">
             <!-- Lista de Itens no Carrinho -->
-            <div class="w-full md:w-2/3 bg-black/50 shadow-md rounded-lg p-4">
+            <div
+                class="w-full h-full md:w-2/3 bg-black/50 shadow-md rounded-lg p-4">
                 <h2 class="text-2xl font-semibold text-neutral-200/50 mb-4">
                     Carrinho de Compras
                 </h2>
+                <hr class="text-gray-500/50" />
                 <ul v-if="cart.length" class="space-y-4">
                     <li v-for="item in cart" :key="item._id">
                         <CartItemView
@@ -89,7 +91,7 @@ onMounted(async () => loadCart(cart));
             <!-- Resumo da Compra -->
             <div
                 v-if="cart.length"
-                class="w-full md:w-1/3 bg-black/50 shadow-md rounded-lg p-6 sticky top-6 text-neutral-200/50">
+                class="w-full lg:w-1/3 h-fit bg-black/50 shadow-md rounded-lg p-6 sticky top-6 text-neutral-200/50">
                 <ResumeCard
                     :length="cart.length"
                     :total-amount="totalAmount"

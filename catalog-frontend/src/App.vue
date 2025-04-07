@@ -16,6 +16,7 @@ import Link from './components/Link.vue';
 import MobileMenu from './components/MobileMenu.vue';
 import NavBarDesktop from './components/NavBarDesktop.vue';
 import { useToast } from 'vue-toastification';
+import { authState } from './store/useAuth';
 
 let showHeader = ref(true);
 let permitted = ref(false);
@@ -73,7 +74,11 @@ onUnmounted(() => {
                 :auth="userIsLogged"
                 :permitted="permitted"
                 @logout="logout" />
-            <MobileMenu v-else />
+            <MobileMenu
+                :auth="userIsLogged"
+                :permitted="permitted"
+                @logout="logout"
+                v-else />
         </header>
 
         <main class="flex flex-col justify-between items-center h-full w-full">
