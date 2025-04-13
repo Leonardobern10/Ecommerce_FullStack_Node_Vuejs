@@ -3,13 +3,14 @@ import { ref } from 'vue';
 import { getProduct, saveUpdate } from '@/services/productService';
 import Button from '@/components/Button.vue';
 
+// Values
 const currentProduct = ref({});
 const idSearched = ref('');
 
+// Methods
 const searchProduct = async () => {
     currentProduct.value = await getProduct(idSearched.value);
 };
-
 const saveChanges = async () => await saveUpdate(currentProduct, alert);
 </script>
 <template>

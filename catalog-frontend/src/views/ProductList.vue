@@ -35,7 +35,6 @@ const filteredProducts = computed(() =>
 let searchValue = ref();
 let searchType = ref('');
 let timeout = null;
-
 let order = ref(SortType.FALSE);
 
 // Adiciona um produto ao carrinho

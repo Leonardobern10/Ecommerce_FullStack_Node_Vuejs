@@ -1,7 +1,5 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue';
-import gsap from 'gsap';
-import { PixiPlugin, ScrollTrigger, TextPlugin } from 'gsap/all';
 import NewestProduct from '@/components/NewestProduct.vue';
 import IconContainer from '@/components/IconContainer.vue';
 import Rating from '@/components/Rating.vue';
@@ -12,61 +10,30 @@ import CATEGORIES from '@/constants/CATEGORIES';
 import NEWESTPRODUCTS from '@/constants/NEWESTPRODUCTS';
 import { BannerImages } from '@/constants/BANNERIMAGES';
 import { ratings } from '@/constants/RATINGS';
+import { toLeftEffect } from '@/effects/toLeftEffect';
+import { toDigitEffect } from '@/effects/toDigitEffect';
+import { toScrollEffect } from '@/effects/toScrollEffect';
 
-const emit = defineEmits(['viewHeader']);
+// Values
 let screenWidth = ref(window.innerWidth);
 let currentIndexItem = ref(0);
 let currentItem = ref({});
 
-gsap.registerPlugin(TextPlugin);
-gsap.registerPlugin(ScrollTrigger);
-gsap.registerPlugin(PixiPlugin);
-
-const updateScreenSize = () => {
-    screenWidth.value = window.innerWidth;
-};
+//Methods
+const updateScreenSize = () => (screenWidth.value = window.innerWidth);
 const goToNextProduct = () =>
     nextNewestItem(currentIndexItem, NEWESTPRODUCTS, currentItem);
-
-const goToPreviousProduct = () => {
+const goToPreviousProduct = () =>
     previousNewestItem(currentIndexItem, NEWESTPRODUCTS, currentItem);
-};
-const emitViewHeader = () => emit('viewHeader');
 
 onMounted(() => {
     checkRole();
     window.addEventListener('resize', updateScreenSize);
     currentItem.value = NEWESTPRODUCTS[currentIndexItem.value];
-    gsap.from('#banner-init', {
-        x: -100,
-        delay: 0.2,
-        duration: 1.2,
-        autoAlpha: 0.2,
-        ease: 'expo.out',
-    });
-    gsap.to('h1', { duration: 5, text: 'Seu estilo começa pelo pulso.' });
-    gsap.from('#newest-products', {
-        scrollTrigger: {
-            trigger: '#newest-products',
-            start: '-100px center',
-            end: '200px center',
-            toggleActions: 'restart pause resume pause',
-            onblur: 0,
-        },
-        x: -100,
-        duration: 1,
-    });
-    gsap.from('#about-company', {
-        scrollTrigger: {
-            trigger: '#about-company',
-            start: '-200px center',
-            end: '200px center',
-            toggleActions: 'restart pause resume pause',
-        },
-        x: -100,
-        duration: 1,
-    });
-    emitViewHeader();
+    toLeftEffect('#banner-init');
+    toDigitEffect('h1', 'Seu estilo começa pelo pulso.');
+    toScrollEffect('#newest-products', '-150px');
+    toScrollEffect('#about-company', '-200px');
 });
 
 onUnmounted(() => {
