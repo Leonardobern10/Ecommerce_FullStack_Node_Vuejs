@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineEmits, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
 import { useAuthStore } from '@/store/useAuthStore.js';
@@ -8,6 +8,10 @@ import Input from './Input.vue';
 import Button from './Button.vue';
 import LOGINIMAGES from '@/constants/LOGINIMAGES';
 import PATH from '@/constants/PATH';
+/*Importar o useHeaderStore*/
+import { useHeaderStore } from '@/store/useHeaderStore';
+
+const useHeader = useHeaderStore();
 
 const currentIndex = ref(0);
 const currentImage = computed(() => LOGINIMAGES[currentIndex.value]);
@@ -21,9 +25,6 @@ const isLoading = ref(false);
 const router = useRouter();
 const auth = useAuthStore();
 const toast = useToast();
-
-const emit = defineEmits(['hideHeader']);
-const emitHideHeader = () => emit('hideHeader');
 
 // Alternar imagens automaticamente
 const changeImage = () => {
@@ -39,8 +40,13 @@ const login = async () =>
     await signIn(isLoading, email, password, auth, router, toast);
 
 onMounted(() => {
-    emitHideHeader();
+    useHeader.hideHeader();
+    console.log(useHeader.header);
     setInterval(changeImage, intervalTime);
+});
+
+onUnmounted(() => {
+    useHeader.showHeader();
 });
 </script>
 

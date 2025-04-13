@@ -153,16 +153,16 @@ authRouter.post('/logout', async (req, res) => {
                 .json({ message: 'Nenhum refresh token encontrado!' });
         }
 
-        console.log('Token recebido para logout:', refreshToken);
+        // console.log('Token recebido para logout:', refreshToken);
 
         // Buscar todos os usuários para diagnóstico
         const allUsers = await User.find({}).select('_id email refreshTokens');
-        console.log('Todos os usuários e seus tokens:');
+        // console.log('Todos os usuários e seus tokens:');
 
         let foundUser = null;
         allUsers.forEach((user) => {
-            console.log(`Usuário ID: ${user._id}, Email: ${user.email}`);
-            console.log('  RefreshTokens:', user.refreshTokens);
+            // console.log(`Usuário ID: ${user._id}, Email: ${user.email}`);
+            // console.log('  RefreshTokens:', user.refreshTokens);
 
             // Verificar se algum usuário tem o token
             if (

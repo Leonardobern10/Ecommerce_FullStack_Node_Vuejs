@@ -16,9 +16,8 @@ import Link from './components/Link.vue';
 import MobileMenu from './components/MobileMenu.vue';
 import NavBarDesktop from './components/NavBarDesktop.vue';
 import { useToast } from 'vue-toastification';
-import { authState } from './store/useAuth';
+import { useHeaderStore } from './store/useHeaderStore';
 
-let showHeader = ref(true);
 let permitted = ref(false);
 const userIsLogged = computed(() => useAuth.authenticated);
 const useAuth = useAuthStore();
@@ -30,23 +29,17 @@ const socialNetworksLogos = [
     { nome: logoTwitter },
 ];
 const toast = useToast();
-
-const hideHeader = () => (showHeader.value = false);
-const viewHeader = () => (showHeader.value = true);
-
+const useHeader = useHeaderStore();
 const updateScreenSize = () => (screenWidth.value = window.innerWidth);
 
 // Função executada quando o botao [Logout] é pressionado.
 const logout = async () => signOut(userIsLogged, useAuth, router, toast);
-
 onMounted(async () => {
     gsap.from('#header', { y: -100, autoAlpha: 0, duration: 1.2, delay: 0.5 });
     await generateContent(updateScreenSize, userIsLogged, useAuth);
     permitted.value = await hasPermission(useAuth, permitted);
 });
-
 watchEffect(async () => await hasPermission(useAuth, permitted));
-
 onUnmounted(() => {
     window.removeEventListener('resize', updateScreenSize);
 });
@@ -57,11 +50,11 @@ onUnmounted(() => {
         id="app"
         :class="{
             'grid grid-rows-[4rem_auto_auto] grid-cols-1 justify-items-center items-center h-full':
-                showHeader,
-            'flex flex-col items-center': !showHeader,
+                useHeader.header,
+            'flex flex-col items-center': !useHeader.header,
         }">
         <header
-            v-show="showHeader"
+            v-show="useHeader.header"
             id="header"
             class="rounded-container max-md:relative w-[95vw] flex justify-between items-center p-6 h-5 gap-x-22 font-lato z-100">
             <div class="max-md:w-[20%] h-[2rem]">
@@ -82,12 +75,12 @@ onUnmounted(() => {
         </header>
 
         <main class="flex flex-col justify-between items-center h-full w-full">
-            <router-view @hide-header="hideHeader" @view-header="viewHeader" />
+            <router-view />
         </main>
 
         <footer
             class="font-lato mt-8 w-full flex flex-col items-center justify-between bg-black/20 p-8"
-            v-show="showHeader">
+            v-show="useHeader.header">
             <div
                 class="w-11/12 h-full flex flex-col sm:flex-row justify-between items-center">
                 <div class="flex flex-col items-left gap-y-1 w-full px-3.5">
@@ -166,7 +159,7 @@ onUnmounted(() => {
 
 <style scoped>
 #app {
-    background: linear-gradient(-45deg, #12140faf, #161314, #444444, #949494);
+    background: linear-gradient(-45deg, #12140faf, #191a19, #444444, #949494);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
 }

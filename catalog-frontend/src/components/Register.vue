@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, defineEmits, computed, watch } from 'vue';
+import { onMounted, ref, defineEmits, computed, watch, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
 import Input from './Input.vue';
@@ -7,9 +7,10 @@ import Button from './Button.vue';
 import signUp from '@/services/registerService';
 import { registerImages } from '@/constants/REGISTERIMAGES';
 import PATH from '@/constants/PATH';
+/* Importar o useHeaderStore */
+import { useHeaderStore } from '@/store/useHeaderStore';
 
-const emit = defineEmits(['hideHeader']);
-
+const useHeader = useHeaderStore();
 const currentIndex = ref(0);
 const currentImage = computed(() => registerImages[currentIndex.value]);
 const fading = ref(false);
@@ -22,8 +23,6 @@ const password = ref('');
 const passwordCheck = ref('');
 const toast = useToast();
 const router = useRouter();
-
-const emitHideHeader = () => emit('hideHeader');
 
 const changeImage = () => {
     fading.value = true;
@@ -38,9 +37,11 @@ const register = async () =>
     await signUp(name, email, password, passwordCheck, router, toast);
 
 onMounted(() => {
-    emitHideHeader();
+    useHeader.hideHeader();
     setInterval(changeImage, intervalTime);
 });
+
+onUnmounted(() => useHeader.showHeader());
 </script>
 
 <template>
