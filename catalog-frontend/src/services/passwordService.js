@@ -14,7 +14,7 @@ export const forgotPassword = async (toast, email) => {
         );
         return response;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         notifyError(
             toast,
             'Erro ao redefinir senha. Tente novamente mais tarde.',
@@ -47,6 +47,6 @@ export const resetPassword = async (
             toast,
             'Erro ao redefinir senha. Tente novamente mais tarde!',
         );
-        console.error(error);
+        // console.error(error);
     }
 };

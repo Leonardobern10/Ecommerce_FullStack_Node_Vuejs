@@ -22,7 +22,7 @@ const handleSubmit = async () => {
 };
 </script>
 <template>
-    <div class="h-screen flex items-center justify-center bg-gray-100">
+    <div class="h-screen flex items-center justify-center bg-gray-100/50">
         <div class="w-96 bg-white p-6 rounded-lg shadow-md">
             <h3 class="text-xl font-semibold text-center mb-4">
                 Defina sua nova senha

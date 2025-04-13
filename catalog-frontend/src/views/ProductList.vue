@@ -162,7 +162,7 @@ onMounted(async () => {
                     @addToCart="addProductToCart(product)" />
             </ul>
             <div
-                class="pagination w-1/5 flex flex-row justify-between items-center gap-5 my-8">
+                class="pagination w-1/3 max-md:w-full flex flex-row justify-between items-center gap-5 my-8 text-white/50">
                 <button
                     @click="getPage(PageCommand.PREVIOUS)"
                     id="previous"

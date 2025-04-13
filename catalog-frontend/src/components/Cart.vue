@@ -68,8 +68,7 @@ onMounted(async () => loadCart(cart));
                 <h2 class="text-2xl font-semibold text-neutral-200/50 mb-4">
                     Carrinho de Compras
                 </h2>
-                <hr class="text-gray-500/50" />
-                <ul v-if="cart.length" class="space-y-4">
+                <ul v-if="cart.length" class="flex flex-col gap-12">
                     <li v-for="item in cart" :key="item._id">
                         <CartItemView
                             :name="item.name"

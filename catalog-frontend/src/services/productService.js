@@ -10,18 +10,18 @@ export const getProducts = async (page, limit) => {
         const response = await axios.get(`${URL.PRODUCTS}`, {
             params: { page, limit },
         });
-        console.log(response.data.data);
+        // console.log(response.data.data);
         return response.data;
     } catch (error) {
-        console.error('Erro ao buscar produtos:', error);
+        // console.error('Erro ao buscar produtos:', error);
         return { data: [], currentPage: 1, totalPages: 1 }; // Retorna um fallback seguro
     }
 };
 
 export const getProduct = async (id) => {
     const response = await axios.get(`${URL.PRODUCTS}/${id}`);
-    console.log('URL: ', `${URL.PRODUCTS}/${id}`);
-    console.log('RESPOSTA: ', response.data);
+    // console.log('URL: ', `${URL.PRODUCTS}/${id}`);
+    // console.log('RESPOSTA: ', response.data);
     return response.data;
 };
 
@@ -38,7 +38,7 @@ export const updateProduct = async (id, product) => {
 };
 
 export const changeProduct = async (id, changes) => {
-    console.log('Iniciou changeProduct');
+    // console.log('Iniciou changeProduct');
     try {
         const response = await axios.patch(
             `${URL.PRODUCTS_CHANGE}/${id}`,
@@ -47,7 +47,7 @@ export const changeProduct = async (id, changes) => {
         );
         return response.data;
     } catch (erro) {
-        console.log(erro);
+        // console.log(erro);
     }
 };
 
@@ -92,7 +92,7 @@ export const saveProduct = async (edit, route, product, router, toast) => {
         }
         router.push(PATH.PRODUCTS.ROOT);
     } catch (error) {
-        console.error(error);
+        // console.error(error);
         notifyError(toast, MESSAGE.ERROR.PRODUCTS.ADD);
     }
 };
@@ -134,7 +134,7 @@ export const searchProduct = async (product, route, store) => {
         product.value = await getProduct(route.params.id);
         store.clean();
     } catch (error) {
-        console.error(error);
+        // console.error(error);
     }
 };
 
@@ -146,7 +146,7 @@ export const getProductsByName = async (name) => {
         });
         return response.data.data;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     }
 };
 

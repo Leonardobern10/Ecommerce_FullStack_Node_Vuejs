@@ -39,9 +39,9 @@ const toggleDropdown = () => {
         <n-drawer v-model:show="isOpen">
             <n-drawer-content
                 title="Menu"
-                closeable
-                color="#000"
-                class="bg-black/50 flex flex-col border-2">
+                closable
+                type="tertiary"
+                class="bg-black/80 flex flex-col text-white/50 text-lg">
                 <div class="flex flex-col gap-y-4 mt-8">
                     <Link
                         @hide-menu="toggleDropdown"

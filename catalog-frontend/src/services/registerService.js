@@ -24,7 +24,7 @@ const signUp = async (name, email, password, passwordCheck, router, toast) => {
         notifySuccess(toast, MESSAGE.SUCCESS.REGISTER);
     } catch (error) {
         notifyError(toast, MESSAGE.ERROR.REGISTER.DEFAULT);
-        console.error(error);
+        // console.error(error);
     }
 };
 

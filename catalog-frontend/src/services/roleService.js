@@ -7,7 +7,7 @@ export const checkRole = async () => {
         });
         return response.data?.role || '';
     } catch (error) {
-        console.error('Erro ao verificar role:', error);
+        // console.error('Erro ao verificar role:', error);
         return '';
     }
 };
