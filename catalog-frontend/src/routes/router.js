@@ -19,6 +19,7 @@ import EditProductView from '@/views/EditProductView.vue';
 
 import ResetPassword from '@/components/ResetPassword.vue';
 import HelpPassword from '@/components/HelpPassword.vue';
+import Users from '@/views/Users.vue';
 
 // Define para cada rota um componente correspondente
 // que será renderizado no momento que a rota for acessada
@@ -41,6 +42,7 @@ const routes = [
     { path: PATH.OUR_HISTORY, component: History },
     { path: PATH.PASSWORD.HELP, component: HelpPassword },
     { path: PATH.PASSWORD.RESET, component: ResetPassword, props: true },
+    { path: PATH.USERS, component: Users },
 ];
 
 export const router = createRouter({ history: createWebHistory(), routes });

@@ -6,6 +6,7 @@ import authRouter from './routes/authRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import orderRouter from './routes/orderRoutes.js';
 import connectDB from './config/db.js';
+import userRouter from './routes/userRoutes.js';
 
 dotenv.config(); // Carregar variáveis de ambiente
 connectDB(); // Conexão com o MongoDB
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/products', productRouter);
 app.use('/api/orders', orderRouter);
+app.use('/api/allUsers', userRouter);
 
 // Rota para checkar o estado do servidor
 app.get('/healthCheck', (req, res) => {
