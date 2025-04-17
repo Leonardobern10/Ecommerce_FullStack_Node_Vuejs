@@ -7,6 +7,7 @@ export const authMiddleware = async (req, res, next) => {
         const cookies = req.headers.cookie
             ? cookie.parse(req.headers.cookie)
             : {};
+
         const accessToken = cookies.accessToken;
 
         if (!accessToken) {
