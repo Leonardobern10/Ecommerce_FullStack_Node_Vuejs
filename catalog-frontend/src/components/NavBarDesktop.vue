@@ -1,5 +1,4 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue';
 import Link from './Link.vue';
 import Button from './Button.vue';
 import PATH from '@/constants/PATH';

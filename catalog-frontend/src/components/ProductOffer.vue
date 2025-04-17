@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, defineEmits, computed } from 'vue';
+import { computed } from 'vue';
 import Button from './Button.vue';
 import {
     calculatePixDiscount,

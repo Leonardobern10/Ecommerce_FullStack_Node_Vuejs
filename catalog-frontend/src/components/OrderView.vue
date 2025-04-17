@@ -1,5 +1,4 @@
 <script setup>
-import { defineProps } from 'vue';
 import CartItemView from './CartItemView.vue';
 
 const props = defineProps([

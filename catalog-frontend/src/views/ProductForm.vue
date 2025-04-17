@@ -36,39 +36,54 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div id="view-product-form">
-        <h2>{{ isEdit ? 'Editar Produto' : 'Adicionar Produto' }}</h2>
+    <div
+        id="view-product-form"
+        class="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+        <h1 class="text-2xl font-semibold mb-4 text-gray-800">
+            {{ isEdit ? 'Editar Produto' : 'Adicionar Produto' }}
+        </h1>
+
         <form @submit.prevent="save">
+            <h5 class="text-gray-600 mb-4">
+                {{
+                    isEdit
+                        ? 'Preencha os dados abaixo para adicionar um produto ao seu catálogo'
+                        : 'Edita os campos abaixo para atualizar as informações do produto escolhido.'
+                }}
+            </h5>
             <Input
                 v-model="product.name"
                 type="text"
-                placeholder="Nome do produto"
-                required />
+                placeholder="Informe o nome do produto..."
+                required
+                name="name" />
+
             <Input
                 v-model="product.brand"
                 type="text"
-                placeholder="Marca do produto"
-                required />
+                placeholder="Informe a marca do produto..."
+                required
+                name="Marca" />
             <Input
                 v-model="product.description"
                 type="text"
-                placeholder="Descricao do produto"
+                placeholder="Insira uma descrição para o produto..."
                 required />
             <Input
                 v-model="product.price"
                 type="number"
                 step="0.01"
-                placeholder="Preço"
+                placeholder="Informe o preço do produto..."
                 required />
             <Input
                 v-model="product.stock"
                 type="number"
-                placeholder="Quantidade"
+                placeholder="Informe a quantidade do produto..."
                 required />
             <Input
                 v-model="product.imageUrl"
                 type="text"
-                placeholder="Url da imagem"
+                placeholder="Informe a URL da imagem..."
                 required />
             <Button
                 type="submit"
@@ -89,25 +104,12 @@ form {
 
     padding: 1rem 0;
 }
-button {
-    width: fit-content;
-    border: 2px solid #d9d9d9;
-    border-radius: 5px;
-    padding: 0.5rem 1rem;
-    background-color: var(--green-spring);
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 200;
-    letter-spacing: 0.5px;
-    margin-top: 4rem;
-    transition:
-        background-color 0.3s ease-in,
-        border 0.3s ease-in;
-}
 
 button:hover {
-    cursor: pointer;
-    background-color: var(--xanadu);
-    border: 1px solid #fff;
+    color: rgb(117, 117, 117);
+}
+
+button {
+    margin-top: 1rem;
 }
 </style>

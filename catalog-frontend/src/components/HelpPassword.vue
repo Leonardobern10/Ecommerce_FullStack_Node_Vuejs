@@ -1,7 +1,7 @@
 <script setup>
-import { ref, defineEmits, onBeforeMount } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import { forgotPassword } from '@/services/passwordService';
-import Button from './Button.vue';
+
 import { useToast } from 'vue-toastification';
 
 const emit = defineEmits(['hideHeader']);

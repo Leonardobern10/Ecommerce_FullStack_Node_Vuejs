@@ -1,6 +1,4 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue';
-
 const props = defineProps(['modelValue', 'type', 'placeholder']);
 const emit = defineEmits(['update:modelValue']);
 </script>

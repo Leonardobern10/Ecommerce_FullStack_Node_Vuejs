@@ -1,12 +1,5 @@
 <script setup>
-import {
-    defineProps,
-    defineEmits,
-    onMounted,
-    onUnmounted,
-    ref,
-    computed,
-} from 'vue';
+import { onMounted, onUnmounted, ref, computed } from 'vue';
 import {
     calculatePixDiscount,
     viewFinancedValue,

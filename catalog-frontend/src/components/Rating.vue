@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 const props = defineProps({
     content: String,
     image: String,
