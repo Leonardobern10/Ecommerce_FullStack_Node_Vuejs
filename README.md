@@ -73,11 +73,11 @@ Estrutura do backend:
 
 ```
 backend/
-├── utils/         # Ferramentas para geração de tokens
+├── config/        # Configurações do banco de dados
 |-- middlewares/   # Definição de middlewares para autentição e roles
 ├── models/        # Modelos do MongoDB
 ├── routes/        # Definição das rotas da API
-├── config/        # Configurações do banco de dados
+├── utils/         # Ferramentas para geração de tokens
 ├── server.js      # Arquivo principal
 ```
 
@@ -91,11 +91,15 @@ frontend/
 |   |-- assets/       # Arquivos auxiliares como imagens, icones, etc.
 │   ├── components/   # Componentes reutilizáveis
 |   |-- constants/    # Informações como URIs, URLs, etc.
-│   ├── views/        # Páginas da aplicação
-│   ├── store/        # Gerenciamento de estado (Pinia)
+|   |-- effects/      # Animações e efeitos aplicados
+|   |-- model/        # Informações padronizadas
+|   |-- notifications # Lógica das notificações
 │   ├── routes/       # Definição das rotas
 |   |-- services/     # Definição dos serviços
+│   ├── store/        # Gerenciamento de estado (Pinia)
+│   ├── views/        # Páginas da aplicação
 │   ├── App.vue       # Componente raiz
+|   |-- main.css      # Estilização global
 │   ├── main.js       # Arquivo de inicialização
 ```
 
@@ -113,7 +117,7 @@ cd Carrinho_de_compras_Node_Vuejs
 ```sh
 cd backend
 npm install
-npm start
+npm run dev
 ```
 
 ### 🔹 Frontend
@@ -168,4 +172,4 @@ Pull requests são bem-vindos! Para melhorias significativas, abra uma issue par
 
 - **Autor:** Leonardo Bernardo
 - **GitHub:** [Leonardobern10](https://github.com/Leonardobern10)
-- **LinkedIn:** [in/leonardo-bern](https://www.linkedin.com/in/leonardo-bern/)
+- **LinkedIn:** [in/leonardo-bernardo25](https://www.linkedin.com/in/leonardo-bernardo25/)
