@@ -20,6 +20,18 @@ export const getOrders = async () => {
     return await axios.get(URL.ORDER, { withCredentials: true });
 };
 
+export const getOrdersById = async (id) => {
+    try {
+        const response = await axios.get(`${URL.ORDER}/${id}`, {
+            withCredentials: true,
+        });
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 export const fetchOrders = async (state, router, array) => {
     try {
         if (!state.value) {

@@ -74,7 +74,8 @@ onUnmounted(() => {
                 v-else />
         </header>
 
-        <main class="flex flex-col justify-between items-center h-full w-full">
+        <main
+            class="flex flex-col justify-between items-center h-full w-full font-andika">
             <router-view />
         </main>
 

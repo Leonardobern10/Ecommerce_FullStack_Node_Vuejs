@@ -1,6 +1,8 @@
 import express from 'express';
 import Order from '../models/Order.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
+import { hasRole } from '../middlewares/roleMiddleware.js';
+import mongoose from 'mongoose';
 
 const orderRouter = express.Router();
 
@@ -36,5 +38,28 @@ orderRouter.get('/', authMiddleware, async (req, res) => {
         res.status(500).json({ message: 'Erro ao buscar pedidos.', error });
     }
 });
+
+orderRouter.get(
+    '/:id',
+    authMiddleware,
+    hasRole(['admin']),
+    async (req, res) => {
+        const { id } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: 'ID inválido.' });
+        }
+
+        try {
+            const orders = await Order.find({
+                user: new mongoose.Types.ObjectId(id),
+            });
+
+            res.status(200).json(orders);
+        } catch (error) {
+            res.status(500).json({ message: 'Erro ao buscar pedidos.', error });
+        }
+    },
+);
 
 export default orderRouter;
