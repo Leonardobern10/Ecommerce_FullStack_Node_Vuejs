@@ -1,5 +1,6 @@
 import express from 'express';
 import Product from '../models/Product.js';
+import { TypeClock } from '../models/Type.js';
 
 const searchRouter = express.Router();
 
@@ -10,6 +11,7 @@ searchRouter.get('/search', async (req, res) => {
         const {
             name,
             brand,
+            type,
             sortBy,
             order = 'asc',
             page = 1,
@@ -28,6 +30,11 @@ searchRouter.get('/search', async (req, res) => {
             // Se recebemos brand, pesquisamos por Brand
             filter.brand = { $regex: new RegExp(brand, 'i') };
         }
+        if (type && Object.values(TypeClock).includes(type.toUpperCase())) {
+            filter.type = type.toUpperCase();
+        }
+
+        console.log(type);
 
         // Recebemos a pagina atual e o limite de produtos
         // a serem exibidos, que são seus valores ou 1
@@ -47,6 +54,8 @@ searchRouter.get('/search', async (req, res) => {
             .sort(sortOptions)
             .skip(skip) // de quanto em quanto
             .limit(limitNumber); // quantos
+
+        console.log(products);
 
         // total de documentos
         const total = await Product.countDocuments(filter);

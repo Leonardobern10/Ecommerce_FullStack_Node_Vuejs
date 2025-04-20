@@ -138,6 +138,19 @@ export const searchProduct = async (product, route, store) => {
     }
 };
 
+export const getProductsByType = async (type) => {
+    console.log(type);
+    try {
+        const response = await axios.get(URL.SEARCH, {
+            params: { type: `${type}` },
+        });
+        console.log(response.data.data);
+        return response.data.data;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 // Retornam os produtos com o nome correspondente
 export const getProductsByName = async (name) => {
     try {

@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import NewestProduct from '@/components/NewestProduct.vue';
 import IconContainer from '@/components/IconContainer.vue';
 import Rating from '@/components/Rating.vue';
@@ -13,18 +14,26 @@ import { ratings } from '@/constants/RATINGS';
 import { toLeftEffect } from '@/effects/toLeftEffect';
 import { toDigitEffect } from '@/effects/toDigitEffect';
 import { toScrollEffect } from '@/effects/toScrollEffect';
+import PATH from '@/constants/PATH';
+import { useCategoryStore } from '@/store/useCategoryStore';
 
 // Values
 let screenWidth = ref(window.innerWidth);
 let currentIndexItem = ref(0);
 let currentItem = ref({});
+const categoryStore = useCategoryStore();
 
 //Methods
+const router = useRouter();
 const updateScreenSize = () => (screenWidth.value = window.innerWidth);
 const goToNextProduct = () =>
     nextNewestItem(currentIndexItem, NEWESTPRODUCTS, currentItem);
 const goToPreviousProduct = () =>
     previousNewestItem(currentIndexItem, NEWESTPRODUCTS, currentItem);
+const redirectToList = async (type) => {
+    categoryStore.save(type);
+    router.push(PATH.PRODUCTS.ROOT);
+};
 
 onMounted(() => {
     checkRole();
@@ -64,15 +73,16 @@ onUnmounted(() => {
                     <div
                         v-for="item in CATEGORIES"
                         :key="item.image"
-                        class="flex flex-col items-center rounded-container max-ml:h-30 bg-black/50">
+                        @click="redirectToList(item.text.toUpperCase())"
+                        class="flex flex-col items-center rounded-container max-ml:h-30 bg-black/50 hover:scale-95 transition-transform duration-300 hover:skew-1 hover:bg-black/70 hover:cursor-pointer">
                         <div
                             class="flex flex-row justify-between items-center gap-8 w-full h-[10rem] max-ml:h-30">
                             <img
-                                class="rounded-container object-cover"
+                                class="lg:w-1/2 rounded-container object-cover"
                                 :src="item.image"
                                 :alt="item.text" />
                             <p
-                                class="text-4xl p-6 text-center rounded-container text-white w-[50%]">
+                                class="text-4xl max-lg:text-lg p-6 text-center rounded-container text-white w-[50%] max-md:w-[80%]">
                                 {{ item.text }}
                             </p>
                         </div>

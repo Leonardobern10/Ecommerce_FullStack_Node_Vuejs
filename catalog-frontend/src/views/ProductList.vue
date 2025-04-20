@@ -11,6 +11,7 @@ import {
     getProductsByName,
     getProductsByPriceToHigh,
     getProductsByPriceToLow,
+    getProductsByType,
     loadProducts,
 } from '../services/productService.js';
 import { addOnCart } from '../services/cartService.js';
@@ -19,6 +20,7 @@ import { goToPage } from '@/services/pageService.js';
 import { notifyInfo } from '@/notifications/notify.js';
 import { SortType } from '@/model/Sort.js';
 import { PageCommand } from '@/model/Page.js';
+import { useCategoryStore } from '@/store/useCategoryStore.js';
 
 const router = useRouter();
 const isLogged = ref(false);
@@ -32,6 +34,10 @@ const searchBrandQuery = ref('');
 const filteredProducts = computed(() =>
     filterProducts(searchBrandQuery, products, 'brand'),
 );
+const searchProductsByType = async (typeName) =>
+    (products.value = await getProductsByType(typeName));
+const categoryStore = useCategoryStore();
+
 let searchValue = ref();
 let searchType = ref('');
 let timeout = null;
@@ -72,6 +78,16 @@ const getPage = async (operation) =>
 const showInfo = () =>
     notifyInfo(toast, 'Por favor, selecione o campo a ser pesquisado');
 
+const categoryIsSetting = async () => {
+    const typeList = ['ANALOGICO', 'DIGITAL', 'SMART'];
+
+    console.log(categoryStore.category);
+
+    if (typeList.includes(categoryStore.category)) {
+        await searchProductsByType(categoryStore.category);
+    }
+};
+
 // Observa mudanças no input e chama a função automaticamente
 watch([searchValue, searchType], async ([newQuery, newType]) => {
     clearTimeout(timeout);
@@ -100,6 +116,7 @@ onMounted(async () => {
         totalPages, // Passando ref corretamente
         limit,
     );
+    await categoryIsSetting();
 });
 </script>
 
@@ -112,19 +129,37 @@ onMounted(async () => {
             class="flex flex-col items-center gap-16 w-full rounded-lg">
             <nav
                 id="container-options-view"
-                class="flex flex-col md:flex-row justify-between items-center bg-gray-500/50 h-auto md:h-12 w-full rounded-lg p-2 md:p-4 gap-2 md:gap-0 text-white">
+                class="flex flex-col md:flex-row justify-between items-center bg-gray-500/50 h-auto md:h-12 w-full rounded-lg p-2 md:p-4 gap-2 md:gap-0 text-white max-md:text-xs">
                 <!-- Opções de Ordenação -->
                 <div
-                    class="flex flex-col md:flex-row gap-2 md:gap-4 text-center w-full md:w-auto">
+                    class="flex flex-row max-md:justify-center gap-2 md:gap-4 text-center w-full md:w-auto">
                     <p
-                        class="options-view text-base hover:cursor-pointer"
+                        class="options-view hover:cursor-pointer"
                         @click="sortProductsLowToHigh">
                         Menor preço
                     </p>
                     <p
-                        class="options-view text-base hover:cursor-pointer"
+                        class="options-view hover:cursor-pointer"
                         @click="sortProductsHighToLow">
                         Maior preço
+                    </p>
+                </div>
+                <div
+                    class="flex flex-row max-md:justify-between md:flex-row gap-2 md:gap-4 text-center w-2/3 md:w-auto">
+                    <p
+                        class="options-view hover:cursor-pointer"
+                        @click="searchProductsByType('ANALOGICO')">
+                        Analogico
+                    </p>
+                    <p
+                        class="options-view hover:cursor-pointer"
+                        @click="searchProductsByType('DIGITAL')">
+                        Digital
+                    </p>
+                    <p
+                        class="options-view hover:cursor-pointer"
+                        @click="searchProductsByType('SMART')">
+                        Smart
                     </p>
                 </div>
 
@@ -142,6 +177,7 @@ onMounted(async () => {
                         <option value="" disabled>Selecione uma opção</option>
                         <option value="Nome">Nome</option>
                         <option value="Marca">Marca</option>
+                        <option value="SMART">SMART</option>
                     </select>
                     <input
                         class="text-gray-300 focus:bg-xanadu w-full md:w-[30%] mt-2 md:mt-0 md:ml-1 p-1 rounded-md"

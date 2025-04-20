@@ -5,6 +5,7 @@ import { useToast } from 'vue-toastification';
 import Input from '@/components/Input.vue';
 import Button from '@/components/Button.vue';
 import { getProducts, saveProduct } from '../services/productService.js';
+import ProductOffer from '@/components/ProductOffer.vue';
 
 const toast = useToast();
 const route = useRoute();
@@ -15,6 +16,7 @@ const product = ref({
     brand: '',
     price: 0,
     description: '',
+    type: '',
     stock: 0,
     imageUrl: '',
 });
@@ -68,6 +70,11 @@ onMounted(async () => {
                 v-model="product.description"
                 type="text"
                 placeholder="Insira uma descrição para o produto..."
+                required />
+            <Input
+                v-model="product.type"
+                type="text"
+                placeholder="Insira o tipo do produto DIGITAL, ANALÓGICO OU SMART..."
                 required />
             <Input
                 v-model="product.price"
