@@ -14,7 +14,7 @@ const props = defineProps({ icon: String, title: String, content: String });
                 class="text-2sm max-ml:whitespace-nowrap max-ml:text-sm max-ml:pt-1 w-full font-bold max-ml:font-semibold">
                 {{ title }}
             </p>
-            <p class="text-xs text-center">
+            <p class="text-sm text-center">
                 {{ content }}
             </p>
         </div>

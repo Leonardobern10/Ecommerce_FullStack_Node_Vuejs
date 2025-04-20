@@ -23,13 +23,13 @@ const addToCart = async (product) =>
 
 <template>
     <div
-        class="w-full h-full py-12 flex flex-col md:flex-row justify-around items-center gap-5">
+        class="w-full h-full py-12 flex flex-col md:flex-row justify-around items-center gap-5 border-2">
         <div
             class="min-w-[15rem] max-w-[20rem] h-80 flex justify-center items-center">
             <img
                 :src="product.imageUrl"
                 alt=""
-                class="w-full h-full object-cover" />
+                class="w-full h-full object-cover bg-white rounded-container" />
         </div>
 
         <div

@@ -52,7 +52,7 @@ onUnmounted(() => {
 
 <template>
     <div
-        class="flex flex-row max-ml:flex-col w-full h-screen max-md:gap-y-4 font-lato border-2">
+        class="flex flex-row max-ml:flex-col w-full h-screen max-md:gap-y-4 font-lato">
         <div
             :style="{ backgroundImage: `url(${currentImage})` }"
             class="flex flex-col justify-between items-center w-[50vw] max-md:w-screen h-50vh max-md:h-full p-8 max-md:p-2 rounded-r-4xl max-md:rounded-b-4xl max-md:rounded-r-none bg-center max-md:bg-top bg-cover bg-no-repeat text-white transition-opacity duration-[1500ms] ease-in-out"

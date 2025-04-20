@@ -19,7 +19,7 @@ const add = () => emit('addToCart');
     <div id="view-product-offer" @click="acess">
         <div id="container-img-product">
             <img
-                class="bg-white product-shadow rounded-2xl"
+                class="bg-white product-shadow rounded-2xl hover:scale-105"
                 :src="product.imageUrl"
                 :alt="`imagem do ${product.name}`" />
         </div>

@@ -75,12 +75,12 @@ onUnmounted(() => {
         </header>
 
         <main
-            class="flex flex-col justify-between items-center h-full w-full font-andika">
+            class="flex flex-col justify-between items-center h-full min-h-screen w-full font-andika">
             <router-view />
         </main>
 
         <footer
-            class="font-lato mt-8 w-full flex flex-col items-center justify-between bg-black/20 p-8"
+            class="font-lato w-full flex flex-col items-center justify-between bg-black/20 p-8"
             v-show="useHeader.header">
             <div
                 class="w-11/12 h-full flex flex-col sm:flex-row justify-between items-center">

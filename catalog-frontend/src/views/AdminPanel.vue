@@ -3,7 +3,7 @@ import PATH from '@/constants/PATH';
 </script>
 
 <template>
-    <div class="flex h-screen w-full bg-gray-100">
+    <div class="flex h-full w-full bg-gray-100">
         <!-- Sidebar -->
         <aside class="w-64 bg-gray-800 text-white p-6 flex flex-col gap-4">
             <h2 class="text-2xl font-semibold">Admin Panel</h2>
