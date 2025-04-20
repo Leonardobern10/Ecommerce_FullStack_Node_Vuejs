@@ -62,4 +62,19 @@ orderRouter.get(
     },
 );
 
+orderRouter.get(
+    '/all',
+    authMiddleware,
+    hasRole(['admins']),
+    async (req, res) => {
+        try {
+            const allOrders = Order.find({});
+            console.log(allOrders);
+            res.status(200).json(allOrders);
+        } catch (error) {
+            console.error(error);
+        }
+    },
+);
+
 export default orderRouter;
