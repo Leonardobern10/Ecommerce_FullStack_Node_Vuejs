@@ -64,6 +64,14 @@
     }
 }
 
+.table-row {
+    @apply border-2 p-0.5 text-center w-full;
+}
+
+.table-head {
+    @apply border-2 p-0.5 text-center whitespace-nowrap;
+}
+
 @layer components {
     .title-section {
         font-size: 2rem;
