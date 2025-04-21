@@ -16,20 +16,23 @@ const add = () => emit('addToCart');
 </script>
 
 <template>
-    <div id="view-product-offer" @click="acess">
-        <div id="container-img-product">
+    <div
+        id="view-product-offer"
+        @click="acess"
+        class="flex flex-col items-center gap-y-8 max-md:gap-y-4 p-4 max-md:px-2 w-full h-full hover:cursor-pointer hover:text-xanadu/90 text-white/90">
+        <div class="w-50 max-md:w-30 h-50 max-md:h-30">
             <img
                 class="bg-white product-shadow rounded-2xl hover:scale-105"
                 :src="product.imageUrl"
                 :alt="`imagem do ${product.name}`" />
         </div>
-        <div id="description-product-offer" class="text-white/90">
-            <p id="product-name ">{{ product.name }}</p>
+        <div class="max-md:text-xs max-md:px-4">
+            <p class="font-bold max-md:text-sm">{{ product.name }}</p>
             <div id="info-numbers">
-                <p class="p-price text-white">
+                <p class="p-price">
                     <strong>
                         R$
-                        <span id="main-product-price">{{
+                        <span class="text-xl max-md:text-sm font-bold">{{
                             pixPrice
                         }}</span></strong
                     >
@@ -46,45 +49,3 @@ const add = () => emit('addToCart');
             button-name="Adicionar ao carrinho" />
     </div>
 </template>
-
-<style scoped>
-#view-product-offer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: 1rem;
-
-    padding: 1rem;
-
-    width: 100%;
-    height: 100%;
-
-    color: rgba(43, 43, 43, 0.808);
-}
-#view-product-offer:hover {
-    cursor: pointer;
-}
-#container-img-product {
-    width: 15rem;
-    height: 15rem;
-}
-img {
-    width: 100%;
-    height: 100%;
-}
-#product-name {
-    font-weight: 700;
-}
-#main-product-price {
-    font-size: 1.4em;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.418);
-    color: var(--xanadu);
-}
-.product-shadow {
-    box-shadow:
-        2px 2px 2px white,
-        2px -2px 2px white,
-        -2px -2px 2px white,
-        -2px 2px 2px white;
-}
-</style>

@@ -81,8 +81,6 @@ const showInfo = () =>
 const categoryIsSetting = async () => {
     const typeList = ['ANALOGICO', 'DIGITAL', 'SMART'];
 
-    console.log(categoryStore.category);
-
     if (typeList.includes(categoryStore.category)) {
         await searchProductsByType(categoryStore.category);
     }
@@ -129,10 +127,10 @@ onMounted(async () => {
             class="flex flex-col items-center gap-16 w-full rounded-lg">
             <nav
                 id="container-options-view"
-                class="flex flex-col md:flex-row justify-between items-center bg-gray-500/50 h-auto md:h-12 w-full rounded-lg p-2 md:p-4 gap-2 md:gap-0 text-white max-md:text-xs">
+                class="flex flex-col md:flex-row justify-between items-center bg-gray-500/50 h-auto md:h-12 w-full rounded-lg p-2 md:p-2 gap-2 md:gap-0 text-white max-lg:text-xs">
                 <!-- Opções de Ordenação -->
                 <div
-                    class="flex flex-row max-md:justify-center gap-2 md:gap-4 text-center w-full md:w-auto">
+                    class="flex flex-row max-md:justify-center gap-2 md:gap-4 text-center w-full lg:w-auto">
                     <p
                         class="options-view hover:cursor-pointer"
                         @click="sortProductsLowToHigh">
@@ -145,7 +143,7 @@ onMounted(async () => {
                     </p>
                 </div>
                 <div
-                    class="flex flex-row max-md:justify-between md:flex-row gap-2 md:gap-4 text-center w-2/3 md:w-auto">
+                    class="flex flex-row max-md:justify-center md:flex-row gap-2 md:gap-2 text-center w-full lg:w-auto">
                     <p
                         class="options-view hover:cursor-pointer"
                         @click="searchProductsByType('ANALOGICO')">
@@ -166,18 +164,19 @@ onMounted(async () => {
                 <!-- Pesquisa -->
                 <div
                     id="container-search-brand"
-                    class="flex flex-col md:flex-row justify-between items-center w-full md:w-fit bg-black text-white/75 border-none rounded-lg md:px-4 px-2 py-2 md:py-0">
-                    <label for="searchMethod" class="text-sm md:mr-1"
+                    class="flex flex-col md:flex-row justify-between items-center w-full lg:w-fit max-lg:text-xs bg-black text-white/75 border-none rounded-lg lg:px-4 px-2 py-2 md:py-0">
+                    <label
+                        for="searchMethod"
+                        class="text-sm max-lg:text-xs md:mr-1 md:whitespace-nowrap"
                         >Pesquisar por:</label
                     >
                     <select
                         class="bg-gray-500/50 md:bg-black md:border-gray-500/50 md:border-2 rounded-lg p-1 w-full md:w-auto"
                         id="searchMethod"
                         v-model="searchType">
-                        <option value="" disabled>Selecione uma opção</option>
+                        <option value="" disabled>Selecione</option>
                         <option value="Nome">Nome</option>
                         <option value="Marca">Marca</option>
-                        <option value="SMART">SMART</option>
                     </select>
                     <input
                         class="text-gray-300 focus:bg-xanadu w-full md:w-[30%] mt-2 md:mt-0 md:ml-1 p-1 rounded-md"

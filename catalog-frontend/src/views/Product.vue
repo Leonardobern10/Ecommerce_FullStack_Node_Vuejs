@@ -23,9 +23,9 @@ const addToCart = async (product) =>
 
 <template>
     <div
-        class="w-full h-full py-12 flex flex-col md:flex-row justify-around items-center gap-5 border-2">
+        class="w-full h-full flex py-12 flex-col lg:flex-row justify-around items-center gap-5">
         <div
-            class="min-w-[15rem] max-w-[20rem] h-80 flex justify-center items-center">
+            class="min-w-[15rem] max-w-[20rem] h-80 flex justify-center items-center max-lg:h-1/2 max-lg:w-1/2 max-md:mb-6">
             <img
                 :src="product.imageUrl"
                 alt=""
@@ -33,18 +33,23 @@ const addToCart = async (product) =>
         </div>
 
         <div
-            class="w-full max-md:w-[90%] md:w-1/3 flex flex-col justify-between items-center text-center md:text-left text-gray-400/80">
-            <h1 class="text-2xl font-bold">{{ product.name }}</h1>
-            <p class="text-base mt-2">
+            class="w-full max-lg:w-[90%] lg:w-1/3 flex flex-col justify-between items-center text-center lg:text-left text-gray-400/80">
+            <h1 class="text-2xl max-md:text-lg font-bold">
+                {{ product.name }}
+            </h1>
+            <p class="text-base max-md:text-xs mt-2">
                 {{ product.description }}
             </p>
 
             <div
                 class="w-full max-md:w-[90%] flex flex-row justify-between items-center mt-4">
-                <p class="text-3xl font-semibold text-gray-100/50">
+                <p
+                    class="text-3xl max-md:text-lg font-semibold text-gray-100/50">
                     R$ <strong>{{ Number(product.price).toFixed(2) }}</strong>
                 </p>
-                <p class="text-gray-200">Quantidade: {{ product.stock }}</p>
+                <p class="text-gray-200 max-md:text-xs">
+                    Quantidade: {{ product.stock }}
+                </p>
             </div>
 
             <Button

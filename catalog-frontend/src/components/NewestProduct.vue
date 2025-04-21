@@ -25,7 +25,7 @@ onUnmounted(() => window.removeEventListener('resize', updateScreenSize));
         class="flex flex-row justify-between max-ml:h-full w-[13rem] max-ml:w-full h-[17rem] items-center sm:flex-col shadow-gray-500 max-md:bg-black/50 p-4 rounded-4xl hover:cursor-pointer">
         <button
             v-if="windowWidth <= 425"
-            class="relative top-[0%] w-[20%] h-8 bg-transparent border-none"
+            class="relative top-[0%] w-[20%] h-6 bg-transparent border-none"
             @click="emitPreviousItem">
             <img src="../assets/icons/left_arrow.svg" alt="Previous" />
         </button>
@@ -55,7 +55,7 @@ onUnmounted(() => window.removeEventListener('resize', updateScreenSize));
         </div>
         <button
             v-if="windowWidth <= 425"
-            class="relative top-[0%] w-[20%] h-8 bg-transparent border-none"
+            class="relative top-[0%] w-[20%] h-6 bg-transparent border-none"
             @click="emitNextItem">
             <img src="../assets/icons/right_arrow.svg" alt="Next" />
         </button>

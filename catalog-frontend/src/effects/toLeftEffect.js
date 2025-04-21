@@ -1,8 +1,8 @@
 import gsap from 'gsap';
 
-export const toLeftEffect = (component) => {
+export const toSlideEffect = (component, startPosition) => {
     gsap.from(component, {
-        x: -100,
+        x: `${startPosition}`,
         delay: 0.2,
         duration: 1.2,
         autoAlpha: 0.2,

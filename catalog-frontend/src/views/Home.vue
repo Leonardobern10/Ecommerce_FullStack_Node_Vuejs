@@ -11,7 +11,7 @@ import CATEGORIES from '@/constants/CATEGORIES';
 import NEWESTPRODUCTS from '@/constants/NEWESTPRODUCTS';
 import { BannerImages } from '@/constants/BANNERIMAGES';
 import { ratings } from '@/constants/RATINGS';
-import { toLeftEffect } from '@/effects/toLeftEffect';
+import { toSlideEffect } from '@/effects/toLeftEffect';
 import { toDigitEffect } from '@/effects/toDigitEffect';
 import { toScrollEffect } from '@/effects/toScrollEffect';
 import PATH from '@/constants/PATH';
@@ -39,10 +39,11 @@ onMounted(() => {
     checkRole();
     window.addEventListener('resize', updateScreenSize);
     currentItem.value = NEWESTPRODUCTS[currentIndexItem.value];
-    toLeftEffect('#banner-init');
+    toSlideEffect('#banner-init', '-100px');
     toDigitEffect('h1', 'Seu estilo começa pelo pulso.');
     toScrollEffect('#newest-products', '-150px');
     toScrollEffect('#about-company', '-200px');
+    toSlideEffect('.categories', '200px');
 });
 
 onUnmounted(() => {
@@ -74,15 +75,17 @@ onUnmounted(() => {
                         v-for="item in CATEGORIES"
                         :key="item.image"
                         @click="redirectToList(item.text.toUpperCase())"
-                        class="flex flex-col items-center rounded-container max-ml:h-30 bg-black/50 hover:scale-95 transition-transform duration-300 hover:skew-1 hover:bg-black/70 hover:cursor-pointer">
+                        class="flex flex-col items-center rounded-container max-ml:h-30 bg-black/50 hover:scale-90 transition-transform duration-300 hover:skew-1 hover:bg-black/70 hover:cursor-pointer">
                         <div
-                            class="flex flex-row justify-between items-center gap-8 w-full h-[10rem] max-ml:h-30">
-                            <img
-                                class="lg:w-1/2 rounded-container object-cover"
-                                :src="item.image"
-                                :alt="item.text" />
+                            class="flex flex-row justify-between items-center w-full h-[10rem] max-ml:h-30">
+                            <div class="max-md:w-full w-60 h-full">
+                                <img
+                                    class="rounded-container object-cover w-full h-full"
+                                    :src="item.image"
+                                    :alt="item.text" />
+                            </div>
                             <p
-                                class="text-4xl max-lg:text-lg p-6 text-center rounded-container text-white w-[50%] max-md:w-[80%]">
+                                class="text-4xl max-lg:text-lg p-6 text-center rounded-container text-white w-[50%] max-md:w-full">
                                 {{ item.text }}
                             </p>
                         </div>
