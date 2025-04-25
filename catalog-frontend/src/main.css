@@ -76,6 +76,10 @@
     @apply border-2 p-2 text-center w-fit;
 }
 
+.admin-sidebar-link {
+    @apply p-2 rounded bg-gray-700 hover:bg-gray-600 transition;
+}
+
 @layer components {
     .title-section {
         font-size: 2rem;

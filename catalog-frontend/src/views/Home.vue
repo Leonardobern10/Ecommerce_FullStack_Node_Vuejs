@@ -16,7 +16,6 @@ import { toDigitEffect } from '@/effects/toDigitEffect';
 import { toScrollEffect } from '@/effects/toScrollEffect';
 import PATH from '@/constants/PATH';
 import { useCategoryStore } from '@/store/useCategoryStore';
-import axios from 'axios';
 import { getNewestProducts } from '@/services/productService';
 
 // Values
