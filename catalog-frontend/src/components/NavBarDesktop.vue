@@ -18,7 +18,7 @@ const emitLogout = () => emit('logout');
             <Link v-if="auth" :to="PATH.ORDERS" name="Meus pedidos" />
             <Link
                 v-if="permitted && auth"
-                :to="PATH.ADMIN"
+                :to="PATH.ADMIN.ROOT"
                 name="Administração" />
         </div>
 

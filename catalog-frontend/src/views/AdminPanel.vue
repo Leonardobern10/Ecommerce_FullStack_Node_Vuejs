@@ -24,7 +24,7 @@ import PATH from '@/constants/PATH';
                     Pedidos
                 </router-link>
                 <router-link
-                    to="/customers"
+                    to="/admin/customers"
                     class="p-2 rounded bg-gray-700 hover:bg-gray-600 transition">
                     Clientes
                 </router-link>

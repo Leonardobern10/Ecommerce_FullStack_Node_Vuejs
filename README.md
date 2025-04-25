@@ -25,6 +25,10 @@ Este é um sistema de **e-commerce** desenvolvido com **Vue.js** no frontend e *
 - Exibição do histórico de pedidos
 - Rotas protegidas
 - Painel administrativo com acesso restrito
+- Funcionalidades administrativas:
+  - Relatório de todos os clientes
+  - Consulta a todos os pedidos de um cliente
+  - Consulta a todos os pedidos do sistema
 
 ## 📸 Imagens do Projeto
 

@@ -20,6 +20,7 @@ import EditProductView from '@/views/EditProductView.vue';
 import ResetPassword from '@/components/ResetPassword.vue';
 import HelpPassword from '@/components/HelpPassword.vue';
 import Users from '@/views/Users.vue';
+import NotFound from '@/views/NotFound.vue';
 
 // Define para cada rota um componente correspondente
 // que será renderizado no momento que a rota for acessada
@@ -35,14 +36,15 @@ const routes = [
     { path: PATH.PRODUCTS.GET_BY_ID, component: Product, props: true },
     { path: PATH.CART, component: Cart },
     { path: PATH.ORDERS, component: Orders },
-    { path: PATH.ADMIN, component: AdminPanel },
+    { path: PATH.ADMIN.ROOT, component: AdminPanel },
     { path: PATH.ABOUT_US, component: AboutUs },
     { path: PATH.DELIVERY, component: Delivery },
     { path: PATH.CARRER, component: Carrer },
     { path: PATH.OUR_HISTORY, component: History },
     { path: PATH.PASSWORD.HELP, component: HelpPassword },
     { path: PATH.PASSWORD.RESET, component: ResetPassword, props: true },
-    { path: PATH.USERS, component: Users },
+    { path: PATH.ADMIN.CUSTOMERS, component: Users },
+    { path: PATH.JOKER, name: 'NotFound', component: NotFound },
 ];
 
 export const router = createRouter({ history: createWebHistory(), routes });

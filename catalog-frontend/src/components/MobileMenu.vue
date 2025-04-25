@@ -64,7 +64,7 @@ const toggleDropdown = () => {
                     <Link
                         @hide-menu="toggleDropdown"
                         v-if="permitted && auth"
-                        :to="PATH.ADMIN"
+                        :to="PATH.ADMIN.ROOT"
                         name="Administração" />
                 </div>
 
