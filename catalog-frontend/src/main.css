@@ -64,6 +64,7 @@
     }
 }
 
+/*     TABLES      */
 .table-row {
     @apply border-2 p-0.5 text-center w-full;
 }
@@ -76,12 +77,26 @@
     @apply border-2 p-2 text-center w-fit;
 }
 
+/*     ADMIN      */
 .admin-sidebar-link {
     @apply p-2 rounded bg-gray-700 hover:bg-gray-600 transition;
 }
 
 .admin-sidebar-style {
     @apply w-64 max-md:w-full bg-gray-800 text-white p-6 flex flex-col gap-4;
+}
+
+/*      FOOTER     */
+.footer-options {
+    @apply md:text-sm text-xs whitespace-nowrap flex flex-col;
+}
+
+.footer-title-options {
+    @apply text-sm md:text-lg font-semibold text-black;
+}
+
+.footer-container-options {
+    @apply flex flex-col gap-y-1;
 }
 
 @layer components {

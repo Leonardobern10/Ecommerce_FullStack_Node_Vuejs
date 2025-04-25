@@ -91,8 +91,7 @@ onUnmounted(() => {
                     <p class="mt-4 w-[40%]">
                         Seu estilo começa pelo seu pulso.
                     </p>
-                    <div
-                        class="flex justify-between w-[40%] mt-4 gap-x-1 h-full">
+                    <div class="flex justify-start gap-x-2 w-[80%] mt-4 h-full">
                         <div
                             v-for="item in socialNetworksLogos"
                             :key="item.nome"
@@ -106,23 +105,17 @@ onUnmounted(() => {
                 <div
                     id="navigation-footer"
                     class="grid grid-cols-3 gap-3 text-gray-700 w-[80%] mt-6">
-                    <div class="flex flex-col gap-y-1">
-                        <p class="text-sm md:text-lg font-semibold text-black">
-                            Info
-                        </p>
-                        <div
-                            class="md:text-sm text-xs whitespace-nowrap flex flex-col">
+                    <div class="footer-container-options">
+                        <p class="footer-title-options">Info</p>
+                        <div class="footer-options">
                             <Link :to="PATH.ABOUT_US" name="Sobre nós" />
                             <Link :to="PATH.DELIVERY" name="Entrega" />
                             <Link :to="PATH.HOME" name="Blog" />
                         </div>
                     </div>
-                    <div class="flex flex-col gap-y-1">
-                        <p class="text-sm md:text-lg font-semibold text-black">
-                            Empresa
-                        </p>
-                        <div
-                            class="md:text-sm text-xs whitespace-nowrap flex flex-col">
+                    <div class="footer-container-options">
+                        <p class="footer-title-options">Empresa</p>
+                        <div class="footer-options">
                             <Link :to="PATH.HOME" name="Comunidade" />
                             <Link :to="PATH.CARRER" name="Carreira" />
                             <Link
@@ -130,12 +123,9 @@ onUnmounted(() => {
                                 name="Nossa história" />
                         </div>
                     </div>
-                    <div class="flex flex-col gap-y-1">
-                        <p class="text-sm md:text-lg font-semibold text-black">
-                            Navegação
-                        </p>
-                        <div
-                            class="md:text-sm text-xs whitespace-nowrap flex flex-col">
+                    <div class="footer-container-options">
+                        <p class="footer-title-options">Navegação</p>
+                        <div class="footer-options">
                             <Link :to="PATH.HOME" name="Home" />
                             <Link :to="PATH.PRODUCTS.ROOT" name="Produtos" />
                             <Link :to="PATH.HOME" name="Contato" />
