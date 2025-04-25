@@ -47,10 +47,10 @@ onMounted(async () => {
     currentItem.value = NEWESTPRODUCTS[currentIndexItem.value];
     toSlideEffect('#banner-init', '-100px');
     toDigitEffect('h1', 'Seu estilo começa pelo pulso.');
-    toScrollEffect('#newest-products', '-150px');
     toScrollEffect('#about-company', '-200px');
     toSlideEffect('.categories', '200px');
     await updateNewestProducts();
+    toScrollEffect('.newest-products', '-150px');
 });
 
 onUnmounted(() => {
@@ -120,7 +120,7 @@ onUnmounted(() => {
                     v-if="screenWidth > 425"
                     class="w-full h-full grid grid-cols-2 md:bg-black/50 md:rounded-container grid-rows-2 place-items-center gap-2">
                     <NewestProduct
-                        id="newest-products"
+                        class="newest-products"
                         v-for="product in newestProducts"
                         :key="product._id"
                         :img="product.imageUrl"
@@ -131,6 +131,7 @@ onUnmounted(() => {
                 </div>
                 <div v-else class="newest-ml">
                     <NewestProduct
+                        class="newest-products"
                         :key="currentItem._id"
                         :img="currentItem.image"
                         :name="currentItem.name"
