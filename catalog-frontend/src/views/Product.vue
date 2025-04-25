@@ -23,9 +23,9 @@ const addToCart = async (product) =>
 
 <template>
     <div
-        class="w-full h-full flex py-12 flex-col lg:flex-row justify-around items-center gap-5">
+        class="w-full h-full min-h-screen flex flex-col lg:flex-row justify-around items-center">
         <div
-            class="min-w-[15rem] max-w-[20rem] h-80 flex justify-center items-center max-lg:h-1/2 max-lg:w-1/2 max-md:mb-6">
+            class="min-w-[15rem] max-w-[20rem] h-80 flex justify-center items-center max-lg:h-1/2 max-lg:w-1/2 max-md:mb-6 hover:scale-200">
             <img
                 :src="product.imageUrl"
                 alt=""

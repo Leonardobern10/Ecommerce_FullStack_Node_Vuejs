@@ -36,6 +36,7 @@ const filteredProducts = computed(() =>
 );
 const searchProductsByType = async (typeName) =>
     (products.value = await getProductsByType(typeName));
+
 const categoryStore = useCategoryStore();
 
 let searchValue = ref();

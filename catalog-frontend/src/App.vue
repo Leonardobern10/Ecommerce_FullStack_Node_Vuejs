@@ -80,7 +80,7 @@ onUnmounted(() => {
         </main>
 
         <footer
-            class="font-lato w-full flex flex-col items-center justify-between bg-black/20 p-8"
+            class="font-lato w-full flex flex-col items-center justify-between bg-black/50 p-8"
             v-show="useHeader.header">
             <div
                 class="w-11/12 h-full flex flex-col sm:flex-row justify-between items-center">
