@@ -3,8 +3,7 @@ import PATH from '@/constants/PATH';
 </script>
 
 <template>
-    <aside
-        class="w-64 max-md:w-full bg-gray-800 text-white p-6 flex flex-col gap-4">
+    <aside class="admin-sidebar-style">
         <h2 class="text-2xl font-semibold">Admin Panel</h2>
         <nav class="flex flex-col max-md:flex-row gap-2">
             <router-link to="/dashboard" class="admin-sidebar-link">
