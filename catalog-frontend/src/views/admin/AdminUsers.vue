@@ -8,11 +8,9 @@ const listUsers = ref([]);
 const pedidos = reactive([]);
 
 const getOrders = async (id) => {
-    console.log('Iniciou!');
     pedidos.length = 0; // Limpar pedidos anteriores antes de atribuir novos
     const orders = await getOrdersById(id);
     pedidos.push(...orders); // Usando push(...) para adicionar novos pedidos ao array
-    console.log(pedidos);
 };
 
 onMounted(async () => {
@@ -52,7 +50,7 @@ onMounted(async () => {
                     </thead>
                     <tbody>
                         <tr v-for="user in listUsers" :key="user._id">
-                            <td class="border-2 p-0.5 text-center">
+                            <td class="table-definition">
                                 {{ user._id }}
                             </td>
                             <td class="border-2 p-0.5 text-center">

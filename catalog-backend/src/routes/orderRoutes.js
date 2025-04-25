@@ -40,6 +40,22 @@ orderRouter.get('/', authMiddleware, async (req, res) => {
 });
 
 orderRouter.get(
+    '/all',
+    authMiddleware,
+    hasRole(['admin']),
+    async (req, res) => {
+        console.log('Iniciando a consulta a todos os pedidos...');
+        try {
+            const allOrders = await Order.find({});
+            console.log(allOrders);
+            res.status(200).json(allOrders);
+        } catch (error) {
+            console.error(error);
+        }
+    },
+);
+
+orderRouter.get(
     '/:id',
     authMiddleware,
     hasRole(['admin']),
@@ -58,21 +74,6 @@ orderRouter.get(
             res.status(200).json(orders);
         } catch (error) {
             res.status(500).json({ message: 'Erro ao buscar pedidos.', error });
-        }
-    },
-);
-
-orderRouter.get(
-    '/all',
-    authMiddleware,
-    hasRole(['admins']),
-    async (req, res) => {
-        try {
-            const allOrders = Order.find({});
-            console.log(allOrders);
-            res.status(200).json(allOrders);
-        } catch (error) {
-            console.error(error);
         }
     },
 );

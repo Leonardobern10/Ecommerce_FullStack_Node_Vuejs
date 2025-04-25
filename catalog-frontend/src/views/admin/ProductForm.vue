@@ -4,8 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
 import Input from '@/components/Input.vue';
 import Button from '@/components/Button.vue';
-import { getProducts, saveProduct } from '../services/productService.js';
-import ProductOffer from '@/components/ProductOffer.vue';
+import { getProducts, saveProduct } from '../../services/productService.js';
 
 const toast = useToast();
 const route = useRoute();

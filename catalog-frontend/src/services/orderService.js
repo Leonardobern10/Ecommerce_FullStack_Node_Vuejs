@@ -17,7 +17,12 @@ export const createOrder = async (orderData) => {
 
 // Obtem todos os pedidos registrados no banco
 export const getOrders = async () => {
-    return await axios.get(URL.ORDER, { withCredentials: true });
+    console.log('Iniciando getOrder() ...');
+    const response = await axios.get(`${URL.ORDER}/all`, {
+        withCredentials: true,
+    });
+    console.log(response.data);
+    return response.data;
 };
 
 export const getOrdersById = async (id) => {

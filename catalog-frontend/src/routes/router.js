@@ -3,15 +3,15 @@ import Login from '@/components/Login.vue';
 import Register from '@/components/Register.vue';
 import Home from '@/views/Home.vue';
 import ProductList from '@/views/ProductList.vue';
-import ProductForm from '@/views/ProductForm.vue';
+import ProductForm from '@/views/admin/ProductForm.vue';
 import Cart from '@/components/Cart.vue';
 import Orders from '@/views/Orders.vue';
 import PATH from '@/constants/PATH';
 import Product from '@/views/Product.vue';
-import AdminPanel from '@/views/AdminPanel.vue';
+import AdminPanel from '@/views/admin/AdminPanel.vue';
 import { checkRole } from '@/services/roleService';
 import AboutUs from '@/views/AboutUs.vue';
-import RemoveProduct from '@/views/RemoveProduct.vue';
+import RemoveProduct from '@/views/admin/RemoveProduct.vue';
 import Delivery from '@/views/Delivery.vue';
 import Carrer from '@/views/Carrer.vue';
 import History from '@/views/History.vue';
@@ -19,8 +19,9 @@ import EditProductView from '@/views/EditProductView.vue';
 
 import ResetPassword from '@/components/ResetPassword.vue';
 import HelpPassword from '@/components/HelpPassword.vue';
-import Users from '@/views/Users.vue';
+import Users from '@/views/admin/AdminUsers.vue';
 import NotFound from '@/views/NotFound.vue';
+import AdminOrders from '@/views/admin/AdminOrders.vue';
 
 // Define para cada rota um componente correspondente
 // que será renderizado no momento que a rota for acessada
@@ -36,6 +37,7 @@ const routes = [
     { path: PATH.PRODUCTS.GET_BY_ID, component: Product, props: true },
     { path: PATH.CART, component: Cart },
     { path: PATH.ORDERS, component: Orders },
+    { path: PATH.ORDERS_ADMIN, component: AdminOrders },
     { path: PATH.ADMIN.ROOT, component: AdminPanel },
     { path: PATH.ABOUT_US, component: AboutUs },
     { path: PATH.DELIVERY, component: Delivery },
