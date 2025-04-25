@@ -11,9 +11,16 @@ onMounted(async () => await getAllOrders());
 </script>
 
 <template>
-    <div class="w-full h-full flex flex-row">
+    <div class="w-full h-full flex flex-row bg-white">
         <AdminSidebar />
-        <table class="w-full bg-white text-black">
+        <table class="w-full text-black">
+            <caption>
+                <h3 class="text-lg">Lista de pedidos do sistema</h3>
+                <p>
+                    Aqui se encontram todos os pedidos registrados no sistema
+                    até então.
+                </p>
+            </caption>
             <thead>
                 <tr>
                     <th class="table-head">Pedido</th>

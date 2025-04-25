@@ -188,7 +188,6 @@ export const getProductsByPriceToHigh = async (page = 1) => {
 export const getNewestProducts = async () => {
     const response = await axios.get(
         'http://localhost:5000/api/products/search?sortBy=createdAt&order=desc&limit=4',
-        { withCredentials: true },
     );
     console.log(response.data.data);
     return response.data.data;

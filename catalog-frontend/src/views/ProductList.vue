@@ -122,13 +122,13 @@ onMounted(async () => {
 <template>
     <div
         id="view"
-        class="flex flex-col justify-center items-center w-[80vw] h-full font-inter font-light">
+        class="flex flex-col justify-center items-center w-[80vw] h-full font-andika font-light">
         <div
             id="container"
-            class="flex flex-col items-center gap-16 w-full rounded-lg">
+            class="flex flex-col items-center gap-16 w-full h-full rounded-lg">
             <nav
                 id="container-options-view"
-                class="flex flex-col md:flex-row justify-between items-center bg-gray-500/50 h-auto md:h-12 w-full rounded-lg p-2 md:p-2 gap-2 md:gap-0 text-white max-lg:text-xs">
+                class="flex flex-col md:flex-row justify-between items-center md:items-start bg-gray-500/50 h-auto md:h-12 w-full rounded-lg p-2 md:p-3 gap-2 md:gap-0 text-white max-lg:text-xs">
                 <!-- Opções de Ordenação -->
                 <div
                     class="flex flex-row max-md:justify-center gap-2 md:gap-4 text-center w-full lg:w-auto">

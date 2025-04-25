@@ -5,6 +5,7 @@ import { router } from './routes/router.js';
 import { createPinia } from 'pinia';
 import Toast from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
+import naive from 'naive-ui';
 
 const app = createApp(App);
 app.use(router);
@@ -14,4 +15,5 @@ app.use(Toast, {
     maxToasts: 20,
     newestOnTop: true,
 });
+app.use(naive);
 app.mount('#app');

@@ -7,6 +7,7 @@ import { useAuthStore } from '@/store/useAuthStore.js';
 import Button from '@/components/Button.vue';
 import { searchProduct } from '@/services/productService';
 import { addOnCart } from '@/services/cartService';
+import { viewFinancedValue } from '../services/productService';
 
 const productStore = useProductStore();
 const route = useRoute();
@@ -25,7 +26,7 @@ const addToCart = async (product) =>
     <div
         class="w-full h-full min-h-screen flex flex-col lg:flex-row justify-around items-center">
         <div
-            class="min-w-[15rem] max-w-[20rem] h-80 flex justify-center items-center max-lg:h-1/2 max-lg:w-1/2 max-md:mb-6 hover:scale-200">
+            class="min-w-[15rem] max-w-[20rem] h-80 flex justify-center items-center max-lg:h-1/2 max-lg:w-1/2 max-md:mb-6 hover:scale-120 lg:hover:scale-200">
             <img
                 :src="product.imageUrl"
                 alt=""
@@ -45,12 +46,16 @@ const addToCart = async (product) =>
                 class="w-full max-md:w-[90%] flex flex-row justify-between items-center mt-4">
                 <p
                     class="text-3xl max-md:text-lg font-semibold text-gray-100/50">
-                    R$ <strong>{{ Number(product.price).toFixed(2) }}</strong>
+                    R$
+                    <strong>{{ Number(product.price).toFixed(2) }}</strong>
                 </p>
                 <p class="text-gray-200 max-md:text-xs">
                     Quantidade: {{ product.stock }}
                 </p>
             </div>
+            <p class="w-full text-left">
+                ou {{ viewFinancedValue(product.price) }}
+            </p>
 
             <Button
                 @click="addToCart(product)"
