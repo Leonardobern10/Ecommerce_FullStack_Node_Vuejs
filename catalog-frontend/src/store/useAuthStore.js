@@ -22,6 +22,17 @@ export const useAuthStore = defineStore('authStore', {
                 this.authenticated = false;
             }
         },
+        async info() {
+            try {
+                const response = await axios.get(
+                    'http://localhost:5000/api/auth/me',
+                    { withCredentials: true },
+                );
+                return response.data;
+            } catch (error) {
+                console.error(error);
+            }
+        },
         login() {
             this.authenticated = true;
         },

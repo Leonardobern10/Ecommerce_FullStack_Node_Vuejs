@@ -25,15 +25,15 @@ export const getOrders = async () => {
     return response.data;
 };
 
-export const getOrdersById = async (id) => {
+export const getOrdersById = async () => {
     try {
-        const response = await axios.get(`${URL.ORDER}/${id}`, {
+        const response = await axios.get(`${URL.ORDER}`, {
             withCredentials: true,
         });
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error(error);
+        throw error;
     }
 };
 
@@ -42,9 +42,11 @@ export const fetchOrders = async (state, router, array) => {
         if (!state.value) {
             return await router.push(PATH.LOGIN);
         }
-        const response = await getOrders();
-        array.value = response.data;
-    } catch (error) {}
+        const response = await getOrdersById();
+        array.value = response;
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 export const loadOrders = async (state, router, auth, array) => {
