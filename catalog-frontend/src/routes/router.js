@@ -37,7 +37,7 @@ const routes = [
     { path: PATH.PRODUCTS.GET_BY_ID, component: Product, props: true },
     { path: PATH.CART, component: Cart },
     { path: PATH.ORDERS, component: Orders },
-    { path: PATH.ORDERS_ADMIN, component: AdminOrders },
+    { path: PATH.ORDERS.ALL, component: AdminOrders },
     { path: PATH.ADMIN.ROOT, component: AdminPanel },
     { path: PATH.ABOUT_US, component: AboutUs },
     { path: PATH.DELIVERY, component: Delivery },

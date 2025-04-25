@@ -59,7 +59,7 @@ const toggleDropdown = () => {
                     <Link
                         @hide-menu="toggleDropdown"
                         v-if="auth"
-                        :to="PATH.ORDERS"
+                        :to="PATH.ORDERS.ROOT"
                         name="Meus pedidos" />
                     <Link
                         @hide-menu="toggleDropdown"
