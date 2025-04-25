@@ -16,12 +16,15 @@ import { toDigitEffect } from '@/effects/toDigitEffect';
 import { toScrollEffect } from '@/effects/toScrollEffect';
 import PATH from '@/constants/PATH';
 import { useCategoryStore } from '@/store/useCategoryStore';
+import axios from 'axios';
+import { getNewestProducts } from '@/services/productService';
 
 // Values
 let screenWidth = ref(window.innerWidth);
 let currentIndexItem = ref(0);
 let currentItem = ref({});
 const categoryStore = useCategoryStore();
+const newestProducts = ref([]);
 
 //Methods
 const router = useRouter();
@@ -35,7 +38,10 @@ const redirectToList = async (type) => {
     router.push(PATH.PRODUCTS.ROOT);
 };
 
-onMounted(() => {
+const updateNewestProducts = async () =>
+    (newestProducts.value = await getNewestProducts());
+
+onMounted(async () => {
     checkRole();
     window.addEventListener('resize', updateScreenSize);
     currentItem.value = NEWESTPRODUCTS[currentIndexItem.value];
@@ -44,6 +50,7 @@ onMounted(() => {
     toScrollEffect('#newest-products', '-150px');
     toScrollEffect('#about-company', '-200px');
     toSlideEffect('.categories', '200px');
+    await updateNewestProducts();
 });
 
 onUnmounted(() => {
@@ -114,19 +121,21 @@ onUnmounted(() => {
                     class="w-full h-full grid grid-cols-2 md:bg-black/50 md:rounded-container grid-rows-2 place-items-center gap-2">
                     <NewestProduct
                         id="newest-products"
-                        v-for="product in NEWESTPRODUCTS"
-                        :key="product.name"
-                        :img="product.image"
+                        v-for="product in newestProducts"
+                        :key="product._id"
+                        :img="product.imageUrl"
                         :name="product.name"
                         :price="product.price"
+                        :item-id="product._id"
                         :screen-width="screenWidth" />
                 </div>
                 <div v-else class="newest-ml">
                     <NewestProduct
-                        :key="currentItem.name"
+                        :key="currentItem._id"
                         :img="currentItem.image"
                         :name="currentItem.name"
                         :price="currentItem.price"
+                        :item-id="product._id"
                         :screen-width="screenWidth"
                         @next-item="goToNextProduct"
                         @previous-item="goToPreviousProduct" />

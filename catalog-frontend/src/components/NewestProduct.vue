@@ -4,9 +4,15 @@ import {
     calculatePixDiscount,
     viewFinancedValue,
 } from '@/services/productService';
+import PATH from '@/constants/PATH';
 
 const emits = defineEmits(['nextItem', 'previousItem']);
-const props = defineProps({ img: String, name: String, price: String });
+const props = defineProps({
+    img: String,
+    name: String,
+    price: String,
+    itemId: String,
+});
 
 const windowWidth = ref(window.innerWidth);
 const pixPrice = computed(() => calculatePixDiscount(props.price));
@@ -32,10 +38,12 @@ onUnmounted(() => window.removeEventListener('resize', updateScreenSize));
         <div
             class="flex flex-col justify-between items-center h-[full] max-ml:gap-0 gap-8 sm:w-[80%] hover:scale-110 transition-transform duration-300">
             <div class="h-20 max-ml:h-30">
-                <img
-                    :src="img"
-                    :alt="`Foto do ${name}`"
-                    class="w-15 h-15 rounded-container" />
+                <router-link :to="`${PATH.PRODUCTS.ROOT}/${itemId}`">
+                    <img
+                        :src="img"
+                        :alt="`Foto do ${name}`"
+                        class="w-15 h-15 rounded-container" />
+                </router-link>
             </div>
             <div
                 class="flex flex-col w-40 items-center text-center text-gray-200/50 leading-4 bkmid:gap-0 bkmid:h-full">
@@ -48,7 +56,7 @@ onUnmounted(() => window.removeEventListener('resize', updateScreenSize));
                     <span class="text-base font-normal">no pix</span>
                 </h3>
                 <p
-                    class="w-full md:w-[80%] text-xs font-light lg:text-sm text-center">
+                    class="w-full md:w-full text-xs font-light lg:text-sm text-center">
                     ou {{ financedPrice }}
                 </p>
             </div>
