@@ -10,13 +10,13 @@ import PATH from '@/constants/PATH';
             <router-link to="/dashboard" class="admin-sidebar-link">
                 Dashboard
             </router-link>
-            <router-link to="/products" class="admin-sidebar-link">
+            <router-link :to="PATH.PRODUCTS.ROOT" class="admin-sidebar-link">
                 Produtos
             </router-link>
             <router-link to="/orders/all" class="admin-sidebar-link">
                 Pedidos
             </router-link>
-            <router-link to="/admin/customers" class="admin-sidebar-link">
+            <router-link :to="PATH.ADMIN.CUSTOMERS" class="admin-sidebar-link">
                 Clientes
             </router-link>
         </nav>
