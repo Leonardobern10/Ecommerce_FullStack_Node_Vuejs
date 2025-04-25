@@ -15,11 +15,13 @@ onMounted(async () => await getAllOrders());
         <AdminSidebar />
         <table class="w-full bg-white text-black">
             <thead>
-                <th class="table-head">Pedido</th>
-                <th class="table-head">Status</th>
-                <th class="table-head">Criado em</th>
-                <th class="table-head">Items do pedido</th>
-                <th class="table-head">Valor total</th>
+                <tr>
+                    <th class="table-head">Pedido</th>
+                    <th class="table-head">Status</th>
+                    <th class="table-head">Criado em</th>
+                    <th class="table-head">Items do pedido</th>
+                    <th class="table-head">Valor total</th>
+                </tr>
             </thead>
             <tbody>
                 <tr v-for="order in orders" :key="order._id">
