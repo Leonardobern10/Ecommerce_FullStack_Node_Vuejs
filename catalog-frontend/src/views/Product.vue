@@ -24,7 +24,7 @@ const addToCart = async (product) =>
 
 <template>
     <div
-        class="w-full h-full min-h-screen flex flex-col lg:flex-row justify-around items-center">
+        class="w-full max-md:w-[90%] h-full min-h-screen flex flex-col lg:flex-row justify-around items-center max-md:my-12">
         <div
             class="min-w-[15rem] max-w-[20rem] h-80 flex justify-center items-center max-lg:h-1/2 max-lg:w-1/2 max-md:mb-6 hover:scale-120 lg:hover:scale-200">
             <img
@@ -53,7 +53,7 @@ const addToCart = async (product) =>
                     Quantidade: {{ product.stock }}
                 </p>
             </div>
-            <p class="w-full text-left">
+            <p class="w-full text-left max-md:text-xs opacity-50">
                 ou {{ viewFinancedValue(product.price) }}
             </p>
 

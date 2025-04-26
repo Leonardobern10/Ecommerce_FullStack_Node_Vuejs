@@ -8,7 +8,6 @@ import { checkRole } from '@/services/roleService';
 import { nextNewestItem, previousNewestItem } from '@/services/itemService';
 import ICONS from '@/constants/ICONS.js';
 import CATEGORIES from '@/constants/CATEGORIES';
-import NEWESTPRODUCTS from '@/constants/NEWESTPRODUCTS';
 import { BannerImages } from '@/constants/BANNERIMAGES';
 import { ratings } from '@/constants/RATINGS';
 import { toSlideEffect } from '@/effects/toLeftEffect';
@@ -29,9 +28,9 @@ const newestProducts = ref([]);
 const router = useRouter();
 const updateScreenSize = () => (screenWidth.value = window.innerWidth);
 const goToNextProduct = () =>
-    nextNewestItem(currentIndexItem, NEWESTPRODUCTS, currentItem);
+    nextNewestItem(currentIndexItem, newestProducts.value, currentItem);
 const goToPreviousProduct = () =>
-    previousNewestItem(currentIndexItem, NEWESTPRODUCTS, currentItem);
+    previousNewestItem(currentIndexItem, newestProducts.value, currentItem);
 const redirectToList = async (type) => {
     categoryStore.save(type);
     router.push(PATH.PRODUCTS.ROOT);
@@ -43,12 +42,12 @@ const updateNewestProducts = async () =>
 onMounted(async () => {
     checkRole();
     window.addEventListener('resize', updateScreenSize);
-    currentItem.value = NEWESTPRODUCTS[currentIndexItem.value];
+    await updateNewestProducts();
+    currentItem.value = newestProducts.value[currentIndexItem.value];
     toSlideEffect('#banner-init', '-100px');
     toDigitEffect('h1', 'Seu estilo começa pelo pulso.');
     toScrollEffect('#about-company', '-200px');
     toSlideEffect('.categories', '200px');
-    await updateNewestProducts();
     toScrollEffect('.newest-products', '-150px');
 });
 
@@ -132,7 +131,7 @@ onUnmounted(() => {
                     <NewestProduct
                         class="newest-products"
                         :key="currentItem._id"
-                        :img="currentItem.image"
+                        :img="currentItem.imageUrl"
                         :name="currentItem.name"
                         :price="currentItem.price"
                         :item-id="currentItem._id"

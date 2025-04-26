@@ -29,7 +29,7 @@ const totalPrice = computed(() => (props.price * props.quantity).toFixed(2));
             <img
                 :src="imageUrl"
                 :alt="'foto de ' + name"
-                class="w-full h-full rounded-4xl" />
+                class="w-full h-full rounded-container bg-white" />
         </div>
 
         <!-- Informações do produto -->
@@ -39,14 +39,14 @@ const totalPrice = computed(() => (props.price * props.quantity).toFixed(2));
                 <p class="text-[1.2rem] max-md:text-sm font-bold">
                     {{ name }}
                 </p>
-                <p class="text-sm">Em estoque</p>
+                <p class="text-xs">Em estoque</p>
             </div>
             <div class="leading-[1.2rem] text-center text-neutral-200/50">
-                <p class="font-bold max-md:text-lg">
+                <p class="font-bold max-md:text-sm">
                     R$ {{ calculatePixDiscount(price) }}
                     <span class="text-sm">no pix</span>
                 </p>
-                <p class="opacity-70">
+                <p class="opacity-70 text-xs">
                     ou R$ {{ totalPrice }} em até 10x de
                     {{ Number(totalPrice / 10).toFixed(2) }}
                 </p>

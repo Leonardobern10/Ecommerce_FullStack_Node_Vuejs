@@ -14,6 +14,7 @@ import {
     updateItemQuantityOnCart,
 } from '../services/cartService.js';
 import { checkoutOrder, createOrder } from '@/services/orderService.js';
+import CartNull from '@/assets/images/cart_null.svg';
 
 const isLogged = ref(false); // Armazena o estado do usuario
 const cart = ref([]); // Responsável por receber os produtos
@@ -65,7 +66,8 @@ onMounted(async () => loadCart(cart));
             <!-- Lista de Itens no Carrinho -->
             <div
                 class="w-full h-full md:w-2/3 bg-black/50 shadow-md rounded-lg p-4">
-                <h2 class="text-2xl font-semibold text-neutral-200/50 mb-4">
+                <h2
+                    class="text-sm md:text-2xl font-semibold text-neutral-200/50 mb-4">
                     Carrinho de Compras
                 </h2>
                 <ul v-if="cart.length" class="flex flex-col gap-12">
@@ -82,9 +84,17 @@ onMounted(async () => loadCart(cart));
                             @remove-item="removeItem(item._id)" />
                     </li>
                 </ul>
-                <p v-else class="text-center text-gray-200/50">
-                    Seu carrinho está vazio.
-                </p>
+                <div v-else class="flex flex-col items-center gap-y-8 mt-8">
+                    <div class="h-20 w-20 md:h-40 md:w-40">
+                        <img
+                            class="w-full h-full opacity-25"
+                            :src="CartNull"
+                            alt="" />
+                    </div>
+                    <p class="text-center text-gray-200/50">
+                        Seu carrinho está vazio.
+                    </p>
+                </div>
             </div>
 
             <!-- Resumo da Compra -->
