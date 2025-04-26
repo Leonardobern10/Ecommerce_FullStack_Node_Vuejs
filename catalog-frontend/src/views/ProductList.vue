@@ -22,6 +22,10 @@ import { SortType } from '@/model/Sort.js';
 import { PageCommand } from '@/model/Page.js';
 import { useCategoryStore } from '@/store/useCategoryStore.js';
 
+let searchValue = ref();
+let searchType = ref('');
+let timeout = null;
+let order = ref(SortType.FALSE);
 const router = useRouter();
 const isLogged = ref(false);
 const products = ref([]);
@@ -31,18 +35,17 @@ const limit = ref(12);
 const toast = useToast();
 const productStore = useProductStore();
 const searchBrandQuery = ref('');
+const categoryStore = useCategoryStore();
 const filteredProducts = computed(() =>
     filterProducts(searchBrandQuery, products, 'brand'),
 );
-const searchProductsByType = async (typeName) =>
-    (products.value = await getProductsByType(typeName));
 
-const categoryStore = useCategoryStore();
-
-let searchValue = ref();
-let searchType = ref('');
-let timeout = null;
-let order = ref(SortType.FALSE);
+const searchProductsByType = async (typeName) => {
+    const response = await getProductsByType(typeName);
+    products.value = response.data;
+    totalPages.value = response.totalPages;
+    currentPage.value = response.currentPage;
+};
 
 // Adiciona um produto ao carrinho
 const addProductToCart = async (product) => {
@@ -97,11 +100,21 @@ watch([searchValue, searchType], async ([newQuery, newType]) => {
         showInfo();
         return;
     }
+
     timeout = setTimeout(async () => {
         if (newType === 'Nome') {
             products.value = await getProductsByName(newQuery);
         } else if (newType === 'Marca') {
             products.value = await getProductsByBrand(newQuery);
+        } else {
+            products.value = await loadProducts(
+                authState,
+                isLogged,
+                products,
+                currentPage, // Passando ref corretamente
+                totalPages, // Passando ref corretamente
+                limit,
+            );
         }
     }, 500); // Aplica um debounce de 500ms
 });
@@ -199,6 +212,7 @@ onMounted(async () => {
             <div
                 class="pagination w-1/3 max-md:w-full flex flex-row justify-between items-center gap-5 my-8 text-white/50">
                 <button
+                    v-if="totalPages > 1"
                     @click="getPage(PageCommand.PREVIOUS)"
                     id="previous"
                     class="button-pagination w-8 h-8 bg-no-repeat bg-center bg-[url('../assets/icons/left_arrow_next_page.svg')] hover:cursor-pointer rounded-lg">
@@ -208,6 +222,7 @@ onMounted(async () => {
                 </button>
                 <span> Página {{ currentPage }} de {{ totalPages }}</span>
                 <button
+                    v-if="totalPages > 1"
                     @click="getPage(PageCommand.NEXT)"
                     id="next"
                     class="button-pagination w-8 h-8 bg-no-repeat bg-center bg-[url('../assets/icons/right_arrow_next_page.svg')] hover:cursor-pointer rounded-lg">
