@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Barriecito&family=BioRhyme:wght@200..800&family=Boldonse&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
 @import 'tailwindcss';
+@import './assets/styles/components.css';
 @theme {
     /* Colors */
     --color-xanadu: #758073;
@@ -110,6 +111,7 @@ body {
     background-color: #fff;
     width: 100%;
     height: 100%;
+    font-family: 'Lato', sans-serif;
 }
 
 img {

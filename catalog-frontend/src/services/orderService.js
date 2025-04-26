@@ -25,9 +25,9 @@ export const getOrders = async () => {
     return response.data;
 };
 
-export const getOrdersById = async () => {
+export const getOrdersById = async (id) => {
     try {
-        const response = await axios.get(`${URL.ORDER}`, {
+        const response = await axios.get(`${URL.ORDER}/${id}`, {
             withCredentials: true,
         });
         return response.data;
