@@ -16,7 +16,7 @@ export const notifyWarning = (toast, message) => {
 
 const optionsNotify = {
     position: 'bottom-right',
-    timeout: 5000,
+    timeout: 7000,
     closeOnClick: true,
     pauseOnFocusLoss: true,
     pauseOnHover: true,

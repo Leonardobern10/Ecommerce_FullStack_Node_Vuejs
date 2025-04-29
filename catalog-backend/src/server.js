@@ -15,6 +15,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Configuração de middlewares
+
+/* !!!! ATENÇÃO - Aberto para testes */
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(cookieParser()); // Permite manipulação de cookies
 app.use(express.json());

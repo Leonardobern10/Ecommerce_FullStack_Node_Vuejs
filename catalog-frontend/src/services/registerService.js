@@ -23,8 +23,7 @@ const signUp = async (name, email, password, passwordCheck, router, toast) => {
         router.push(PATH.LOGIN);
         notifySuccess(toast, MESSAGE.SUCCESS.REGISTER);
     } catch (error) {
-        notifyError(toast, MESSAGE.ERROR.REGISTER.DEFAULT);
-        // console.error(error);
+        notifyError(toast, `${error.response.data.message}`);
     }
 };
 

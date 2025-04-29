@@ -9,6 +9,7 @@ import {
     generateResetToken,
 } from '../utils/tokens.js';
 import nodemailer from 'nodemailer';
+import { registerValidator } from '../middlewares/validatorMiddleware.js';
 
 const authRouter = express.Router();
 
@@ -16,7 +17,7 @@ const authRouter = express.Router();
 
 // Método que cuida do acesso à rota '/register' mediante
 // o metodo http [POST]
-authRouter.post('/register', async (req, res) => {
+authRouter.post('/register', registerValidator, async (req, res) => {
     const { name, email, password } = req.body;
     try {
         const user = new User({ name, email, password });
