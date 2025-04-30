@@ -33,8 +33,9 @@ const changeImage = () => {
     }, transitionTime); // Tempo igual ao da animação CSS
 };
 
-const register = async () =>
+const register = async () => {
     await signUp(name, email, password, passwordCheck, router, toast);
+};
 
 onMounted(() => {
     useHeader.hideHeader();
@@ -60,7 +61,11 @@ onUnmounted(() => useHeader.showHeader());
                 @submit.prevent="register"
                 class="flex flex-col items-center max-w-md mx-auto py-4">
                 <div class="flex flex-row justify-between items-center gap-x-4">
-                    <Input v-model="name" type="text" placeholder="Nome" />
+                    <Input
+                        v-model="name"
+                        type="text"
+                        placeholder="Nome"
+                        required />
                     <Input
                         v-model="email"
                         type="email"

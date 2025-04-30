@@ -22,6 +22,7 @@ import HelpPassword from '@/components/HelpPassword.vue';
 import Users from '@/views/admin/AdminUsers.vue';
 import NotFound from '@/views/NotFound.vue';
 import AdminOrders from '@/views/admin/AdminOrders.vue';
+import TestPage from '@/views/TestPage/TestPage.vue';
 
 // Define para cada rota um componente correspondente
 // que será renderizado no momento que a rota for acessada
@@ -47,6 +48,7 @@ const routes = [
     { path: PATH.PASSWORD.RESET, component: ResetPassword, props: true },
     { path: PATH.ADMIN.CUSTOMERS, component: Users },
     { path: PATH.JOKER, name: 'NotFound', component: NotFound },
+    { path: '/teste', component: TestPage },
 ];
 
 export const router = createRouter({ history: createWebHistory(), routes });
