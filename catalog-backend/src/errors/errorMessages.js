@@ -1,4 +1,5 @@
 import { JOI_TYPE_ERRORS } from './joiTypeErrors.js';
+import { infoQuantityCaracteres } from './errorUtils.js';
 
 export const SourceRegisterError = (path, type) => {
     /*
@@ -34,6 +35,7 @@ export const TypeRegisterError = (source, type) => {
                     infoQuantityCaracteres.MIN_CARACTERES_PASSWORD,
                 );
             }
+            break;
         case JOI_TYPE_ERRORS.MAX:
             if (source === 'name') {
                 return responseQuantityError(
@@ -48,6 +50,7 @@ export const TypeRegisterError = (source, type) => {
                     infoQuantityCaracteres.MAX_CARACTERES_PASSWORD,
                 );
             }
+            break;
         case JOI_TYPE_ERRORS.ALPHANUM:
             return `O campo ${source.toUpperCase()} aceita apenas letras e números.`;
         default:
@@ -63,12 +66,4 @@ const responseQuantityError = (filter, source, validState) => {
     } else {
         throw Error('Tipo de filtro não permitido!');
     }
-};
-
-const infoQuantityCaracteres = {
-    MAX_CARACTERES_NAME: 40,
-    MIN_CARACTERES_NAME: 3,
-    MAX_CARACTERES_PASSWORD: 30,
-    MIN_CARACTERES_PASSWORD: 8,
-    TYPE: { MIN: 'min', MAX: 'max' },
 };

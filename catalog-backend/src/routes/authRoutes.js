@@ -9,7 +9,9 @@ import {
     generateResetToken,
 } from '../utils/tokens.js';
 import nodemailer from 'nodemailer';
-import { registerValidator } from '../middlewares/validatorMiddleware.js';
+import { infoValidator } from '../middlewares/validatorMiddleware.js';
+import { loginValidatorSchema } from '../validators/loginValidator.js';
+import { registerValidatorSchema } from '../validators/registerValidator.js';
 
 const authRouter = express.Router();
 
@@ -17,58 +19,70 @@ const authRouter = express.Router();
 
 // Método que cuida do acesso à rota '/register' mediante
 // o metodo http [POST]
-authRouter.post('/register', registerValidator, async (req, res) => {
-    const { name, email, password } = req.body;
-    try {
-        const user = new User({ name, email, password });
-        await user.save();
-        res.status(201).json({ message: `Usuário registrado com sucesso!` });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-        console.log(error);
-    }
-});
+authRouter.post(
+    '/register',
+    infoValidator(registerValidatorSchema),
+    async (req, res) => {
+        const { name, email, password } = req.body;
+        try {
+            const user = new User({ name, email, password });
+            await user.save();
+            res.status(201).json({
+                message: `Usuário registrado com sucesso!`,
+            });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+            console.log(error);
+        }
+    },
+);
 
 // Método que cuida do acesso à rota '/login' mediante
 // o metodo http [POST]
-authRouter.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-    try {
-        const user = await User.findOne({ email }).select('+password');
-        if (!user || !(await user.matchPassword(password))) {
-            return res.status(401).json({ message: 'Credenciais inválidas' });
+authRouter.post(
+    '/login',
+    infoValidator(loginValidatorSchema),
+    async (req, res) => {
+        const { email, password } = req.body;
+        try {
+            const user = await User.findOne({ email }).select('+password');
+            if (!user || !(await user.matchPassword(password))) {
+                return res
+                    .status(401)
+                    .json({ message: 'Credenciais inválidas' });
+            }
+
+            const accessToken = generateAccessToken(user._id, user.role);
+            const refreshToken = generateRefreshToken(user._id, user.role);
+
+            // Inicializar o array se não existir e adicionar o novo token
+            if (!user.refreshTokens) {
+                user.refreshTokens = [];
+            }
+            user.refreshTokens.push(refreshToken);
+            await user.save();
+
+            res.cookie('accessToken', accessToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'Strict',
+                maxAge: 15 * 60 * 1000,
+            });
+
+            res.cookie('refreshToken', refreshToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'Strict',
+                maxAge: 7 * 24 * 60 * 60 * 1000,
+            });
+
+            res.json({ accessToken });
+        } catch (error) {
+            console.error('Erro no login:', error);
+            res.status(500).json({ message: 'Erro interno no servidor' });
         }
-
-        const accessToken = generateAccessToken(user._id, user.role);
-        const refreshToken = generateRefreshToken(user._id, user.role);
-
-        // Inicializar o array se não existir e adicionar o novo token
-        if (!user.refreshTokens) {
-            user.refreshTokens = [];
-        }
-        user.refreshTokens.push(refreshToken);
-        await user.save();
-
-        res.cookie('accessToken', accessToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'Strict',
-            maxAge: 15 * 60 * 1000,
-        });
-
-        res.cookie('refreshToken', refreshToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'Strict',
-            maxAge: 7 * 24 * 60 * 60 * 1000,
-        });
-
-        res.json({ accessToken });
-    } catch (error) {
-        console.error('Erro no login:', error);
-        res.status(500).json({ message: 'Erro interno no servidor' });
-    }
-});
+    },
+);
 
 // Renovação do Access Token
 authRouter.post('/refresh', async (req, res) => {

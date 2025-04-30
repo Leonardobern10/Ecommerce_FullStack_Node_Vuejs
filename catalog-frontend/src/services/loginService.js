@@ -18,7 +18,8 @@ const signIn = async (loading, email, password, auth, router, toast) => {
         router.push(PATH.PRODUCTS.ROOT);
         notifySuccess(toast, MESSAGE.SUCCESS.LOGIN);
     } catch (error) {
-        notifyError(toast, MESSAGE.ERROR.LOGIN.CHECK_CREDENTIALS);
+        notifyError(toast, error.response.data.message);
+        //        notifyError(toast, MESSAGE.ERROR.LOGIN.CHECK_CREDENTIALS);
     } finally {
         loading.value = false;
     }
